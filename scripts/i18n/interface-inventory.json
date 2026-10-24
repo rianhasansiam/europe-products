@@ -1,0 +1,2328 @@
+{
+  "inventory": [
+    {
+      "file": "app/(auth)/_components/AuthAnimations.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/_components/AuthBackground.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/_components/BrandPanel.tsx",
+      "namespaces": [
+        "InterfaceComponentsBrandPanel"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/_components/FloatField.tsx",
+      "namespaces": [
+        "InterfaceComponentsFloatField"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/_components/GoogleIcon.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/_components/GoogleSignInButton.tsx",
+      "namespaces": [
+        "InterfaceComponentsGoogleSignInButton"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/_components/PasswordVisibilityButton.tsx",
+      "namespaces": [
+        "InterfaceComponentsPasswordVisibilityButton"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/login/components/LoginForm.tsx",
+      "namespaces": [
+        "InterfaceLoginComponentsLoginForm"
+      ],
+      "sourceCalls": 10,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/login/components/LoginHeader.tsx",
+      "namespaces": [
+        "InterfaceLoginComponentsLoginHeader"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/login/components/SuccessState.tsx",
+      "namespaces": [
+        "InterfaceLoginComponentsSuccessState"
+      ],
+      "sourceCalls": 5,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/login/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/login/page.tsx",
+      "namespaces": [
+        "InterfaceLoginPage"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/components/AccountStep.tsx",
+      "namespaces": [
+        "InterfaceRegisterComponentsAccountStep"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/components/PasswordStrengthMeter.tsx",
+      "namespaces": [
+        "InterfaceRegisterComponentsPasswordStrengthMeter"
+      ],
+      "sourceCalls": 7,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/components/ProfileStep.tsx",
+      "namespaces": [
+        "InterfaceRegisterComponentsProfileStep"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/components/RegisterFooter.tsx",
+      "namespaces": [
+        "InterfaceRegisterComponentsRegisterFooter"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/components/RegisterHeader.tsx",
+      "namespaces": [
+        "InterfaceRegisterComponentsRegisterHeader"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/components/SecurityStep.tsx",
+      "namespaces": [
+        "InterfaceRegisterComponentsSecurityStep"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/components/StepPanel.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/components/Stepper.tsx",
+      "namespaces": [
+        "InterfaceRegisterComponentsStepper"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/components/SuccessState.tsx",
+      "namespaces": [
+        "InterfaceRegisterComponentsSuccessState"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/components/TermsCheckbox.tsx",
+      "namespaces": [
+        "InterfaceRegisterComponentsTermsCheckbox"
+      ],
+      "sourceCalls": 5,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(auth)/register/page.tsx",
+      "namespaces": [
+        "InterfaceRegisterPage"
+      ],
+      "sourceCalls": 5,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/about/components/AboutCTA.tsx",
+      "namespaces": [
+        "InterfaceAboutComponentsAboutCTA"
+      ],
+      "sourceCalls": 5,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/about/components/AboutHero.tsx",
+      "namespaces": [
+        "InterfaceAboutComponentsAboutHero"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/about/components/OurStory.tsx",
+      "namespaces": [
+        "InterfaceAboutComponentsOurStory"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/about/components/OurValues.tsx",
+      "namespaces": [
+        "InterfaceAboutComponentsOurValues"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/about/components/TeamSection.tsx",
+      "namespaces": [
+        "InterfaceAboutComponentsTeamSection"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/about/components/Testimonials.tsx",
+      "namespaces": [
+        "InterfaceAboutComponentsTestimonials"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/about/components/WhyChooseUs.tsx",
+      "namespaces": [
+        "InterfaceAboutComponentsWhyChooseUs"
+      ],
+      "sourceCalls": 5,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/about/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/about/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/brands/[slug]/page.tsx",
+      "namespaces": [
+        "Seo",
+        "InterfaceBrandsSlugPage"
+      ],
+      "sourceCalls": 17,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/brands/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/brands/page.tsx",
+      "namespaces": [
+        "Seo",
+        "InterfaceBrandsPage"
+      ],
+      "sourceCalls": 14,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/components/CartHeader.tsx",
+      "namespaces": [
+        "InterfaceCartComponentsCartHeader"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/components/CartItemCard.tsx",
+      "namespaces": [
+        "InterfaceCartComponentsCartItemCard"
+      ],
+      "sourceCalls": 11,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/components/EmptyCart.tsx",
+      "namespaces": [
+        "InterfaceCartComponentsEmptyCart"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/components/FreeShippingBar.tsx",
+      "namespaces": [
+        "InterfaceCartComponentsFreeShippingBar"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/components/OrderSummary.tsx",
+      "namespaces": [
+        "InterfaceCartComponentsOrderSummary"
+      ],
+      "sourceCalls": 23,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/components/PromoCodeInput.tsx",
+      "namespaces": [
+        "InterfaceCartComponentsPromoCodeInput"
+      ],
+      "sourceCalls": 8,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/components/QuantityStepper.tsx",
+      "namespaces": [
+        "InterfaceCartComponentsQuantityStepper"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/components/SavedForLater.tsx",
+      "namespaces": [
+        "InterfaceCartComponentsSavedForLater"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/cart/page.tsx",
+      "namespaces": [
+        "InterfaceCartPage"
+      ],
+      "sourceCalls": 34,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/categories/[...segments]/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/categories/[...segments]/page.tsx",
+      "namespaces": [
+        "Seo",
+        "InterfaceCategoriesSegmentsPage"
+      ],
+      "sourceCalls": 13,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/categories/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/categories/page.tsx",
+      "namespaces": [
+        "InterfaceCategoriesPage"
+      ],
+      "sourceCalls": 15,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/checkout/components/CheckoutHeader.tsx",
+      "namespaces": [
+        "InterfaceCheckoutComponentsCheckoutHeader"
+      ],
+      "sourceCalls": 12,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/checkout/components/CheckoutItemsCard.tsx",
+      "namespaces": [
+        "InterfaceCheckoutComponentsCheckoutItemsCard"
+      ],
+      "sourceCalls": 7,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/checkout/components/CustomerForm.tsx",
+      "namespaces": [
+        "InterfaceCheckoutComponentsCustomerForm"
+      ],
+      "sourceCalls": 39,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/checkout/components/OrderSummaryCard.tsx",
+      "namespaces": [
+        "InterfaceCheckoutComponentsOrderSummaryCard"
+      ],
+      "sourceCalls": 26,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/checkout/components/PaymentMethodPicker.tsx",
+      "namespaces": [
+        "InterfaceCheckoutComponentsPaymentMethodPicker"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/checkout/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/checkout/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/checkout/page.tsx",
+      "namespaces": [
+        "InterfaceCheckoutPage"
+      ],
+      "sourceCalls": 32,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/components/CarouselBanner.tsx",
+      "namespaces": [
+        "InterfaceComponentsCarouselBanner"
+      ],
+      "sourceCalls": 8,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/components/Categories.tsx",
+      "namespaces": [
+        "InterfaceComponentsCategories"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/components/CategoriesBanner.tsx",
+      "namespaces": [
+        "InterfaceComponentsCategoriesBanner"
+      ],
+      "sourceCalls": 5,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/components/CategoryScroller.tsx",
+      "namespaces": [
+        "InterfaceComponentsCategoryScroller"
+      ],
+      "sourceCalls": 10,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/contact/components/ContactForm.tsx",
+      "namespaces": [
+        "InterfaceContactComponentsContactForm"
+      ],
+      "sourceCalls": 30,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/contact/components/ContactHero.tsx",
+      "namespaces": [
+        "InterfaceContactComponentsContactHero"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/contact/components/ContactInfoCards.tsx",
+      "namespaces": [
+        "InterfaceContactComponentsContactInfoCards"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/contact/components/ContactMap.tsx",
+      "namespaces": [
+        "InterfaceContactComponentsContactMap"
+      ],
+      "sourceCalls": 7,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/contact/components/FAQSection.tsx",
+      "namespaces": [
+        "InterfaceContactComponentsFAQSection"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/contact/components/SocialConnect.tsx",
+      "namespaces": [
+        "InterfaceContactComponentsSocialConnect"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/contact/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/contact/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/orders/[id]/components/OrderSummaryClient.tsx",
+      "namespaces": [
+        "InterfaceOrdersIdComponentsOrderSummaryClient"
+      ],
+      "sourceCalls": 71,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/orders/[id]/components/OrderTracker.tsx",
+      "namespaces": [
+        "InterfaceOrdersIdComponentsOrderTracker"
+      ],
+      "sourceCalls": 13,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/orders/[id]/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/orders/[id]/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/orders/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/orders/payment-return/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/privacy-policy/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/privacy-policy/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 24,
+      "sourceOnly": true
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/Breadcrumbs.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsBreadcrumbs"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/DealsCarousel.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsDealsCarousel"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/DeferredProductSections.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsDeferredProductSections"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/ProductActions.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsProductActions"
+      ],
+      "sourceCalls": 32,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/ProductGallery.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsProductGallery"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/ProductInfo.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsProductInfo"
+      ],
+      "sourceCalls": 7,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/ProductTabs.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsProductTabs"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/PromoBanners.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsPromoBanners"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/RecentProducts.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsRecentProducts"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/RelatedProducts.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsRelatedProducts"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/components/ReviewSection.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugComponentsReviewSection"
+      ],
+      "sourceCalls": 25,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/[slug]/page.tsx",
+      "namespaces": [
+        "InterfaceProductsSlugPage",
+        "Seo"
+      ],
+      "sourceCalls": 19,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/components/FilterSidebar.tsx",
+      "namespaces": [
+        "InterfaceProductsComponentsFilterSidebar"
+      ],
+      "sourceCalls": 24,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/components/MobileFilterDrawer.tsx",
+      "namespaces": [
+        "InterfaceProductsComponentsMobileFilterDrawer"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/components/ProductToolbar.tsx",
+      "namespaces": [
+        "InterfaceProductsComponentsProductToolbar"
+      ],
+      "sourceCalls": 15,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/components/ProductsExplorer.tsx",
+      "namespaces": [
+        "InterfaceProductsComponentsProductsExplorer"
+      ],
+      "sourceCalls": 14,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/components/ProductsGrid.tsx",
+      "namespaces": [
+        "InterfaceProductsComponentsProductsGrid"
+      ],
+      "sourceCalls": 8,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/products/page.tsx",
+      "namespaces": [
+        "Seo"
+      ],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/components/CartTab.tsx",
+      "namespaces": [
+        "InterfaceProfileComponentsCartTab"
+      ],
+      "sourceCalls": 18,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/components/OrdersTab.tsx",
+      "namespaces": [
+        "InterfaceProfileComponentsOrdersTab"
+      ],
+      "sourceCalls": 29,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/components/OverviewTab.tsx",
+      "namespaces": [
+        "InterfaceProfileComponentsOverviewTab"
+      ],
+      "sourceCalls": 24,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/components/ProfileClient.tsx",
+      "namespaces": [
+        "InterfaceProfileComponentsProfileClient"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/components/ProfileHeader.tsx",
+      "namespaces": [
+        "InterfaceProfileComponentsProfileHeader"
+      ],
+      "sourceCalls": 14,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/components/ProfileSidebar.tsx",
+      "namespaces": [
+        "InterfaceProfileComponentsProfileSidebar"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/components/SecurityTab.tsx",
+      "namespaces": [
+        "InterfaceProfileComponentsSecurityTab"
+      ],
+      "sourceCalls": 30,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/components/SettingsTab.tsx",
+      "namespaces": [
+        "InterfaceProfileComponentsSettingsTab"
+      ],
+      "sourceCalls": 18,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/components/TransactionsTab.tsx",
+      "namespaces": [
+        "InterfaceProfileComponentsTransactionsTab"
+      ],
+      "sourceCalls": 26,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/components/WishlistTab.tsx",
+      "namespaces": [
+        "InterfaceProfileComponentsWishlistTab"
+      ],
+      "sourceCalls": 11,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/profile/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/return-policy/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/return-policy/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 16,
+      "sourceOnly": true
+    },
+    {
+      "file": "app/(shop)/terms-and-conditions/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/terms-and-conditions/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 37,
+      "sourceOnly": true
+    },
+    {
+      "file": "app/(shop)/wishlist/components/BulkActionsBar.tsx",
+      "namespaces": [
+        "InterfaceWishlistComponentsBulkActionsBar"
+      ],
+      "sourceCalls": 8,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/wishlist/components/EmptyWishlist.tsx",
+      "namespaces": [
+        "InterfaceWishlistComponentsEmptyWishlist"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/wishlist/components/WishlistCard.tsx",
+      "namespaces": [
+        "InterfaceWishlistComponentsWishlistCard"
+      ],
+      "sourceCalls": 19,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/wishlist/components/WishlistHero.tsx",
+      "namespaces": [
+        "InterfaceWishlistComponentsWishlistHero"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/wishlist/components/WishlistToolbar.tsx",
+      "namespaces": [
+        "InterfaceWishlistComponentsWishlistToolbar"
+      ],
+      "sourceCalls": 12,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/wishlist/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/wishlist/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/(shop)/wishlist/page.tsx",
+      "namespaces": [
+        "InterfaceWishlistPage"
+      ],
+      "sourceCalls": 19,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/activities/ActivityLogClient.tsx",
+      "namespaces": [
+        "AdminAdminActivitiesActivityLogClient"
+      ],
+      "sourceCalls": 38,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/activities/loading.tsx",
+      "namespaces": [
+        "AdminAdminActivitiesLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/activities/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/banners/components/BannerFormDrawer.tsx",
+      "namespaces": [
+        "AdminAdminBannersComponentsBannerFormDrawer"
+      ],
+      "sourceCalls": 7,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/banners/components/BannerFormFields.tsx",
+      "namespaces": [
+        "AdminAdminBannersComponentsBannerFormFields"
+      ],
+      "sourceCalls": 66,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/banners/components/BannerLists.tsx",
+      "namespaces": [
+        "AdminAdminBannersComponentsBannerLists"
+      ],
+      "sourceCalls": 12,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/banners/components/BannerSummaryCards.tsx",
+      "namespaces": [
+        "AdminAdminBannersComponentsBannerSummaryCards"
+      ],
+      "sourceCalls": 5,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/banners/components/BannerTabsBar.tsx",
+      "namespaces": [
+        "AdminAdminBannersComponentsBannerTabsBar"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/banners/components/RowFooter.tsx",
+      "namespaces": [
+        "AdminAdminBannersComponentsRowFooter"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/banners/loading.tsx",
+      "namespaces": [
+        "AdminAdminBannersLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/banners/page.tsx",
+      "namespaces": [
+        "AdminAdminBannersPage"
+      ],
+      "sourceCalls": 12,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/brands/loading.tsx",
+      "namespaces": [
+        "AdminAdminBrandsLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/brands/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/capital-costs/components/CapitalCostActivity.tsx",
+      "namespaces": [
+        "AdminAdminCapitalCostsComponentsCapitalCostActivity"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/capital-costs/components/CapitalCostSummaryCards.tsx",
+      "namespaces": [
+        "AdminAdminCapitalCostsComponentsCapitalCostSummaryCards"
+      ],
+      "sourceCalls": 10,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/capital-costs/components/CapitalForm.tsx",
+      "namespaces": [
+        "AdminAdminCapitalCostsComponentsCapitalForm"
+      ],
+      "sourceCalls": 12,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/capital-costs/components/OtherCostFilters.tsx",
+      "namespaces": [
+        "AdminAdminCapitalCostsComponentsOtherCostFilters"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/capital-costs/components/OtherCostFormDrawer.tsx",
+      "namespaces": [
+        "AdminAdminCapitalCostsComponentsOtherCostFormDrawer"
+      ],
+      "sourceCalls": 14,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/capital-costs/components/OtherCostsTable.tsx",
+      "namespaces": [
+        "AdminAdminCapitalCostsComponentsOtherCostsTable"
+      ],
+      "sourceCalls": 7,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/capital-costs/components/ProductCostCard.tsx",
+      "namespaces": [
+        "AdminAdminCapitalCostsComponentsProductCostCard"
+      ],
+      "sourceCalls": 14,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/capital-costs/components/ProductCostPickerDrawer.tsx",
+      "namespaces": [
+        "AdminAdminCapitalCostsComponentsProductCostPickerDrawer"
+      ],
+      "sourceCalls": 18,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/capital-costs/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/capital-costs/page.tsx",
+      "namespaces": [
+        "AdminAdminCapitalCostsPage"
+      ],
+      "sourceCalls": 20,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/categories/components/CategoriesTable.tsx",
+      "namespaces": [
+        "AdminAdminCategoriesComponentsCategoriesTable"
+      ],
+      "sourceCalls": 29,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/categories/components/CategoriesToolbar.tsx",
+      "namespaces": [
+        "AdminAdminCategoriesComponentsCategoriesToolbar"
+      ],
+      "sourceCalls": 11,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/categories/components/CategoryFormDrawer.tsx",
+      "namespaces": [
+        "AdminAdminCategoriesComponentsCategoryFormDrawer"
+      ],
+      "sourceCalls": 31,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/categories/components/CategorySummaryCards.tsx",
+      "namespaces": [
+        "AdminAdminCategoriesComponentsCategorySummaryCards"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/categories/loading.tsx",
+      "namespaces": [
+        "AdminAdminCategoriesLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/categories/page.tsx",
+      "namespaces": [
+        "AdminAdminCategoriesPage"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/ActivityFeed.tsx",
+      "namespaces": [
+        "AdminAdminComponentsActivityFeed"
+      ],
+      "sourceCalls": 5,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/AdminShell.tsx",
+      "namespaces": [
+        "AdminAdminComponentsAdminShell"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/AdminSidebar.tsx",
+      "namespaces": [
+        "AdminAdminComponentsAdminSidebar"
+      ],
+      "sourceCalls": 8,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/Field.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/RecentOrders.tsx",
+      "namespaces": [
+        "AdminAdminComponentsRecentOrders"
+      ],
+      "sourceCalls": 14,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/SalesChart.tsx",
+      "namespaces": [
+        "AdminAdminComponentsSalesChart"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/Stars.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/StatCards.tsx",
+      "namespaces": [
+        "AdminAdminComponentsStatCards"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/TopProducts.tsx",
+      "namespaces": [
+        "AdminAdminComponentsTopProducts"
+      ],
+      "sourceCalls": 7,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/catalog-entities/CatalogEntityAdminPage.tsx",
+      "namespaces": [
+        "AdminAdminComponentsCatalogEntitiesCatalogEntityAdminPage"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/catalog-entities/CatalogEntityFormDrawer.tsx",
+      "namespaces": [
+        "AdminAdminComponentsCatalogEntitiesCatalogEntityFormDrawer"
+      ],
+      "sourceCalls": 26,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/catalog-entities/CatalogEntitySummaryCards.tsx",
+      "namespaces": [
+        "AdminAdminComponentsCatalogEntitiesCatalogEntitySummaryCards"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/catalog-entities/CatalogEntityTable.tsx",
+      "namespaces": [
+        "AdminAdminComponentsCatalogEntitiesCatalogEntityTable"
+      ],
+      "sourceCalls": 16,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/components/catalog-entities/CatalogEntityToolbar.tsx",
+      "namespaces": [
+        "AdminAdminComponentsCatalogEntitiesCatalogEntityToolbar"
+      ],
+      "sourceCalls": 8,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/courier/components/CourierReportPanel.tsx",
+      "namespaces": [
+        "AdminAdminCourierComponentsCourierReportPanel"
+      ],
+      "sourceCalls": 11,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/courier/loading.tsx",
+      "namespaces": [
+        "AdminAdminCourierLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/courier/page.tsx",
+      "namespaces": [
+        "AdminAdminCourierPage"
+      ],
+      "sourceCalls": 20,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/layout.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/loading.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/manufacturers/loading.tsx",
+      "namespaces": [
+        "AdminAdminManufacturersLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/manufacturers/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/messages/components/MessageActionButton.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/messages/components/MessageDrawer.tsx",
+      "namespaces": [
+        "AdminAdminMessagesComponentsMessageDrawer"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/messages/components/MessageSummaryCards.tsx",
+      "namespaces": [
+        "AdminAdminMessagesComponentsMessageSummaryCards"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/messages/components/MessagesTable.tsx",
+      "namespaces": [
+        "AdminAdminMessagesComponentsMessagesTable"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/messages/components/MessagesToolbar.tsx",
+      "namespaces": [
+        "AdminAdminMessagesComponentsMessagesToolbar"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/messages/loading.tsx",
+      "namespaces": [
+        "AdminAdminMessagesLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/messages/page.tsx",
+      "namespaces": [
+        "AdminAdminMessagesPage"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/orders/components/AdminOrderDetails.tsx",
+      "namespaces": [
+        "AdminAdminOrdersComponentsAdminOrderDetails"
+      ],
+      "sourceCalls": 29,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/orders/components/AdminOrderDetailsDrawer.tsx",
+      "namespaces": [
+        "AdminAdminOrdersComponentsAdminOrderDetailsDrawer"
+      ],
+      "sourceCalls": 6,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/orders/components/AdminOrderDrawer.tsx",
+      "namespaces": [
+        "AdminAdminOrdersComponentsAdminOrderDrawer"
+      ],
+      "sourceCalls": 65,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/orders/components/OrderSummaryCards.tsx",
+      "namespaces": [
+        "AdminAdminOrdersComponentsOrderSummaryCards"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/orders/components/OrdersTable.tsx",
+      "namespaces": [
+        "AdminAdminOrdersComponentsOrdersTable"
+      ],
+      "sourceCalls": 39,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/orders/components/OrdersToolbar.tsx",
+      "namespaces": [
+        "AdminAdminOrdersComponentsOrdersToolbar"
+      ],
+      "sourceCalls": 14,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/orders/loading.tsx",
+      "namespaces": [
+        "AdminAdminOrdersLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/orders/page.tsx",
+      "namespaces": [
+        "AdminAdminOrdersPage"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/page.tsx",
+      "namespaces": [
+        "AdminAdminPage"
+      ],
+      "sourceCalls": 7,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/products/components/Field.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/products/components/ProductFormDrawer.tsx",
+      "namespaces": [
+        "AdminAdminProductsComponentsProductFormDrawer"
+      ],
+      "sourceCalls": 78,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/products/components/ProductsTable.tsx",
+      "namespaces": [
+        "AdminAdminProductsComponentsProductsTable"
+      ],
+      "sourceCalls": 20,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/products/components/ProductsToolbar.tsx",
+      "namespaces": [
+        "AdminAdminProductsComponentsProductsToolbar"
+      ],
+      "sourceCalls": 10,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/products/loading.tsx",
+      "namespaces": [
+        "AdminAdminProductsLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/products/page.tsx",
+      "namespaces": [
+        "AdminAdminProductsPage"
+      ],
+      "sourceCalls": 12,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reports/components/ReportFilters.tsx",
+      "namespaces": [
+        "AdminAdminReportsComponentsReportFilters"
+      ],
+      "sourceCalls": 8,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reports/components/ReportPreview.tsx",
+      "namespaces": [
+        "AdminAdminReportsComponentsReportPreview"
+      ],
+      "sourceCalls": 30,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reports/components/ReportTypePicker.tsx",
+      "namespaces": [
+        "AdminAdminReportsComponentsReportTypePicker"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reports/loading.tsx",
+      "namespaces": [
+        "AdminAdminReportsLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reports/page.tsx",
+      "namespaces": [
+        "AdminAdminReportsPage"
+      ],
+      "sourceCalls": 8,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reviews/components/AddReviewForm.tsx",
+      "namespaces": [
+        "AdminAdminReviewsComponentsAddReviewForm"
+      ],
+      "sourceCalls": 16,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reviews/components/ReviewSummaryCards.tsx",
+      "namespaces": [
+        "AdminAdminReviewsComponentsReviewSummaryCards"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reviews/components/ReviewsTable.tsx",
+      "namespaces": [
+        "AdminAdminReviewsComponentsReviewsTable"
+      ],
+      "sourceCalls": 13,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reviews/components/ReviewsToolbar.tsx",
+      "namespaces": [
+        "AdminAdminReviewsComponentsReviewsToolbar"
+      ],
+      "sourceCalls": 10,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reviews/loading.tsx",
+      "namespaces": [
+        "AdminAdminReviewsLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/reviews/page.tsx",
+      "namespaces": [
+        "AdminAdminReviewsPage"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/settings/components/PromoCodesTable.tsx",
+      "namespaces": [
+        "AdminAdminSettingsComponentsPromoCodesTable"
+      ],
+      "sourceCalls": 15,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/settings/components/PromoFormDrawer.tsx",
+      "namespaces": [
+        "AdminAdminSettingsComponentsPromoFormDrawer"
+      ],
+      "sourceCalls": 25,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/settings/components/SettingsSummaryCards.tsx",
+      "namespaces": [
+        "AdminAdminSettingsComponentsSettingsSummaryCards"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/settings/components/StorePricingForm.tsx",
+      "namespaces": [
+        "AdminAdminSettingsComponentsStorePricingForm"
+      ],
+      "sourceCalls": 15,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/settings/loading.tsx",
+      "namespaces": [
+        "AdminAdminSettingsLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/settings/page.tsx",
+      "namespaces": [
+        "AdminAdminSettingsPage"
+      ],
+      "sourceCalls": 13,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/testimonials/components/ImportReviewsPanel.tsx",
+      "namespaces": [
+        "AdminAdminTestimonialsComponentsImportReviewsPanel"
+      ],
+      "sourceCalls": 11,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/testimonials/components/TestimonialForm.tsx",
+      "namespaces": [
+        "AdminAdminTestimonialsComponentsTestimonialForm"
+      ],
+      "sourceCalls": 19,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/testimonials/components/TestimonialSummaryCards.tsx",
+      "namespaces": [
+        "AdminAdminTestimonialsComponentsTestimonialSummaryCards"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/testimonials/components/TestimonialsTable.tsx",
+      "namespaces": [
+        "AdminAdminTestimonialsComponentsTestimonialsTable"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/testimonials/components/TestimonialsToolbar.tsx",
+      "namespaces": [
+        "AdminAdminTestimonialsComponentsTestimonialsToolbar"
+      ],
+      "sourceCalls": 8,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/testimonials/loading.tsx",
+      "namespaces": [
+        "AdminAdminTestimonialsLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/testimonials/page.tsx",
+      "namespaces": [
+        "AdminAdminTestimonialsPage"
+      ],
+      "sourceCalls": 8,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/transactions/TransactionsClient.tsx",
+      "namespaces": [
+        "AdminAdminTransactionsTransactionsClient"
+      ],
+      "sourceCalls": 37,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/transactions/loading.tsx",
+      "namespaces": [
+        "AdminAdminTransactionsLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/transactions/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/translations/TranslationsManager.tsx",
+      "namespaces": [
+        "translationManagement"
+      ],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/translations/page.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/users/components/UserSummaryCards.tsx",
+      "namespaces": [
+        "AdminAdminUsersComponentsUserSummaryCards"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/users/components/UsersTable.tsx",
+      "namespaces": [
+        "AdminAdminUsersComponentsUsersTable"
+      ],
+      "sourceCalls": 14,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/users/components/UsersToolbar.tsx",
+      "namespaces": [
+        "AdminAdminUsersComponentsUsersToolbar"
+      ],
+      "sourceCalls": 12,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/users/loading.tsx",
+      "namespaces": [
+        "AdminAdminUsersLoading"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/admin/users/page.tsx",
+      "namespaces": [
+        "AdminAdminUsersPage"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/error.tsx",
+      "namespaces": [
+        "States"
+      ],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/layout.tsx",
+      "namespaces": [
+        "Seo"
+      ],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/loading.tsx",
+      "namespaces": [
+        "Loading"
+      ],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/not-found.tsx",
+      "namespaces": [
+        "States"
+      ],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "app/providers.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/analytics/MetaPixel.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/analytics/ProductView.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/currency/CurrencyAmount.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/currency/CurrencyProvider.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/currency/FormattedCurrencyAmount.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/i18n/IntlProvider.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/i18n/LanguageSelector.tsx",
+      "namespaces": [
+        "Language"
+      ],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/i18n/LocaleDraftMonitor.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/i18n/LocaleSection.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/i18n/PublicContentNotice.tsx",
+      "namespaces": [
+        "Language"
+      ],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/layout/CategoryNavigation.tsx",
+      "namespaces": [
+        "InterfaceLayoutCategoryNavigation"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/layout/Footer.tsx",
+      "namespaces": [
+        "InterfaceLayoutFooter"
+      ],
+      "sourceCalls": 10,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/layout/Navbar.tsx",
+      "namespaces": [
+        "Navigation"
+      ],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/layout/SearchBar.tsx",
+      "namespaces": [
+        "InterfaceLayoutSearchBar"
+      ],
+      "sourceCalls": 17,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/layout/SiteChrome.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/layout/StoreHydrator.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/layout/TopBanner.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/layout/TopBannerClient.tsx",
+      "namespaces": [
+        "InterfaceLayoutTopBannerClient"
+      ],
+      "sourceCalls": 5,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/policy/PolicyContactBlock.tsx",
+      "namespaces": [],
+      "sourceCalls": 4,
+      "sourceOnly": true
+    },
+    {
+      "file": "components/policy/PolicyHero.tsx",
+      "namespaces": [],
+      "sourceCalls": 1,
+      "sourceOnly": true
+    },
+    {
+      "file": "components/policy/PolicyLayout.tsx",
+      "namespaces": [
+        "InterfacePolicyPolicyLayout",
+        "Language"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/policy/PolicyList.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/policy/PolicySection.tsx",
+      "namespaces": [
+        "InterfacePolicyPolicySection"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/policy/RelatedPolicies.tsx",
+      "namespaces": [
+        "InterfacePolicyRelatedPolicies"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product-description/AddBlockMenu.tsx",
+      "namespaces": [
+        "InterfaceProductDescriptionAddBlockMenu"
+      ],
+      "sourceCalls": 5,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product-description/BlockActions.tsx",
+      "namespaces": [
+        "InterfaceProductDescriptionBlockActions"
+      ],
+      "sourceCalls": 10,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product-description/BlockCommonControls.tsx",
+      "namespaces": [
+        "InterfaceProductDescriptionBlockCommonControls"
+      ],
+      "sourceCalls": 10,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product-description/ProductDescriptionBuilder.tsx",
+      "namespaces": [
+        "InterfaceProductDescriptionProductDescriptionBuilder"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product-description/RichTextEditor.tsx",
+      "namespaces": [
+        "InterfaceProductDescriptionRichTextEditor"
+      ],
+      "sourceCalls": 15,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product-description/SortableBlock.tsx",
+      "namespaces": [
+        "InterfaceMessages"
+      ],
+      "sourceCalls": 3,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product-description/blocks/FeatureGridBlockForm.tsx",
+      "namespaces": [
+        "InterfaceProductDescriptionBlocksFeatureGridBlockForm"
+      ],
+      "sourceCalls": 16,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product-description/blocks/ImageTextBlockForm.tsx",
+      "namespaces": [
+        "InterfaceProductDescriptionBlocksImageTextBlockForm"
+      ],
+      "sourceCalls": 14,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product-description/blocks/RichTextBlockForm.tsx",
+      "namespaces": [
+        "InterfaceProductDescriptionBlocksRichTextBlockForm"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product-description/blocks/SpecificationTableBlockForm.tsx",
+      "namespaces": [
+        "InterfaceProductDescriptionBlocksSpecificationTableBlockForm"
+      ],
+      "sourceCalls": 13,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product/ProductCard.tsx",
+      "namespaces": [
+        "InterfaceProductProductCard"
+      ],
+      "sourceCalls": 23,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product/product-description/ProductDescriptionRenderer.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product/product-description/blocks/FeatureGridBlockView.tsx",
+      "namespaces": [
+        "InterfaceProductProductDescriptionBlocksFeatureGridBlockView"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product/product-description/blocks/ImageTextBlockView.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product/product-description/blocks/RichTextBlockView.tsx",
+      "namespaces": [
+        "InterfaceProductProductDescriptionBlocksRichTextBlockView"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/product/product-description/blocks/SpecificationTableBlockView.tsx",
+      "namespaces": [
+        "InterfaceProductProductDescriptionBlocksSpecificationTableBlockView"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/seo/JsonLd.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/AdvancedColorPicker.tsx",
+      "namespaces": [
+        "InterfaceUiAdvancedColorPicker"
+      ],
+      "sourceCalls": 7,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/ColorBadge.tsx",
+      "namespaces": [
+        "InterfaceUiColorBadge"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/ConfirmDialog.tsx",
+      "namespaces": [
+        "InterfaceUiConfirmDialog"
+      ],
+      "sourceCalls": 4,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/ImageUploader.tsx",
+      "namespaces": [
+        "InterfaceUiImageUploader"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/MultiImageUploader.tsx",
+      "namespaces": [
+        "InterfaceUiMultiImageUploader"
+      ],
+      "sourceCalls": 7,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/Toaster.tsx",
+      "namespaces": [
+        "InterfaceUiToaster"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/button.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/dropdown-menu.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/input.tsx",
+      "namespaces": [],
+      "sourceCalls": 0,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/loading.tsx",
+      "namespaces": [
+        "InterfaceUiLoading"
+      ],
+      "sourceCalls": 28,
+      "sourceOnly": false
+    },
+    {
+      "file": "components/ui/sheet.tsx",
+      "namespaces": [
+        "InterfaceUiSheet"
+      ],
+      "sourceCalls": 1,
+      "sourceOnly": false
+    },
+    {
+      "file": "lib/airwallex/components/AirwallexPayButton.tsx",
+      "namespaces": [
+        "InterfaceAirwallexComponentsAirwallexPayButton"
+      ],
+      "sourceCalls": 2,
+      "sourceOnly": false
+    },
+    {
+      "file": "lib/airwallex/components/AirwallexPaymentStatus.tsx",
+      "namespaces": [
+        "InterfaceAirwallexComponentsAirwallexPaymentStatus"
+      ],
+      "sourceCalls": 9,
+      "sourceOnly": false
+    }
+  ],
+  "staticCandidates": [
+    {
+      "file": "app/admin/banners/components/BannerFormFields.tsx",
+      "line": 153,
+      "attribute": "placeholder",
+      "text": "VEGETABLES"
+    },
+    {
+      "file": "app/admin/banners/components/BannerFormFields.tsx",
+      "line": 225,
+      "attribute": "placeholder",
+      "text": "/products?category=grocery"
+    },
+    {
+      "file": "app/admin/banners/components/BannerFormFields.tsx",
+      "line": 321,
+      "attribute": "placeholder",
+      "text": "SALE"
+    },
+    {
+      "file": "app/admin/banners/components/BannerFormFields.tsx",
+      "line": 354,
+      "attribute": "placeholder",
+      "text": "/categories/tools"
+    },
+    {
+      "file": "app/admin/banners/components/BannerFormFields.tsx",
+      "line": 424,
+      "attribute": "placeholder",
+      "text": "/products?sale=black-friday"
+    },
+    {
+      "file": "app/admin/banners/components/BannerFormFields.tsx",
+      "line": 512,
+      "attribute": "placeholder",
+      "text": "/products?sale=mega"
+    },
+    {
+      "file": "app/admin/banners/components/BannerFormFields.tsx",
+      "line": 614,
+      "attribute": "placeholder",
+      "text": "/products?sort=deals"
+    },
+    {
+      "file": "app/admin/categories/components/CategoryFormDrawer.tsx",
+      "line": 239,
+      "text": "/categories/"
+    },
+    {
+      "file": "app/admin/components/RecentOrders.tsx",
+      "line": 103,
+      "text": "BDT"
+    },
+    {
+      "file": "app/admin/components/SalesChart.tsx",
+      "line": 119,
+      "text": "BDT"
+    },
+    {
+      "file": "app/admin/components/TopProducts.tsx",
+      "line": 95,
+      "text": "BDT"
+    },
+    {
+      "file": "app/admin/components/catalog-entities/CatalogEntityFormDrawer.tsx",
+      "line": 115,
+      "attribute": "placeholder",
+      "text": "brand-slug"
+    },
+    {
+      "file": "app/admin/courier/components/CourierReportPanel.tsx",
+      "line": 163,
+      "attribute": "label",
+      "text": "OK"
+    },
+    {
+      "file": "app/admin/products/components/ProductFormDrawer.tsx",
+      "line": 252,
+      "attribute": "placeholder",
+      "text": "industrial-air-compressor"
+    },
+    {
+      "file": "app/admin/products/components/ProductFormDrawer.tsx",
+      "line": 445,
+      "attribute": "label",
+      "text": "SKU"
+    },
+    {
+      "file": "app/admin/settings/components/PromoFormDrawer.tsx",
+      "line": 69,
+      "attribute": "placeholder",
+      "text": "ENTERFLY10"
+    }
+  ],
+  "catalogCounts": {
+    "en": {
+      "core": 47,
+      "interface": 1552,
+      "admin": 1168,
+      "translation-management": 58,
+      "seo": 33,
+      "notifications": 29
+    },
+    "bn": {
+      "core": 47,
+      "interface": 1552,
+      "admin": 1168,
+      "translation-management": 58,
+      "seo": 33,
+      "notifications": 29
+    }
+  },
+  "sourceOnlyDocuments": [
+    "app/(shop)/privacy-policy/page.tsx",
+    "app/(shop)/return-policy/page.tsx",
+    "app/(shop)/terms-and-conditions/page.tsx",
+    "components/policy/PolicyHero.tsx",
+    "components/policy/PolicyContactBlock.tsx"
+  ],
+  "notificationAudit": "Application-owned status notification templates use local structured catalogs; delivery is a log sink unless configured separately.",
+  "externalTemplateAudit": "Contact EmailJS email template is hosted externally and its template body is absent from the repository.",
+  "documentAudit": "Existing receipt/report PDFs retain their explicitly identified English document language; font embedding requires separate validated script support.",
+  "dynamicContentAudit": "Database product/category/brand/banner fields use stored allowlisted translations and source-language availability notices; private user fields stay intact."
+}

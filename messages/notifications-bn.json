@@ -1,0 +1,22 @@
+{
+  "Notifications": {
+    "subject": "অর্ডার {orderNumber}: {statusLabel}",
+    "message": "প্রিয় {customerName}, আপনার অর্ডার {orderNumber}-এর বর্তমান অবস্থা \"{statusLabel}\"। {statusDescription}",
+    "guestName": "গ্রাহক",
+    "statuses": {
+      "PENDING": {"label": "অপেক্ষমাণ", "description": "আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে।"},
+      "PAYMENT_CONFIRMED": {"label": "পেমেন্ট নিশ্চিত হয়েছে", "description": "আপনার পেমেন্ট যাচাই করা হয়েছে।"},
+      "SELLER_TO_PACK": {"label": "প্রস্তুত করা হচ্ছে", "description": "বিক্রেতা আপনার পণ্যগুলো প্রস্তুত করছেন।"},
+      "PACKED": {"label": "প্যাক করা হয়েছে", "description": "আপনার অর্ডার প্যাক করা হয়েছে।"},
+      "READY_TO_SHIP": {"label": "পাঠানোর জন্য প্রস্তুত", "description": "কুরিয়ারের সংগ্রহের অপেক্ষায় রয়েছে।"},
+      "WAREHOUSE": {"label": "গুদামে রয়েছে", "description": "অর্ডারটি বাছাই কেন্দ্রে পৌঁছেছে।"},
+      "IN_TRANSIT": {"label": "পথে রয়েছে", "description": "অর্ডারটি এক কেন্দ্র থেকে অন্য কেন্দ্রে যাচ্ছে।"},
+      "OUT_FOR_DELIVERY": {"label": "ডেলিভারির জন্য বের হয়েছে", "description": "অর্ডারটি ডেলিভারি কর্মীর কাছে দেওয়া হয়েছে।"},
+      "DELIVERED": {"label": "ডেলিভারি সম্পন্ন", "description": "আপনার অর্ডার পৌঁছে দেওয়া হয়েছে।"},
+      "CANCELLED": {"label": "বাতিল করা হয়েছে", "description": "এই অর্ডারটি বাতিল করা হয়েছে।"},
+      "RETURN_REQUESTED": {"label": "ফেরতের অনুরোধ করা হয়েছে", "description": "অর্ডার ফেরত দেওয়ার অনুরোধ করা হয়েছে।"},
+      "RETURNED": {"label": "ফেরত দেওয়া হয়েছে", "description": "অর্ডারটি ফেরত দেওয়া হয়েছে।"},
+      "REFUNDED": {"label": "টাকা ফেরত দেওয়া হয়েছে", "description": "আপনার টাকা ফেরত দেওয়া সম্পন্ন হয়েছে।"}
+    }
+  }
+}

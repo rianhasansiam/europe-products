@@ -1,0 +1,297 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+ * Banner color safelist.
+ *
+ * Carousel / deal / promo banners store their Tailwind color classes as
+ * plain strings in the database (managed from the admin "Banners" page).
+ * Because Tailwind v4 scans source files as text, those admin-entered
+ * classes never appear in the codebase and would be purged from the
+ * build. `@source inline(...)` force-generates every background, from,
+ * via, and to color across the full palette so any slide an admin
+ * configures renders correctly. Brace expansion keeps this compact.
+ */
+@source inline("{bg-,from-,via-,to-}{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose,slate,gray,zinc,neutral,stone}-{50,{100..900..100},950}");
+
+@custom-variant dark (&:is(.dark *));
+@custom-variant can-hover (@media (hover: hover));
+
+/* Native system fonts provide script coverage without loading all locale fonts. */
+html:lang(bn) { font-family: var(--font-geist-sans), "Noto Sans Bengali", "Kohinoor Bangla", sans-serif; }
+html:lang(ar), html:lang(ur), html:lang(fa) { font-family: var(--font-geist-sans), "Noto Sans Arabic", "Geeza Pro", Arial, sans-serif; }
+html:lang(he) { font-family: var(--font-geist-sans), "Noto Sans Hebrew", Arial, sans-serif; }
+html:lang(zh) { font-family: var(--font-geist-sans), "PingFang SC", "PingFang TC", "Microsoft YaHei", sans-serif; }
+input[type="email"], input[type="tel"], input[autocomplete^="cc-"], [data-product-code] { direction: ltr; unicode-bidi: isolate; }
+
+
+@theme inline {
+  /*
+   * SexToy brand color utilities.
+   *
+   * Map each raw --brand-* token (defined once in :root) to a Tailwind v4
+   * --color-brand-* theme entry so the generator emits brand utilities such
+   * as bg-brand-red, text-brand-black, border-brand-border, and
+   * hover:bg-brand-red-hover. No tailwind.config.ts is used — this is the
+   * Tailwind v4 @theme mechanism.
+   */
+  --color-brand-black: var(--brand-black);
+  --color-brand-dark-surface: var(--brand-dark-surface);
+  --color-brand-red: var(--brand-red);
+  --color-brand-red-hover: var(--brand-red-hover);
+  --color-brand-white: var(--brand-white);
+  --color-brand-light-bg: var(--brand-light-bg);
+  --color-brand-border: var(--brand-border);
+  --color-brand-text-dark: var(--brand-text-dark);
+  --color-brand-text-muted: var(--brand-text-muted);
+  --color-brand-gold: var(--brand-gold);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /*
+   * SexToy raw brand tokens — single source of truth.
+   *
+   * Each value is an OKLCH color perceptually equivalent (within an
+   * imperceptible tolerance) to its reference sRGB hex, listed alongside.
+   * Defined exactly once here with no media-query / breakpoint variants so
+   * the palette is identical across every viewport width (320px–2560px).
+   */
+  --brand-black: oklch(0.115 0 0); /* #050505 */
+  --brand-dark-surface: oklch(0.15 0 0); /* #0B0B0B */
+  --brand-red: oklch(0.573 0.233 29.4); /* #E10600 */
+  --brand-red-hover: oklch(0.492 0.202 29.2); /* #B80000 */
+  --brand-white: oklch(1 0 0); /* #FFFFFF */
+  --brand-light-bg: oklch(0.979 0 0); /* #F8F8F8 */
+  --brand-border: oklch(0.928 0.006 264); /* #E5E7EB */
+  --brand-text-dark: oklch(0.177 0 0); /* #111111 */
+  --brand-text-muted: oklch(0.551 0.023 264); /* #6B7280 */
+  --brand-gold: oklch(0.861 0.173 91.9); /* #FACC15 */
+
+  /*
+   * shadcn semantic tokens remapped to SexToy brand tokens (light theme).
+   *
+   * Each mapping references a raw --brand-* token with a CSS-native fallback
+   * (var(--token, <safe-default>)) so no element ever resolves to an
+   * undefined/transparent color: backgrounds fall back to Brand_White
+   * (#FFFFFF) and text falls back to Text_Dark (#111111). A fallback that
+   * differs from the requested token is itself the non-blocking signal that
+   * a token failed to resolve.
+   */
+  --background: var(--brand-white, #ffffff); /* Brand_White */
+  --foreground: var(--brand-text-dark, #111111); /* Text_Dark */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: var(--brand-red, #ffffff); /* Brand_Red (bg fallback Brand_White) */
+  --primary-foreground: var(--brand-white, #ffffff); /* Brand_White */
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: var(--brand-text-muted, #111111); /* Text_Muted (text fallback Text_Dark) */
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  /* Retained functional status color (red-600) — distinct from Brand_Red / Red_Hover, per Req 11.3 */
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: var(--brand-border, #e5e7eb); /* Border_Gray */
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  /*
+   * shadcn semantic tokens remapped to SexToy brand tokens (dark theme).
+   *
+   * Mirrors the light-theme :root remap but resolves to the dark-theme brand
+   * Design_Tokens: page/surface backgrounds use Brand_Black / Dark_Surface and
+   * foreground text uses Brand_White, rather than the previous grayscale
+   * values (Req 1.6, 3.1, 3.2). Brand_Red is retained for high-emphasis
+   * primary elements. Each mapping carries a CSS-native fallback
+   * (var(--token, <safe-default>)) so no element resolves to an
+   * undefined/transparent color; a fallback differing from the requested
+   * token is itself the non-blocking signal that a token failed to resolve.
+   */
+  --background: var(--brand-black, #050505); /* Brand_Black */
+  --foreground: var(--brand-white, #ffffff); /* Brand_White */
+  --card: var(--brand-dark-surface, #0b0b0b); /* Dark_Surface */
+  --card-foreground: var(--brand-white, #ffffff); /* Brand_White */
+  --popover: var(--brand-dark-surface, #0b0b0b); /* Dark_Surface */
+  --popover-foreground: var(--brand-white, #ffffff); /* Brand_White */
+  --primary: var(--brand-red, #ffffff); /* Brand_Red (bg fallback Brand_White) */
+  --primary-foreground: var(--brand-white, #ffffff); /* Brand_White */
+  --secondary: var(--brand-dark-surface, #0b0b0b); /* Dark_Surface */
+  --secondary-foreground: var(--brand-white, #ffffff); /* Brand_White */
+  --muted: var(--brand-dark-surface, #0b0b0b); /* Dark_Surface */
+  --muted-foreground: var(--brand-text-muted, #ffffff); /* Text_Muted (text fallback Brand_White) */
+  --accent: var(--brand-dark-surface, #0b0b0b); /* Dark_Surface */
+  --accent-foreground: var(--brand-white, #ffffff); /* Brand_White */
+  /* Retained functional status color (dark-theme red) — distinct from Brand_Red / Red_Hover, per Req 11.3 */
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: var(--brand-border, #e5e7eb); /* Border_Gray */
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+
+  }
+}
+
+/*
+ * Testimonials marquee — continuous left-to-right scroll for the About
+ * page "Loved by shoppers" section when there are more than 3 reviews.
+ * The track holds two copies of the list; translating by -50% loops
+ * seamlessly. Pauses on hover and respects reduced-motion.
+ */
+@keyframes testimonial-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.testimonial-marquee-track {
+  animation: testimonial-marquee var(--marquee-duration, 40s) linear infinite;
+  width: max-content;
+}
+
+.testimonial-marquee:hover .testimonial-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-marquee-track {
+    animation: none;
+  }
+}
+
+/*
+ * AdvancedColorPicker (react-colorful) sizing + opacity slider.
+ *
+ * react-colorful ships a fixed 200px square; we widen it and give the
+ * saturation area a taller, landscape feel to match the design-tool look
+ * used on the admin banner/color fields. The opacity <input type="range">
+ * is a plain slider painted with a checkerboard+gradient inline style, so
+ * here we only need to shape its thumb.
+ */
+.advanced-color-picker.react-colorful {
+  width: 100%;
+  height: 188px;
+}
+.advanced-color-picker .react-colorful__saturation {
+  border-radius: 12px 12px 0 0;
+}
+.advanced-color-picker .react-colorful__last-control {
+  border-radius: 0 0 12px 12px;
+}
+.advanced-color-picker .react-colorful__hue,
+.advanced-color-picker .react-colorful__alpha {
+  height: 22px;
+}
+.advanced-color-picker .react-colorful__pointer {
+  width: 22px;
+  height: 22px;
+}
+
+.advanced-opacity-slider {
+  outline: none;
+}
+.advanced-opacity-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 9999px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.advanced-opacity-slider::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 9999px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}

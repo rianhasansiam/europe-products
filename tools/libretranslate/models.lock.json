@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "index": "https://raw.githubusercontent.com/argosopentech/argospm-index/main/index.json",
+  "languages": ["en", "bn"],
+  "packages": [
+    {"source": "en", "target": "bn", "version": "1.9", "sha256": "2b70f590df0170315323442816391552519b6f0d3aa6c2d1184b562a682465a7"},
+    {"source": "bn", "target": "en", "version": "1.9", "sha256": "1fdc080e676a930bae436b82bf856077191b1497c086d3d3d15cf63a7ad476fe"}
+  ],
+  "sentenceModels": [
+    {"code": "en", "sha256": "6fa9f3a3b201687bd43e329b2b0736789efc97b37883b5b759b31988dca9f353"},
+    {"code": "hi", "sha256": "16924ea9912aec3d6759dbf0652a82508a8e3ec840b20941b30d264eba1798d1"}
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "Notifications": {
+    "subject": "Order {orderNumber}: {statusLabel}",
+    "message": "Hi {customerName}, your order {orderNumber} is now \"{statusLabel}\". {statusDescription}",
+    "guestName": "there",
+    "statuses": {
+      "PENDING": {"label": "Pending", "description": "Your order has been placed successfully."},
+      "PAYMENT_CONFIRMED": {"label": "Payment Confirmed", "description": "We've verified your payment."},
+      "SELLER_TO_PACK": {"label": "Preparing", "description": "The seller is preparing your items."},
+      "PACKED": {"label": "Packed", "description": "Your order has been packed."},
+      "READY_TO_SHIP": {"label": "Ready to Ship", "description": "Waiting for courier pickup."},
+      "WAREHOUSE": {"label": "Warehouse", "description": "Received at the sorting center."},
+      "IN_TRANSIT": {"label": "In Transit", "description": "On the move between facilities."},
+      "OUT_FOR_DELIVERY": {"label": "Out for Delivery", "description": "Assigned to a delivery agent."},
+      "DELIVERED": {"label": "Delivered", "description": "Your order has been delivered."},
+      "CANCELLED": {"label": "Cancelled", "description": "This order was cancelled."},
+      "RETURN_REQUESTED": {"label": "Return Requested", "description": "A return has been requested."},
+      "RETURNED": {"label": "Returned", "description": "The order was returned."},
+      "REFUNDED": {"label": "Refunded", "description": "Your refund has been completed."}
+    }
+  }
+}

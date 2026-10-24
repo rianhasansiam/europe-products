@@ -1,0 +1,644 @@
+[
+  {
+    "file": "app/admin/activities/ActivityLogClient.tsx",
+    "namespace": "AdminAdminActivitiesActivityLogClient",
+    "messages": 50,
+    "translatedComponents": 2
+  },
+  {
+    "file": "app/admin/activities/loading.tsx",
+    "namespace": "AdminAdminActivitiesLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/activities/page.tsx",
+    "namespace": "AdminAdminActivitiesPage",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/banners/components/BannerFormDrawer.tsx",
+    "namespace": "AdminAdminBannersComponentsBannerFormDrawer",
+    "messages": 13,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/banners/components/BannerFormFields.tsx",
+    "namespace": "AdminAdminBannersComponentsBannerFormFields",
+    "messages": 43,
+    "translatedComponents": 6
+  },
+  {
+    "file": "app/admin/banners/components/BannerLists.tsx",
+    "namespace": "AdminAdminBannersComponentsBannerLists",
+    "messages": 11,
+    "translatedComponents": 5
+  },
+  {
+    "file": "app/admin/banners/components/BannerSummaryCards.tsx",
+    "namespace": "AdminAdminBannersComponentsBannerSummaryCards",
+    "messages": 5,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/banners/components/BannerTabsBar.tsx",
+    "namespace": "AdminAdminBannersComponentsBannerTabsBar",
+    "messages": 2,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/banners/components/RowFooter.tsx",
+    "namespace": "AdminAdminBannersComponentsRowFooter",
+    "messages": 2,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/banners/components/constants.ts",
+    "namespace": "AdminAdminBannersComponentsConstants",
+    "messages": 10,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/banners/loading.tsx",
+    "namespace": "AdminAdminBannersLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/banners/page.tsx",
+    "namespace": "AdminAdminBannersPage",
+    "messages": 11,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/brands/loading.tsx",
+    "namespace": "AdminAdminBrandsLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/brands/page.tsx",
+    "namespace": "AdminAdminBrandsPage",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/capital-costs/components/CapitalCostActivity.tsx",
+    "namespace": "AdminAdminCapitalCostsComponentsCapitalCostActivity",
+    "messages": 11,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/capital-costs/components/CapitalCostSummaryCards.tsx",
+    "namespace": "AdminAdminCapitalCostsComponentsCapitalCostSummaryCards",
+    "messages": 12,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/capital-costs/components/CapitalForm.tsx",
+    "namespace": "AdminAdminCapitalCostsComponentsCapitalForm",
+    "messages": 11,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/capital-costs/components/OtherCostFilters.tsx",
+    "namespace": "AdminAdminCapitalCostsComponentsOtherCostFilters",
+    "messages": 9,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/capital-costs/components/OtherCostFormDrawer.tsx",
+    "namespace": "AdminAdminCapitalCostsComponentsOtherCostFormDrawer",
+    "messages": 14,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/capital-costs/components/OtherCostsTable.tsx",
+    "namespace": "AdminAdminCapitalCostsComponentsOtherCostsTable",
+    "messages": 7,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/capital-costs/components/ProductCostCard.tsx",
+    "namespace": "AdminAdminCapitalCostsComponentsProductCostCard",
+    "messages": 14,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/capital-costs/components/ProductCostPickerDrawer.tsx",
+    "namespace": "AdminAdminCapitalCostsComponentsProductCostPickerDrawer",
+    "messages": 19,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/capital-costs/loading.tsx",
+    "namespace": "AdminAdminCapitalCostsLoading",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/capital-costs/page.tsx",
+    "namespace": "AdminAdminCapitalCostsPage",
+    "messages": 21,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/categories/components/CategoriesTable.tsx",
+    "namespace": "AdminAdminCategoriesComponentsCategoriesTable",
+    "messages": 28,
+    "translatedComponents": 4
+  },
+  {
+    "file": "app/admin/categories/components/CategoriesToolbar.tsx",
+    "namespace": "AdminAdminCategoriesComponentsCategoriesToolbar",
+    "messages": 11,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/categories/components/CategoryFormDrawer.tsx",
+    "namespace": "AdminAdminCategoriesComponentsCategoryFormDrawer",
+    "messages": 32,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/categories/components/CategorySummaryCards.tsx",
+    "namespace": "AdminAdminCategoriesComponentsCategorySummaryCards",
+    "messages": 4,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/categories/loading.tsx",
+    "namespace": "AdminAdminCategoriesLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/categories/page.tsx",
+    "namespace": "AdminAdminCategoriesPage",
+    "messages": 6,
+    "translatedComponents": 2
+  },
+  {
+    "file": "app/admin/components/ActivityFeed.tsx",
+    "namespace": "AdminAdminComponentsActivityFeed",
+    "messages": 5,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/AdminShell.tsx",
+    "namespace": "AdminAdminComponentsAdminShell",
+    "messages": 2,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/AdminSidebar.tsx",
+    "namespace": "AdminAdminComponentsAdminSidebar",
+    "messages": 6,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/Field.tsx",
+    "namespace": "AdminAdminComponentsField",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/components/RecentOrders.tsx",
+    "namespace": "AdminAdminComponentsRecentOrders",
+    "messages": 12,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/SalesChart.tsx",
+    "namespace": "AdminAdminComponentsSalesChart",
+    "messages": 10,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/Stars.tsx",
+    "namespace": "AdminAdminComponentsStars",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/components/StatCards.tsx",
+    "namespace": "AdminAdminComponentsStatCards",
+    "messages": 8,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/TopProducts.tsx",
+    "namespace": "AdminAdminComponentsTopProducts",
+    "messages": 7,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/catalog-entities/CatalogEntityAdminPage.tsx",
+    "namespace": "AdminAdminComponentsCatalogEntitiesCatalogEntityAdminPage",
+    "messages": 12,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/catalog-entities/CatalogEntityFormDrawer.tsx",
+    "namespace": "AdminAdminComponentsCatalogEntitiesCatalogEntityFormDrawer",
+    "messages": 30,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/catalog-entities/CatalogEntitySummaryCards.tsx",
+    "namespace": "AdminAdminComponentsCatalogEntitiesCatalogEntitySummaryCards",
+    "messages": 2,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/catalog-entities/CatalogEntityTable.tsx",
+    "namespace": "AdminAdminComponentsCatalogEntitiesCatalogEntityTable",
+    "messages": 16,
+    "translatedComponents": 2
+  },
+  {
+    "file": "app/admin/components/catalog-entities/CatalogEntityToolbar.tsx",
+    "namespace": "AdminAdminComponentsCatalogEntitiesCatalogEntityToolbar",
+    "messages": 8,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/components/data.ts",
+    "namespace": "AdminAdminComponentsData",
+    "messages": 21,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/courier/components/CourierReportPanel.tsx",
+    "namespace": "AdminAdminCourierComponentsCourierReportPanel",
+    "messages": 10,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/courier/loading.tsx",
+    "namespace": "AdminAdminCourierLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/courier/page.tsx",
+    "namespace": "AdminAdminCourierPage",
+    "messages": 22,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/layout.tsx",
+    "namespace": "AdminAdminLayout",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/loading.tsx",
+    "namespace": "AdminAdminLoading",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/manufacturers/loading.tsx",
+    "namespace": "AdminAdminManufacturersLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/manufacturers/page.tsx",
+    "namespace": "AdminAdminManufacturersPage",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/messages/components/MessageActionButton.tsx",
+    "namespace": "AdminAdminMessagesComponentsMessageActionButton",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/messages/components/MessageDrawer.tsx",
+    "namespace": "AdminAdminMessagesComponentsMessageDrawer",
+    "messages": 6,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/messages/components/MessageSummaryCards.tsx",
+    "namespace": "AdminAdminMessagesComponentsMessageSummaryCards",
+    "messages": 3,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/messages/components/MessagesTable.tsx",
+    "namespace": "AdminAdminMessagesComponentsMessagesTable",
+    "messages": 9,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/messages/components/MessagesToolbar.tsx",
+    "namespace": "AdminAdminMessagesComponentsMessagesToolbar",
+    "messages": 6,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/messages/components/constants.ts",
+    "namespace": "AdminAdminMessagesComponentsConstants",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/messages/loading.tsx",
+    "namespace": "AdminAdminMessagesLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/messages/page.tsx",
+    "namespace": "AdminAdminMessagesPage",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/orders/components/AdminOrderDetails.tsx",
+    "namespace": "AdminAdminOrdersComponentsAdminOrderDetails",
+    "messages": 30,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/orders/components/AdminOrderDetailsDrawer.tsx",
+    "namespace": "AdminAdminOrdersComponentsAdminOrderDetailsDrawer",
+    "messages": 9,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/orders/components/AdminOrderDrawer.tsx",
+    "namespace": "AdminAdminOrdersComponentsAdminOrderDrawer",
+    "messages": 61,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/orders/components/OrderSummaryCards.tsx",
+    "namespace": "AdminAdminOrdersComponentsOrderSummaryCards",
+    "messages": 3,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/orders/components/OrdersTable.tsx",
+    "namespace": "AdminAdminOrdersComponentsOrdersTable",
+    "messages": 33,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/orders/components/OrdersToolbar.tsx",
+    "namespace": "AdminAdminOrdersComponentsOrdersToolbar",
+    "messages": 12,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/orders/loading.tsx",
+    "namespace": "AdminAdminOrdersLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/orders/page.tsx",
+    "namespace": "AdminAdminOrdersPage",
+    "messages": 2,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/page.tsx",
+    "namespace": "AdminAdminPage",
+    "messages": 6,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/products/components/Field.tsx",
+    "namespace": "AdminAdminProductsComponentsField",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/products/components/ProductFormDrawer.tsx",
+    "namespace": "AdminAdminProductsComponentsProductFormDrawer",
+    "messages": 76,
+    "translatedComponents": 2
+  },
+  {
+    "file": "app/admin/products/components/ProductsTable.tsx",
+    "namespace": "AdminAdminProductsComponentsProductsTable",
+    "messages": 21,
+    "translatedComponents": 2
+  },
+  {
+    "file": "app/admin/products/components/ProductsToolbar.tsx",
+    "namespace": "AdminAdminProductsComponentsProductsToolbar",
+    "messages": 10,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/products/loading.tsx",
+    "namespace": "AdminAdminProductsLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/products/page.tsx",
+    "namespace": "AdminAdminProductsPage",
+    "messages": 11,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/reports/components/ReportFilters.tsx",
+    "namespace": "AdminAdminReportsComponentsReportFilters",
+    "messages": 12,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/reports/components/ReportPreview.tsx",
+    "namespace": "AdminAdminReportsComponentsReportPreview",
+    "messages": 85,
+    "translatedComponents": 9
+  },
+  {
+    "file": "app/admin/reports/components/ReportTypePicker.tsx",
+    "namespace": "AdminAdminReportsComponentsReportTypePicker",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/reports/loading.tsx",
+    "namespace": "AdminAdminReportsLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/reports/page.tsx",
+    "namespace": "AdminAdminReportsPage",
+    "messages": 7,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/reviews/components/AddReviewForm.tsx",
+    "namespace": "AdminAdminReviewsComponentsAddReviewForm",
+    "messages": 17,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/reviews/components/ReviewSummaryCards.tsx",
+    "namespace": "AdminAdminReviewsComponentsReviewSummaryCards",
+    "messages": 3,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/reviews/components/ReviewsTable.tsx",
+    "namespace": "AdminAdminReviewsComponentsReviewsTable",
+    "messages": 14,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/reviews/components/ReviewsToolbar.tsx",
+    "namespace": "AdminAdminReviewsComponentsReviewsToolbar",
+    "messages": 11,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/reviews/loading.tsx",
+    "namespace": "AdminAdminReviewsLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/reviews/page.tsx",
+    "namespace": "AdminAdminReviewsPage",
+    "messages": 3,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/settings/components/PromoCodesTable.tsx",
+    "namespace": "AdminAdminSettingsComponentsPromoCodesTable",
+    "messages": 15,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/settings/components/PromoFormDrawer.tsx",
+    "namespace": "AdminAdminSettingsComponentsPromoFormDrawer",
+    "messages": 24,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/settings/components/SettingsSummaryCards.tsx",
+    "namespace": "AdminAdminSettingsComponentsSettingsSummaryCards",
+    "messages": 3,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/settings/components/StorePricingForm.tsx",
+    "namespace": "AdminAdminSettingsComponentsStorePricingForm",
+    "messages": 15,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/settings/loading.tsx",
+    "namespace": "AdminAdminSettingsLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/settings/page.tsx",
+    "namespace": "AdminAdminSettingsPage",
+    "messages": 14,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/testimonials/components/ImportReviewsPanel.tsx",
+    "namespace": "AdminAdminTestimonialsComponentsImportReviewsPanel",
+    "messages": 11,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/testimonials/components/TestimonialForm.tsx",
+    "namespace": "AdminAdminTestimonialsComponentsTestimonialForm",
+    "messages": 20,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/testimonials/components/TestimonialSummaryCards.tsx",
+    "namespace": "AdminAdminTestimonialsComponentsTestimonialSummaryCards",
+    "messages": 5,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/testimonials/components/TestimonialsTable.tsx",
+    "namespace": "AdminAdminTestimonialsComponentsTestimonialsTable",
+    "messages": 9,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/testimonials/components/TestimonialsToolbar.tsx",
+    "namespace": "AdminAdminTestimonialsComponentsTestimonialsToolbar",
+    "messages": 8,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/testimonials/loading.tsx",
+    "namespace": "AdminAdminTestimonialsLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/testimonials/page.tsx",
+    "namespace": "AdminAdminTestimonialsPage",
+    "messages": 10,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/transactions/TransactionsClient.tsx",
+    "namespace": "AdminAdminTransactionsTransactionsClient",
+    "messages": 41,
+    "translatedComponents": 5
+  },
+  {
+    "file": "app/admin/transactions/loading.tsx",
+    "namespace": "AdminAdminTransactionsLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/transactions/page.tsx",
+    "namespace": "AdminAdminTransactionsPage",
+    "messages": 0,
+    "translatedComponents": 0
+  },
+  {
+    "file": "app/admin/users/components/UserSummaryCards.tsx",
+    "namespace": "AdminAdminUsersComponentsUserSummaryCards",
+    "messages": 4,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/users/components/UsersTable.tsx",
+    "namespace": "AdminAdminUsersComponentsUsersTable",
+    "messages": 17,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/users/components/UsersToolbar.tsx",
+    "namespace": "AdminAdminUsersComponentsUsersToolbar",
+    "messages": 12,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/users/loading.tsx",
+    "namespace": "AdminAdminUsersLoading",
+    "messages": 1,
+    "translatedComponents": 1
+  },
+  {
+    "file": "app/admin/users/page.tsx",
+    "namespace": "AdminAdminUsersPage",
+    "messages": 1,
+    "translatedComponents": 1
+  }
+]

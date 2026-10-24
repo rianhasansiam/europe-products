@@ -1,0 +1,6 @@
+# Official LibreTranslate release. Install the complete platform lock, not this input.
+libretranslate==1.9.6
+# LibreTranslate pins packaging==23.1; newer wheel requires packaging>=24.
+wheel==0.45.1
+# Keep requests==2.31.0's optional detector within its supported version range.
+chardet==5.2.0
