@@ -32,7 +32,7 @@ export type LoginFieldUpdater = <Field extends keyof LoginForm>(
 
 const DEFAULT_REDIRECT = "/";
 const GENERIC_LOGIN_ERROR = "Invalid email or password. Please try again.";
-const CALLBACK_BASE_URL = "https://sextoybd.com";
+const CALLBACK_BASE_URL = "https://sextoybd.net";
 
 function getSafeCallbackUrl(value: string | null): string {
   if (

@@ -48,7 +48,7 @@ const nextConfig: NextConfig = {
             },
           ],
           // Legacy ImgBB images: reuse the storefront's resized cache in dev.
-          destination: "https://sextoybd.com/_next/image",
+          destination: "https://sextoybd.net/_next/image",
         },
       ],
       afterFiles: [],

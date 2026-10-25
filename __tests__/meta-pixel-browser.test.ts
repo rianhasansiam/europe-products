@@ -39,7 +39,7 @@ function fakeBrowser(storage = new Map<string, string>()) {
     };
   } = {
     document,
-    location: { href: "https://sextoybd.com/products/shirt", pathname: "/products/shirt", search: "" },
+    location: { href: "https://sextoybd.net/products/shirt", pathname: "/products/shirt", search: "" },
     localStorage: {
       get length() { return storage.size; },
       key: (index) => [...storage.keys()][index] ?? null,

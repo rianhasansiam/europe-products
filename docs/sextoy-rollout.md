@@ -4,9 +4,14 @@ Repository validation completed 24 October 2026 (Asia/Dhaka). These changes are
 local source/configuration changes. No production migration, deployment, DNS,
 provider dashboard update or live payment was performed.
 
+The permanent canonical domain changed to `https://sextoybd.net` on 25 October
+2026. The original `https://sextoybd.com` validation below is historical evidence;
+it does not establish DNS, TLS or provider readiness for the new domain.
+
 ## Implemented
 
-- SexToy branding, new wordmark/icons, `https://sextoybd.com` canonical metadata,
+- SexToy branding, new wordmark/icons, canonical metadata (originally validated
+  with the former `https://sextoybd.com` origin),
   Open Graph, structured data, sitemap/robots, receipts, UI and translated text.
 - Removed public business phone numbers, telephone contact buttons, physical
   addresses and maps. Customer delivery/billing/contact fields remain available.

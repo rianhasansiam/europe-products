@@ -9,7 +9,7 @@ import { BASE_CURRENCY } from "@/lib/currency/config";
  * fallback — never hardcode localhost into shipped metadata.
  */
 
-const PRODUCTION_SITE_URL = "https://sextoybd.com";
+const PRODUCTION_SITE_URL = "https://sextoybd.net";
 const LOCAL_SITE_URL = "http://localhost:3000";
 
 type SiteUrlEnvironment = {

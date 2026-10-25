@@ -12,7 +12,7 @@ const DEFAULTS = {
   productionApiBaseUrl: "https://api.airwallex.com",
   httpTimeoutMs: "10000",
   webhookToleranceSeconds: "300",
-  returnUrl: "https://sextoybd.com/orders/payment-return",
+  returnUrl: "https://sextoybd.net/orders/payment-return",
 } as const;
 
 const optionalSecret = (minimumLength = 1) =>

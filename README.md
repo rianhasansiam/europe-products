@@ -1,6 +1,6 @@
 # SexToy
 
-SexToy is a Next.js storefront and administration app for **https://sextoybd.com**.
+SexToy is a Next.js storefront and administration app for **https://sextoybd.net**.
 New orders use USD and Airwallex. PostgreSQL/Prisma stores catalog, customers,
 orders and immutable payment history. English and Bengali catalogs are bundled.
 
@@ -24,7 +24,7 @@ AUTH_URL=http://localhost:3000
 AIRWALLEX_RETURN_URL=http://localhost:3000/orders/payment-return
 ```
 
-Keep canonical SEO URLs on `https://sextoybd.com`. Apply migrations and start:
+Keep canonical SEO URLs on `https://sextoybd.net`. Apply migrations and start:
 
 ```sh
 npx prisma migrate deploy

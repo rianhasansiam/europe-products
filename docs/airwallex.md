@@ -18,9 +18,9 @@ to production only after completing provider-side onboarding and testing.
 
 Configure the external Airwallex dashboard for the deployment:
 
-- Return URL: `https://sextoybd.com/orders/payment-return`
-- Webhook: `https://sextoybd.com/api/payments/airwallex/webhook`
-- Recovery endpoint: `POST https://sextoybd.com/api/payments/airwallex/reconcile`,
+- Return URL: `https://sextoybd.net/orders/payment-return`
+- Webhook: `https://sextoybd.net/api/payments/airwallex/webhook`
+- Recovery endpoint: `POST https://sextoybd.net/api/payments/airwallex/reconcile`,
   protected with `Authorization: Bearer <AIRWALLEX_RECONCILIATION_SECRET>`.
 
 The webhook verifies the signature against the raw body and timestamp before

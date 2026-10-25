@@ -1,6 +1,6 @@
 # Isolated VPS deployment
 
-The canonical origin is `https://sextoybd.com`. Deploy the public repository
+The canonical origin is `https://sextoybd.net`. Deploy the public repository
 `https://github.com/rianhasansiam/europe-products.git` into a new release directory.
 Do not replace a running project's checkout, environment, database or uploads.
 
@@ -40,7 +40,7 @@ Use [.env.example](../.env.example) as the supported inventory. At minimum:
 
 - `NODE_ENV=production`
 - New, app-scoped `DATABASE_URL` and independently generated `AUTH_SECRET`
-- `SITE_URL`, `NEXT_PUBLIC_SITE_URL`, `AUTH_URL`: `https://sextoybd.com`
+- `SITE_URL`, `NEXT_PUBLIC_SITE_URL`, `AUTH_URL`: `https://sextoybd.net`
 - `UPLOAD_STORAGE=filesystem`, dedicated `UPLOAD_DIR` and new `UPLOAD_PUBLIC_URL`
 - `AIRWALLEX_ENABLED=false` until scoped credentials, dashboard URLs and USD
   pricing have been verified
@@ -61,7 +61,7 @@ systemd restart-on-failure, a read-only system, private temporary directory,
 resource limits and narrow writable paths for this release's `.next` and uploads.
 Keep credentials out of the unit and command line; use its protected environment.
 
-Add only a new Nginx virtual host for `sextoybd.com`/`www.sextoybd.com` with:
+Add only a new Nginx virtual host for `sextoybd.net`/`www.sextoybd.net` with:
 
 - A dedicated ACME challenge webroot.
 - `/uploads/` mapped to the app's persistent upload directory.
@@ -77,6 +77,11 @@ conflicting AAAA records. Issue a real certificate only after DNS reaches this
 host; prefer `certbot certonly --webroot` for the dedicated challenge path.
 Enable HTTPS/canonical redirects for this host after certificate verification.
 Do not install an unrelated certificate or a self-signed substitute.
+
+The previous canonical `sextoybd.com` origin is historical. If it remains under
+the same ownership, retain its valid certificate and redirect old links and
+payment returns to `https://sextoybd.net`, preserving paths and query strings.
+Audit stored absolute upload URLs before retiring the old upload hostname.
 
 Configure Google OAuth and Airwallex callbacks on the new domain. Payment keys
 must belong to this app/provider account and remain disabled until verified.
