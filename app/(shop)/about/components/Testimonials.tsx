@@ -22,8 +22,8 @@ function avatarFor(item: TestimonialItem): string {
 function TestimonialCard({ t }: { t: TestimonialItem }) {
   const i18n = useInterfaceTranslations("InterfaceAboutComponentsTestimonials");
   return (
-    <div className="group relative h-full overflow-hidden rounded-2xl bg-white p-5 shadow-sm ring-1 ring-brand-border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-6">
-      <Quote className="absolute -top-1 -end-1 h-20 w-20 text-brand-border transition-transform duration-500 group-hover:scale-110" />
+    <div className="group relative h-full overflow-hidden rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border transition-colors duration-200 sm:p-6">
+      <Quote className="absolute -top-1 -end-1 h-20 w-20 text-border transition-transform duration-500 " />
 
       <div className="relative">
         <div className="flex items-center gap-1">
@@ -32,8 +32,8 @@ function TestimonialCard({ t }: { t: TestimonialItem }) {
               key={i}
               className={`h-4 w-4 ${
                 i < t.rating
-                  ? "fill-brand-gold text-brand-gold"
-                  : "fill-brand-border text-brand-border"
+                  ? "fill-primary text-primary"
+                  : "fill-border text-border"
               }`}
             />
           ))}
@@ -43,7 +43,7 @@ function TestimonialCard({ t }: { t: TestimonialItem }) {
           {i18n("“")}{i18n(t.text)}{i18n("”")}</p>
 
         <div className="mt-5 flex items-center gap-3">
-          <div className="relative h-11 w-11 overflow-hidden rounded-full ring-2 ring-brand-border">
+          <div className="relative h-11 w-11 overflow-hidden rounded-full ring-2 ring-border">
             <Image
               src={avatarFor(t)}
               alt={t.name}
@@ -87,14 +87,14 @@ export default function Testimonials({
   return (
     <section>
       <div className="mb-6 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full bg-brand-light-bg px-3 py-1.5">
-          <Quote className="h-3.5 w-3.5 text-brand-red" />
-          <span className="text-[11px] font-bold uppercase tracking-wide text-brand-red">
+        <div className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5">
+          <Quote className="h-3.5 w-3.5 text-primary" />
+          <span className="text-[11px] font-bold uppercase tracking-wide text-primary">
             {i18n("Testimonials")}</span>
         </div>
-        <h2 className="mt-3 text-2xl font-black tracking-tight text-foreground sm:text-3xl lg:text-4xl">
+        <h2 className="mt-3 text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
           {i18n("Loved by")}{" "}
-          <span className="text-brand-red">
+          <span className="text-primary">
             {i18n("shoppers like you")}</span>
         </h2>
       </div>

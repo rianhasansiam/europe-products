@@ -509,7 +509,7 @@ export default function WishlistPage() {
   if (pricingReady === false) return <PricingUnavailable />;
 
   return (
-    <main className="min-h-screen bg-brand-light-bg">
+    <main className="min-h-screen bg-background">
       <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <WishlistHero
           totalItems={items.length}
@@ -518,7 +518,7 @@ export default function WishlistPage() {
           priceDrops={stats.priceDrops}
         />
 
-        <div className="mt-2 flex items-center justify-between px-1 text-xs text-gray-500">
+        <div className="mt-2 flex items-center justify-between px-1 text-xs text-muted-foreground">
           <span>{i18n("Storage mode: {mode}", { mode: mode === "server" ? i18n("Server + Local") : i18n("Local only") })}</span>
           {isLoading && (
             <span className="inline-flex items-center gap-1.5">

@@ -11,14 +11,14 @@ const cards = [
     value: siteConfig.contact.email,
     helper: "We reply within 2 hours",
     href: `mailto:${siteConfig.contact.email}`,
-    color: "bg-brand-red",
+    color: "bg-primary",
   },
   {
     icon: Building2,
     title: "Company Info",
     value: siteConfig.contact.companyName,
     helper: "",
-    color: "bg-brand-red",
+    color: "bg-primary",
   },
 ];
 
@@ -32,23 +32,23 @@ export default function ContactInfoCards() {
           return (
             <div
               key={c.title}
-              className="group relative overflow-hidden rounded-2xl bg-white p-5 shadow-sm ring-1 ring-brand-border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border transition-colors duration-200"
             >
               <div
-                className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl ${c.color} text-white shadow-md transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}
+                className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl ${c.color} text-primary-foreground shadow-md transition-transform duration-300 `}
               >
                 <Icon className="h-6 w-6" />
               </div>
-              <p className="text-xs font-bold uppercase tracking-wide text-brand-red">
+              <p className="text-xs font-bold uppercase tracking-wide text-primary">
                 {i18n(c.title)}
               </p>
-              <p className="mt-1 text-base font-black text-foreground sm:text-lg">
+              <p className="mt-1 text-base font-bold text-foreground sm:text-lg">
                 {"href" in c ? <a href={c.href} className="hover:underline">{c.value}</a> : c.value}
               </p>
               {c.helper && <p className="mt-0.5 text-xs text-muted-foreground">{i18n(c.helper)}</p>}
 
               {/* Decorative corner */}
-              <div className="absolute -end-6 -top-6 h-16 w-16 rounded-full bg-brand-red/10 transition-transform duration-500 group-hover:scale-150" />
+              <div className="absolute -end-6 -top-6 h-16 w-16 rounded-full bg-primary/10 transition-transform duration-500 " />
             </div>
           );
         })}

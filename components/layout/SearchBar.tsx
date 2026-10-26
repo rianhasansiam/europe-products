@@ -289,7 +289,7 @@ export default function SearchBar({
       <div className="relative w-full">
         <Search
           aria-hidden="true"
-          className="pointer-events-none absolute start-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500"
+          className="pointer-events-none absolute start-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground"
         />
         <Input
           ref={inputRef}
@@ -318,7 +318,7 @@ export default function SearchBar({
           onKeyDown={handleKeyDown}
           placeholder={i18n(placeholder)}
           className={cn(
-            "h-10 rounded-xl border-brand-border bg-white/60 ps-11 pe-9 text-sm text-gray-800 focus-visible:border-brand-red focus-visible:bg-white focus-visible:ring-brand-red/30",
+            "h-11 rounded-xl border-input bg-card ps-11 pe-11 text-base text-foreground focus-visible:border-primary focus-visible:bg-card focus-visible:ring-ring/30",
             inputClassName,
           )}
         />
@@ -335,19 +335,19 @@ export default function SearchBar({
               setOpen(true);
               inputRef.current?.focus();
             }}
-            className="absolute end-2 top-1/2 -translate-y-1/2 rounded-full p-1 transition-colors hover:bg-white/70"
+            className="absolute end-0 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-lg transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
-            <X className="h-4 w-4 text-gray-600" />
+            <X className="h-4 w-4 text-body" />
           </button>
         )}
       </div>
 
       {showDropdown && (
-        <div className="absolute inset-x-0 top-full z-50 mt-1.5 max-h-[min(65dvh,30rem)] w-full max-w-full touch-pan-y overflow-y-auto overscroll-contain rounded-xl border border-brand-border bg-white shadow-xl sm:mt-2">
+        <div className="absolute inset-x-0 top-full z-50 mt-1.5 max-h-[min(65dvh,30rem)] w-full max-w-full touch-pan-y overflow-y-auto overscroll-contain rounded-xl border border-border bg-card shadow-lg sm:mt-2">
           {isLoading && (
             <div
               role="status"
-              className="flex items-center justify-center gap-2 border-b border-gray-100 px-3 py-4 text-sm text-brand-red"
+              className="flex items-center justify-center gap-2 border-b border-border px-3 py-4 text-sm text-primary"
             >
               <LoadingSpinner decorative size="sm" />
               <span>{i18n("Finding products and categories...")}</span>
@@ -357,7 +357,7 @@ export default function SearchBar({
           {!isLoading && error && (
             <div
               role="alert"
-              className="flex items-center justify-between gap-3 border-b border-red-100 bg-red-50 px-3 py-3 text-sm text-red-700"
+              className="flex items-center justify-between gap-3 border-b border-red-100 bg-red-50 px-3 py-3 text-sm text-destructive"
             >
               <span className="min-w-0 break-words">{i18n(error)}</span>
               <button
@@ -368,7 +368,7 @@ export default function SearchBar({
                   setIsLoading(queryIsReady);
                   setRetryToken((token) => token + 1);
                 }}
-                className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-red-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-red-700 transition hover:bg-red-100"
+                className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-red-200 bg-card px-2.5 py-1.5 text-xs font-semibold text-destructive transition hover:bg-red-100"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 {i18n("Retry")}</button>
@@ -384,9 +384,9 @@ export default function SearchBar({
             {!isLoading && !error && trimmed && !queryIsReady && (
               <li
                 role="presentation"
-                className="flex items-center gap-2 border-b border-gray-100 px-3 py-3 text-xs text-gray-600"
+                className="flex items-center gap-2 border-b border-border px-3 py-3 text-xs text-body"
               >
-                <PackageSearch className="h-4 w-4 shrink-0 text-brand-red" />
+                <PackageSearch className="h-4 w-4 shrink-0 text-primary" />
                 {i18n("Type at least {count, number} characters for live catalog matches.", { count: MIN_CATALOG_SEARCH_LENGTH })}</li>
             )}
 
@@ -397,9 +397,9 @@ export default function SearchBar({
               visibleCategories.length === 0 && (
                 <li
                   role="presentation"
-                  className="flex items-center gap-2 border-b border-gray-100 px-3 py-3 text-xs text-gray-600"
+                  className="flex items-center gap-2 border-b border-border px-3 py-3 text-xs text-body"
                 >
-                  <PackageSearch className="h-4 w-4 shrink-0 text-brand-text-muted" />
+                  <PackageSearch className="h-4 w-4 shrink-0 text-muted-foreground" />
                   <span className="min-w-0 break-words">
                     {i18n("No direct matches for")}<strong>“{trimmed}”</strong>.
                   </span>
@@ -408,7 +408,7 @@ export default function SearchBar({
 
             {visibleProducts.length > 0 && (
               <li role="presentation">
-                  <div className="px-3 pb-1 pt-2 text-[10px] font-bold uppercase tracking-wide text-gray-400">
+                  <div className="px-3 pb-1 pt-2 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
                     {i18n("Products")}</div>
                   <ul role="group" aria-label={i18n("Products")}>
                     {visibleProducts.map((product) => {
@@ -430,11 +430,11 @@ export default function SearchBar({
                           className={cn(
                             "flex min-w-0 cursor-pointer items-center gap-2.5 px-2.5 py-2 text-start transition-colors sm:gap-3 sm:px-3",
                             index === activeIndex
-                              ? "bg-brand-red/10"
-                              : "hover:bg-brand-red/5",
+                              ? "bg-secondary"
+                              : "hover:bg-secondary",
                           )}
                         >
-                          <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-gray-100 bg-gray-50 sm:h-12 sm:w-12">
+                          <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-border bg-background sm:h-12 sm:w-12">
                             <Image
                               src={product.image}
                               alt=""
@@ -444,11 +444,11 @@ export default function SearchBar({
                             />
                           </div>
                           <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-medium text-gray-800">
+                            <p className="truncate text-sm font-medium text-foreground">
                               {product.name}
                             </p>
                             <div className="mt-0.5 flex min-w-0 items-baseline justify-between gap-2">
-                              <p className="min-w-0 truncate text-[11px] text-gray-500 sm:text-xs">
+                              <p className="min-w-0 truncate text-[11px] text-muted-foreground sm:text-xs">
                                 {[
                                   product.brand,
                                   product.modelNumber,
@@ -458,11 +458,11 @@ export default function SearchBar({
                                   .join(" · ")}
                               </p>
                               <div className="shrink-0 text-end">
-                                <p className="whitespace-nowrap text-xs font-bold text-brand-red sm:text-sm">
+                                <p className="whitespace-nowrap text-xs font-bold text-primary sm:text-sm">
                                   <CurrencyAmount amountUSD={finalPrice} />
                                 </p>
                                 {hasDiscount && (
-                                  <p className="whitespace-nowrap text-[10px] text-gray-400 line-through sm:text-[11px]">
+                                  <p className="whitespace-nowrap text-[10px] text-muted-foreground line-through sm:text-[11px]">
                                     <CurrencyAmount amountUSD={product.price} />
                                   </p>
                                 )}
@@ -477,8 +477,8 @@ export default function SearchBar({
             )}
 
             {visibleCategories.length > 0 && (
-              <li role="presentation" className="border-t border-gray-100">
-                  <div className="px-3 pb-1 pt-2 text-[10px] font-bold uppercase tracking-wide text-gray-400">
+              <li role="presentation" className="border-t border-border">
+                  <div className="px-3 pb-1 pt-2 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
                     {i18n("Categories")}</div>
                   <ul role="group" aria-label={i18n("Categories")}>
                     {visibleCategories.map((category) => {
@@ -499,22 +499,22 @@ export default function SearchBar({
                           className={cn(
                             "flex min-w-0 cursor-pointer items-center gap-2.5 px-2.5 py-2 text-start transition-colors sm:gap-3 sm:px-3",
                             index === activeIndex
-                              ? "bg-brand-red/10"
-                              : "hover:bg-brand-red/5",
+                              ? "bg-secondary"
+                              : "hover:bg-secondary",
                           )}
                         >
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-light-bg text-brand-red">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background text-primary">
                             <FolderTree className="h-4 w-4" />
                           </span>
                           <span className="min-w-0 flex-1">
-                            <span className="block truncate text-sm font-medium text-gray-800">
+                            <span className="block truncate text-sm font-medium text-foreground">
                               {category.name}
                             </span>
-                            <span className="block truncate text-[11px] text-gray-500 sm:text-xs">
+                            <span className="block truncate text-[11px] text-muted-foreground sm:text-xs">
                               {breadcrumb}
                             </span>
                           </span>
-                          <span className="hidden shrink-0 whitespace-nowrap text-[11px] text-gray-400 min-[360px]:inline">
+                          <span className="hidden shrink-0 whitespace-nowrap text-[11px] text-muted-foreground min-[360px]:inline">
                             {category.totalProductCount} {i18n("items")}</span>
                         </li>
                       );
@@ -524,8 +524,8 @@ export default function SearchBar({
             )}
 
             {recommendedSearches.length > 0 && (
-              <li role="presentation" className="border-t border-gray-100">
-                <div className="flex items-center gap-1.5 px-3 pb-1 pt-2 text-[10px] font-bold uppercase tracking-wide text-gray-400">
+              <li role="presentation" className="border-t border-border">
+                <div className="flex items-center gap-1.5 px-3 pb-1 pt-2 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
                   <Sparkles className="h-3 w-3" />
                   {i18n("Recommended searches")}</div>
                 <ul role="group" aria-label={i18n("Recommended searches")}>
@@ -542,10 +542,10 @@ export default function SearchBar({
                         onMouseDown={(event) => event.preventDefault()}
                         onClick={() => selectOption(options[index])}
                         className={cn(
-                          "flex cursor-pointer items-center gap-2 px-3 py-2 text-sm text-gray-700 transition-colors",
+                          "flex cursor-pointer items-center gap-2 px-3 py-2 text-sm text-body transition-colors",
                           index === activeIndex
-                            ? "bg-brand-red/10 text-brand-red"
-                            : "hover:bg-brand-red/5 hover:text-brand-red",
+                            ? "bg-secondary text-primary"
+                            : "hover:bg-secondary hover:text-primary",
                         )}
                       >
                         <Search className="h-3.5 w-3.5 shrink-0" />
@@ -569,8 +569,8 @@ export default function SearchBar({
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => selectOption(options[index])}
                     className={cn(
-                      "flex min-w-0 cursor-pointer items-center justify-center gap-1.5 border-t border-gray-100 bg-brand-light-bg px-3 py-2.5 text-sm font-semibold text-brand-red transition-colors",
-                      index === activeIndex && "bg-brand-red/10",
+                      "flex min-w-0 cursor-pointer items-center justify-center gap-1.5 border-t border-border bg-background px-3 py-2.5 text-sm font-semibold text-primary transition-colors",
+                      index === activeIndex && "bg-secondary",
                     )}
                   >
                     <Search className="h-4 w-4 shrink-0" />

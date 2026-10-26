@@ -72,7 +72,6 @@ export const ADMIN_NAV_GROUPS: NavGroup[] = [
       { href: "/admin/activities", label: "Activity Log", icon: Activity },
       { href: "/admin/reports", label: "Reports", icon: BarChart3 },
       { href: "/admin/settings", label: "Settings", icon: Settings },
-      { href: "/admin/translations", label: "Languages & Translations", icon: Settings },
     ],
   },
 ];

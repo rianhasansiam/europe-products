@@ -171,28 +171,28 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
           ? state.message
           : "Sign in or use the browser you checked out with to view this order.";
     return (
-      <main className="min-h-screen bg-brand-light-bg">
+      <main className="min-h-screen bg-background">
         <div className="mx-auto w-full max-w-2xl px-4 py-16 sm:px-6">
-          <div className="rounded-3xl border border-rose-200 bg-white p-10 text-center shadow-sm">
+          <div className="rounded-3xl border border-rose-200 bg-card p-10 text-center shadow-sm">
             <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-rose-100 text-rose-700">
               <AlertCircle className="h-7 w-7" />
             </div>
-            <h1 className="mt-4 text-2xl font-extrabold text-gray-900">
+            <h1 className="mt-4 text-2xl font-bold text-foreground">
               {i18n("Order not available")}</h1>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-body">
               {i18n(message)}
             </p>
             <div className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-3">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 rounded-2xl bg-brand-red px-5 py-2.5 text-sm font-bold text-brand-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl"
+                className="inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-xl"
               >
                 <ShoppingBag className="h-4 w-4" />
                 {i18n("Browse products")}</Link>
               {authStatus !== "authenticated" && (
                 <Link
                   href={`/login?callbackUrl=/orders/${orderId}`}
-                  className="inline-flex items-center gap-2 rounded-2xl border border-brand-border bg-brand-white px-5 py-2.5 text-sm font-bold text-brand-black transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-red hover:bg-brand-light-bg"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-border bg-card px-5 py-2.5 text-sm font-bold text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-background"
                 >
                   {i18n("Sign in")}</Link>
               )}
@@ -240,33 +240,25 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
   ].filter(Boolean);
 
   return (
-    <main className="min-h-screen bg-brand-light-bg">
+    <main className="min-h-screen bg-background">
       <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
         {/* Hero */}
-        <section className="overflow-hidden rounded-3xl border border-brand-border bg-brand-white shadow-sm">
-          <div className="relative bg-brand-black px-6 py-8 text-brand-white sm:px-10">
-            <div
-              className="pointer-events-none absolute inset-0 opacity-10"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-                backgroundSize: "22px 22px",
-              }}
-            />
+        <section className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+          <div className="relative bg-secondary px-6 py-8 text-foreground sm:px-10">
             <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 {justPlaced ? (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-card px-3 py-1 text-xs font-bold uppercase tracking-wider ">
                     <CheckCircle2 className="h-3.5 w-3.5" />
                     {i18n("Order placed")}</span>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-card px-3 py-1 text-xs font-bold uppercase tracking-wider ">
                     {i18n("Order summary")}</span>
                 )}
-                <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
+                <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
                   #{order.orderNumber}
                 </h1>
-                <p className="mt-2 text-sm text-white/85">
+                <p className="mt-2 text-sm text-body">
                   {i18n("Placed on")}{formatDateTime(order.createdAt, locale)}
                 </p>
               </div>
@@ -275,7 +267,7 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
                   type="button"
                   onClick={handleDownload}
                   disabled={downloading}
-                  className="inline-flex items-center gap-2 rounded-2xl bg-white/15 px-4 py-2 text-sm font-bold text-white backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/25 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-card px-4 py-2 text-sm font-semibold text-primary  transition-all duration-200 hover:-translate-y-0.5 hover:bg-background disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
                   aria-busy={downloading}
                 >
                   {downloading ? (
@@ -287,14 +279,14 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
                   )}
                 </button>
                 {downloadError && (
-                  <p className="rounded-lg bg-rose-500/30 px-2 py-1 text-[11px] font-medium text-white">
+                  <p className="rounded-lg bg-destructive/10 px-2 py-1 text-xs font-medium text-destructive">
                     {downloadError}
                   </p>
                 )}
               </div>
             </div>
           </div>
-          <div className="grid gap-3 border-t border-brand-border p-5 sm:grid-cols-4 sm:p-6">
+          <div className="grid gap-3 border-t border-border p-5 sm:grid-cols-4 sm:p-6">
             <Stat label={i18n("Order ID")} value={order.id} mono />
             <Stat label={i18n("Order date")} value={formatDateTime(order.createdAt, locale)} />
             <Stat
@@ -312,7 +304,7 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
               label={i18n("Payment")}
               custom={
                 <div className="flex flex-col gap-1">
-                  <span className="text-sm font-semibold text-gray-900">
+                  <span className="text-sm font-semibold text-foreground">
                     {paymentMethodLabel(order.paymentMethod)}
                   </span>
                   <span
@@ -342,13 +334,13 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
               onSettled={refreshSettledAirwallexOrder}
             />
             {canPayWithAirwallex ? (
-              <section className="rounded-3xl border border-brand-border bg-white p-5 shadow-sm sm:p-6">
-                <h2 className="text-lg font-bold text-gray-900">
+              <section className="rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-6">
+                <h2 className="text-lg font-bold text-foreground">
                   {order.paymentStatus === "FAILED"
                     ? i18n("Try payment again")
                     : i18n("Complete your payment")}
                 </h2>
-                <p className="mt-1 text-sm leading-6 text-gray-600">
+                <p className="mt-1 text-sm leading-6 text-body">
                   {i18n("Your order and inventory are reserved. Continue to Airwallex's hosted checkout; SexToy does not collect your card details.")}</p>
                 <AirwallexPayButton
                   orderId={order.id}
@@ -357,7 +349,7 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
                       ? i18n("Retry secure payment")
                       : i18n("Continue to secure payment")
                   }
-                  className="mt-4 h-12 w-full rounded-2xl bg-brand-red px-5 text-base font-bold text-white sm:w-auto"
+                  className="mt-4 h-12 w-full rounded-2xl bg-primary px-5 text-base font-semibold text-primary-foreground sm:w-auto"
                 />
               </section>
             ) : null}
@@ -374,12 +366,12 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
           <div className="flex flex-col gap-5">
             {/* Customer + shipping */}
-            <section className="rounded-3xl border border-brand-border bg-brand-white p-5 shadow-sm sm:p-6">
+            <section className="rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-6">
               <header className="mb-4 flex items-center gap-2">
-                <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-light-bg text-brand-black">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-background text-foreground">
                   <User className="h-4 w-4" />
                 </span>
-                <h2 className="text-lg font-bold text-gray-900">
+                <h2 className="text-lg font-bold text-foreground">
                   {i18n("Customer details")}</h2>
               </header>
               <dl className="grid gap-4 text-sm sm:grid-cols-2">
@@ -423,27 +415,27 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
             </section>
 
             {/* Items */}
-            <section className="rounded-3xl border border-brand-border bg-brand-white p-5 shadow-sm sm:p-6">
+            <section className="rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-6">
               <header className="mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-light-bg text-brand-black">
+                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-background text-foreground">
                     <Package className="h-4 w-4" />
                   </span>
-                  <h2 className="text-lg font-bold text-gray-900">{i18n("Items")}</h2>
+                  <h2 className="text-lg font-bold text-foreground">{i18n("Items")}</h2>
                 </div>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-muted-foreground">
                   {order.items.length}{" "}
                   {order.items.length === 1 ? i18n("product") : i18n("products")}
                 </span>
               </header>
-              <ul className="divide-y divide-brand-border">
+              <ul className="divide-y divide-border">
                 {order.items.map((item) => {
                   return (
                     <li
                       key={item.id}
                       className="flex items-center gap-3 py-3 first:pt-0 last:pb-0"
                     >
-                      <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-brand-border bg-brand-light-bg">
+                      <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-border bg-background">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={item.productImage || FALLBACK_IMAGE}
@@ -452,7 +444,7 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold text-gray-900">
+                        <p className="truncate text-sm font-semibold text-foreground">
                           {item.productName}
                         </p>
                         <ColorBadge
@@ -461,13 +453,13 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
                           className="mt-0.5"
                         />
                         {(item.variantName || item.attributeSummary) && (
-                          <p className="mt-0.5 line-clamp-2 text-[11px] text-gray-500">
+                          <p className="mt-0.5 line-clamp-2 text-[11px] text-muted-foreground">
                             {[item.variantName, item.attributeSummary]
                               .filter(Boolean)
                               .join(" · ")}
                           </p>
                         )}
-                        <p className="mt-0.5 text-xs text-gray-500">
+                        <p className="mt-0.5 text-xs text-muted-foreground">
                           {i18n("Qty")}{item.quantity} ·{" "}
                           <FormattedCurrencyAmount
                             amount={item.unitPrice}
@@ -478,7 +470,7 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
                       <FormattedCurrencyAmount
                         amount={item.totalPrice}
                         currency={currency}
-                        className="text-sm font-bold text-gray-900"
+                        className="text-sm font-bold text-foreground"
                       />
                     </li>
                   );
@@ -489,8 +481,8 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
 
           {/* Totals */}
           <aside className="lg:sticky lg:top-[88px] lg:self-start">
-            <section className="rounded-3xl border border-brand-border bg-brand-white p-5 shadow-sm sm:p-6">
-              <h2 className="text-lg font-bold text-gray-900">{i18n("Total")}</h2>
+            <section className="rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-6">
+              <h2 className="text-lg font-bold text-foreground">{i18n("Total")}</h2>
               <div className="mt-4 space-y-2.5 text-sm">
                 <SummaryRow
                   label={i18n("Subtotal")}
@@ -541,19 +533,19 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
                   </>
                 )}
               </div>
-              <div className="mt-4 rounded-2xl border border-brand-border bg-brand-light-bg p-4">
+              <div className="mt-4 rounded-2xl border border-border bg-background p-4">
                 <div className="flex items-baseline justify-between">
-                  <span className="text-sm font-semibold text-gray-700">
+                  <span className="text-sm font-semibold text-body">
                     {i18n("Grand total")}</span>
                   <FormattedCurrencyAmount
                     amount={order.totalAmount}
                     currency={currency}
-                    className="text-2xl font-extrabold text-brand-red sm:text-3xl"
+                    className="text-2xl font-bold text-primary sm:text-3xl"
                   />
                 </div>
                 {airwallexPaymentCharge && (
-                  <div className="mt-3 flex items-baseline justify-between gap-3 border-t border-brand-border pt-3">
-                    <span className="text-xs font-semibold text-gray-600">
+                  <div className="mt-3 flex items-baseline justify-between gap-3 border-t border-border pt-3">
+                    <span className="text-xs font-semibold text-body">
                       {order.paymentStatus === "PAID" ||
                       order.paymentStatus === "REFUNDED"
                         ? i18n("Airwallex charge")
@@ -562,7 +554,7 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
                     <FormattedCurrencyAmount
                       amount={airwallexPaymentCharge.amount}
                       currency={airwallexPaymentCharge.currency}
-                      className="shrink-0 text-base font-bold text-gray-900"
+                      className="shrink-0 text-base font-bold text-foreground"
                     />
                   </div>
                 )}
@@ -605,7 +597,7 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
                 type="button"
                 onClick={handleDownload}
                 disabled={downloading}
-                className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-brand-red text-base font-bold text-brand-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:translate-y-0"
+                className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-base font-bold text-primary-foreground shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-xl disabled:cursor-not-allowed disabled:bg-muted disabled:hover:translate-y-0"
                 aria-busy={downloading}
               >
                 {downloading ? (
@@ -625,7 +617,7 @@ export default function OrderSummaryClient({ orderId }: OrderSummaryClientProps)
               <button
                 type="button"
                 onClick={() => router.push("/products")}
-                className="mt-3 inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-brand-border bg-brand-white text-sm font-bold text-brand-black transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-red hover:bg-brand-light-bg"
+                className="mt-3 inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card text-sm font-bold text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-background"
               >
                 <ShoppingBag className="h-4 w-4" />
                 {i18n("Continue shopping")}</button>
@@ -649,14 +641,14 @@ function Field({
   const i18n = useInterfaceTranslations("InterfaceOrdersIdComponentsOrderSummaryClient");
   return (
     <div className="flex items-start gap-2.5">
-      <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-brand-light-bg text-brand-black">
+      <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-background text-foreground">
         {icon}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
+        <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
           {i18n(label)}
         </p>
-        <p className="mt-0.5 wrap-break-word text-sm font-medium text-gray-900">
+        <p className="mt-0.5 wrap-break-word text-sm font-medium text-foreground">
           {value}
         </p>
       </div>
@@ -677,8 +669,8 @@ function Stat({
 }) {
   const i18n = useInterfaceTranslations("InterfaceOrdersIdComponentsOrderSummaryClient");
   return (
-    <div className="rounded-2xl border border-brand-border bg-brand-white p-3">
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
+    <div className="rounded-2xl border border-border bg-card p-3">
+      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
         {i18n(label)}
       </p>
       <div className="mt-1">
@@ -686,7 +678,7 @@ function Stat({
           custom
         ) : (
           <p
-            className={`break-all text-sm font-bold text-gray-900 ${mono ? "font-mono" : ""}`}
+            className={`break-all text-sm font-bold text-foreground ${mono ? "font-mono" : ""}`}
           >
             {value}
           </p>
@@ -712,7 +704,7 @@ function SummaryRow({
   const i18n = useInterfaceTranslations("InterfaceOrdersIdComponentsOrderSummaryClient");
   return (
     <div className="flex items-start justify-between gap-2 sm:items-center">
-      <span className="min-w-0 flex-1 text-gray-600 [overflow-wrap:anywhere]">
+      <span className="min-w-0 flex-1 text-body [overflow-wrap:anywhere]">
         {i18n(label)}
       </span>
       {freeLabel ? (
@@ -724,7 +716,7 @@ function SummaryRow({
           amount={value}
           currency={currency}
           className={`shrink-0 text-end font-semibold ${
-            tone === "success" ? "text-emerald-600" : "text-gray-900"
+            tone === "success" ? "text-emerald-600" : "text-foreground"
           }`}
         />
       )}

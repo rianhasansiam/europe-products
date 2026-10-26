@@ -71,34 +71,34 @@ export default function OrderSummaryCard({
 
   return (
     <aside
-      className="flex flex-col gap-4 rounded-3xl border border-brand-border bg-brand-white p-5 shadow-sm sm:p-6"
+      className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6"
       aria-busy={isLoading || isPlacing}
     >
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-gray-900">{i18n("Order summary")}</h2>
-        <span className="rounded-full bg-brand-light-bg px-2.5 py-0.5 text-xs font-semibold text-brand-black">
+        <h2 className="text-lg font-bold text-foreground">{i18n("Order summary")}</h2>
+        <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-semibold text-foreground">
           {i18n("Server-priced")}</span>
       </div>
 
       {/* Promo code */}
       {appliedPromo ? (
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-3 py-3">
+        <div className="rounded-2xl border border-success/25 bg-success-surface px-3 py-3">
           <div className="flex items-center gap-2.5">
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-emerald-500 text-white">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-success-surface0 text-white">
               <Check className="h-4 w-4" />
             </span>
             <div className="min-w-0 flex-1">
-              <p className="flex min-w-0 items-center gap-1.5 text-sm font-bold text-emerald-800">
+              <p className="flex min-w-0 items-center gap-1.5 text-sm font-bold text-success">
                 <span
                   title={appliedPromo}
-                  className="min-w-0 flex-1 truncate rounded-md bg-white px-1.5 py-0.5 font-mono text-xs text-emerald-700"
+                  className="min-w-0 flex-1 truncate rounded-md bg-card px-1.5 py-0.5 font-mono text-xs text-success"
                 >
                   {appliedPromo}
                 </span>
                 <span className="shrink-0">{i18n("applied")}</span>
               </p>
               {summary && (
-                <p className="truncate text-xs text-emerald-700">
+                <p className="truncate text-xs text-success">
                   <FormattedCurrencyAmount
                     amount={-summary.discount}
                     currency={summary.currency}
@@ -111,7 +111,7 @@ export default function OrderSummaryCard({
               onClick={onRemovePromo}
               aria-label={i18n("Remove promo")}
               disabled={isPlacing}
-              className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-emerald-700 transition-colors hover:bg-emerald-100"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-lg text-success transition-colors hover:bg-success/10"
             >
               <X className="h-4 w-4" />
             </button>
@@ -127,22 +127,23 @@ export default function OrderSummaryCard({
             className="flex items-stretch gap-2"
           >
             <div className="relative min-w-0 flex-1">
-              <Tag className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-text-muted" />
+              <Tag className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 type="text"
                 value={promoCode}
                 onChange={(e) => onPromoCodeChange(e.target.value)}
                 disabled={isPlacing}
                 maxLength={40}
+                aria-label={i18n("Promo code")}
                 placeholder={i18n("Promo code")}
-                className="h-11 rounded-xl border-brand-border bg-white ps-10 pe-3 text-sm font-medium uppercase tracking-wide focus-visible:border-brand-red focus-visible:ring-brand-red/30"
+                className="h-11 rounded-xl border-input bg-card ps-10 pe-3 text-base font-medium uppercase tracking-wide focus-visible:border-primary focus-visible:ring-primary/30"
               />
             </div>
             <button
               type="submit"
               disabled={!deliveryAreaSelected || !promoCode.trim() || isLoading || isPlacing}
               aria-busy={isApplyingPromo}
-              className="rounded-xl bg-brand-red px-4 text-sm font-semibold text-brand-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-sm"
+              className="rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-sm"
             >
               {isApplyingPromo ? <ButtonLoader label={i18n("Applying...")} /> : i18n("Apply")}
             </button>
@@ -151,8 +152,8 @@ export default function OrderSummaryCard({
             <p
               className={`flex items-center gap-1.5 text-xs font-medium ${
                 promoFeedback.tone === "error"
-                  ? "text-red-600"
-                  : "text-emerald-600"
+                  ? "text-destructive"
+                  : "text-success"
               }`}
             >
               <AlertCircle className="h-3.5 w-3.5" />
@@ -163,9 +164,9 @@ export default function OrderSummaryCard({
       )}
 
       {/* Totals */}
-      <div className="space-y-2.5 border-t border-dashed border-brand-border pt-4 text-sm">
+      <div className="space-y-2.5 border-t border-dashed border-border pt-4 text-sm">
         {!deliveryAreaSelected ? (
-          <p className="text-gray-600">{i18n("Select a delivery area to calculate your total.")}</p>
+          <p className="text-body">{i18n("Select a delivery area to calculate your total.")}</p>
         ) : isLoading || !summary ? (
           <div className="space-y-2.5" aria-label={i18n("Calculating totals")}>
             {Array.from({ length: 4 }).map((_, index) => (
@@ -210,9 +211,9 @@ export default function OrderSummaryCard({
       </div>
 
       {deliveryAreaSelected && summary ? (
-        <div className="rounded-2xl border border-brand-border bg-brand-light-bg p-4">
-          <div className="flex items-baseline justify-between">
-            <span className="text-sm font-semibold text-gray-700">
+        <div className="rounded-2xl border border-border bg-secondary p-4">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <span className="text-sm font-semibold text-body">
               {summary.currency === summary.baseCurrency
                 ? i18n("Total")
                 : i18n("Display total")}
@@ -220,25 +221,25 @@ export default function OrderSummaryCard({
             <FormattedCurrencyAmount
               amount={summary.total}
               currency={summary.currency}
-              className="text-2xl font-extrabold text-brand-red sm:text-3xl"
+              className="text-2xl font-bold text-primary sm:text-3xl"
             />
           </div>
           {paymentMethod === "AIRWALLEX" &&
             airwallexPaymentQuote &&
             airwallexPaymentQuote.displayCurrency !==
               airwallexPaymentQuote.paymentCurrency && (
-              <div className="mt-3 flex items-baseline justify-between gap-3 border-t border-brand-border pt-3">
-                <span className="text-xs font-semibold text-gray-600">
+              <div className="mt-3 flex items-baseline justify-between gap-3 border-t border-border pt-3">
+                <span className="text-xs font-semibold text-body">
                   {i18n("Payment processed as")}</span>
                 <FormattedCurrencyAmount
                   amount={airwallexPaymentQuote.paymentAmount}
                   currency={airwallexPaymentQuote.paymentCurrency}
-                  className="shrink-0 text-base font-bold text-gray-900"
+                  className="shrink-0 text-base font-bold text-foreground"
                 />
               </div>
             )}
           {totalSaved > 0 && (
-            <p className="mt-1 inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">
+            <p className="mt-1 inline-flex items-center gap-1 rounded-md bg-success-surface px-2 py-0.5 text-[11px] font-semibold text-success">
               <Sparkles className="h-3 w-3" />
               {i18n("You saved")}{" "}
               <FormattedCurrencyAmount
@@ -249,7 +250,7 @@ export default function OrderSummaryCard({
           )}
         </div>
       ) : deliveryAreaSelected ? (
-        <div className="rounded-2xl border border-brand-border bg-brand-light-bg p-4">
+        <div className="rounded-2xl border border-border bg-secondary p-4">
           <div className="flex items-baseline justify-between gap-3">
             <Skeleton className="h-4 w-16" />
             <Skeleton className="h-8 w-32" />
@@ -259,7 +260,7 @@ export default function OrderSummaryCard({
       ) : null}
 
       {submitError && (
-        <p className="flex items-start gap-1.5 rounded-xl border border-red-200 bg-red-50 p-2.5 text-xs font-medium text-red-700">
+        <p className="flex items-start gap-1.5 rounded-xl border border-destructive/25 bg-destructive/10 p-2.5 text-xs font-medium text-destructive">
           <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           {i18n(submitError)}
         </p>
@@ -270,7 +271,7 @@ export default function OrderSummaryCard({
         onClick={onPlaceOrder}
         disabled={!deliveryAreaSelected || isPlacing || isLoading || !summary}
         aria-busy={isPlacing}
-        className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-brand-red px-5 text-base font-bold text-brand-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none disabled:hover:translate-y-0"
+        className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 text-base font-semibold text-primary-foreground shadow-md transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none disabled:hover:translate-y-0"
       >
         {isPlacing ? (
           <ButtonLoader label={buttonLabel} />
@@ -283,12 +284,12 @@ export default function OrderSummaryCard({
         )}
       </button>
       {paymentMethod === "AIRWALLEX" && (
-        <p className="-mt-1 text-center text-[11px] font-medium text-gray-600">
+        <p className="-mt-1 text-center text-[11px] font-medium text-body">
           {i18n("You'll continue to Airwallex's hosted checkout. SexToy never collects your card details.")}</p>
       )}
 
-      <div className="flex items-center justify-center gap-1.5 text-[11px] text-gray-500">
-        <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
+      <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
+        <ShieldCheck className="h-3.5 w-3.5 text-success" />
         {i18n("Pricing verified by server • Buyer protection included")}</div>
     </aside>
   );
@@ -310,11 +311,11 @@ function SummaryRow({
   const i18n = useInterfaceTranslations("InterfaceCheckoutComponentsOrderSummaryCard");
   return (
     <div className="flex items-start justify-between gap-2 sm:items-center">
-      <span className="min-w-0 flex-1 text-gray-600 [overflow-wrap:anywhere]">
+      <span className="min-w-0 flex-1 text-body [overflow-wrap:anywhere]">
         {i18n(label)}
       </span>
       {freeLabel ? (
-        <span className="shrink-0 font-bold uppercase tracking-wider text-emerald-600">
+        <span className="shrink-0 font-bold uppercase tracking-wider text-success">
           {freeLabel}
         </span>
       ) : (
@@ -322,7 +323,7 @@ function SummaryRow({
           amount={value}
           currency={currency}
           className={`shrink-0 text-end font-semibold ${
-            tone === "success" ? "text-emerald-600" : "text-gray-900"
+            tone === "success" ? "text-success" : "text-foreground"
           }`}
         />
       )}

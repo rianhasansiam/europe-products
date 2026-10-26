@@ -2,11 +2,8 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import { getCatalogRedirectByPath } from "@/lib/services/catalog-redirect.service";
-import { getPublishedLanguages } from "@/lib/i18n/server";
-import { getProfileLocale } from "@/lib/i18n/preferences";
 import { DEFAULT_LOCALE, LOCALE_COOKIE, LOCALE_HEADER, PATH_HEADER, URL_HEADER } from "@/lib/i18n/registry";
-import { loadMessages } from "@/lib/i18n/catalogs";
-import { isLocaleExcludedPath, replaceLocaleHref, resolveNavigationLocale, splitLocalePath } from "@/lib/i18n/paths";
+import { isLocaleExcludedPath, replaceLocaleHref, splitLocalePath } from "@/lib/i18n/paths";
 
 const MAX_CATALOG_PATH_LENGTH = 8_192;
 const CATALOG_PATH_PATTERN =
@@ -30,31 +27,30 @@ export async function proxy(request: NextRequest) {
   const { locale: explicit, pathname } = splitLocalePath(incomingPath);
   // A locale must never turn an API, upload, callback or static asset into a page.
   if (isLocaleExcludedPath(pathname)) return NextResponse.next();
-  const published = (await getPublishedLanguages()).map((language) => language.code);
-  const saved = explicit ? null : request.cookies.get(LOCALE_COOKIE)?.value ?? await getProfileLocale(request);
-  let locale = resolveNavigationLocale(explicit, saved, published);
-  if (locale !== DEFAULT_LOCALE && !Object.keys(await loadMessages(locale)).length) locale = DEFAULT_LOCALE;
+  const locale = DEFAULT_LOCALE;
   const canonicalPath = replaceLocaleHref(pathname, locale);
   if (!explicit || explicit !== locale || incomingPath !== canonicalPath) {
     const destination = new URL(request.url);
     destination.pathname = canonicalPath;
     const response = NextResponse.redirect(destination, explicit && explicit === locale ? 308 : 307);
-    // Preference redirects are private; no visitor's language can leak via CDN caching.
+    // Retire language preferences while keeping existing English URLs stable.
     response.headers.set("Cache-Control", "private, no-store");
     response.headers.set("Vary", "Cookie");
-    if (saved && locale === DEFAULT_LOCALE && !published.includes(saved)) response.cookies.delete(LOCALE_COOKIE);
+    if (request.cookies.has(LOCALE_COOKIE)) response.cookies.delete(LOCALE_COOKIE);
     return response;
   }
 
   const renderPage = () => {
     const requestHeaders = new Headers(request.headers);
-    // Overwrite untrusted input; the URL is the sole locale authority for rendering.
+    // Overwrite untrusted input with the site's fixed language.
     requestHeaders.set(LOCALE_HEADER, locale);
     requestHeaders.set(PATH_HEADER, pathname);
     requestHeaders.set(URL_HEADER, incomingPath + request.nextUrl.search);
     const destination = new URL(request.url);
     destination.pathname = pathname;
-    return NextResponse.rewrite(destination, { request: { headers: requestHeaders } });
+    const response = NextResponse.rewrite(destination, { request: { headers: requestHeaders } });
+    if (request.cookies.has(LOCALE_COOKIE)) response.cookies.delete(LOCALE_COOKIE);
+    return response;
   };
   const normalizedPathname = pathname.toLowerCase();
 

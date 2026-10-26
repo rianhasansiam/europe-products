@@ -7,9 +7,8 @@ import { Menu, ShieldCheck } from "lucide-react";
 import { usePathname } from "@/lib/i18n/navigation";
 
 import AdminSidebar from "@/app/admin/components/AdminSidebar";
-import LanguageSelector, { type SelectableLanguage } from "@/components/i18n/LanguageSelector";
 
-export default function AdminShell({ children, languages }: { children: React.ReactNode; languages: SelectableLanguage[] }) {
+export default function AdminShell({ children }: { children: React.ReactNode }) {
   const i18n = useInterfaceTranslations("AdminAdminComponentsAdminShell");
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -31,7 +30,7 @@ export default function AdminShell({ children, languages }: { children: React.Re
   return (
     <div className="min-h-screen bg-brand-light-bg">
       <div className="flex w-full">
-        <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} languages={languages} />
+        <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <main className="min-w-0 flex-1 px-3 py-4 sm:px-5 sm:py-6 lg:px-8">
           <div className="mx-auto w-full max-w-6xl">
@@ -53,7 +52,6 @@ export default function AdminShell({ children, languages }: { children: React.Re
                 <span className="text-base font-extrabold text-brand-black">
                   {i18n("Admin Panel")}</span>
               </div>
-              <div className="ms-auto"><LanguageSelector languages={languages} mobile /></div>
             </div>
 
             {children}

@@ -39,13 +39,13 @@ export default function FAQSection() {
   return (
     <section>
       <div className="mb-6 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full bg-brand-light-bg px-3 py-1.5">
-          <HelpCircle className="h-3.5 w-3.5 text-brand-red" />
-          <span className="text-[11px] font-bold uppercase tracking-wide text-brand-red">
+        <div className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5">
+          <HelpCircle className="h-3.5 w-3.5 text-primary" />
+          <span className="text-[11px] font-bold uppercase tracking-wide text-primary">
             {i18n("Got Questions?")}</span>
         </div>
-        <h2 className="mt-3 text-2xl font-black tracking-tight text-foreground sm:text-3xl lg:text-4xl">
-          {i18n.rich("Frequently asked <highlight>questions</highlight>", { highlight: (chunks) => <span className="text-brand-red">{chunks}</span> })}
+        <h2 className="mt-3 text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
+          {i18n.rich("Frequently asked <highlight>questions</highlight>", { highlight: (chunks) => <span className="text-primary">{chunks}</span> })}
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground sm:text-base">
           {i18n("Quick answers to common questions. Don't see yours? Send us a message above.")}</p>
@@ -57,10 +57,10 @@ export default function FAQSection() {
           return (
             <div
               key={i18n(item.q)}
-              className={`overflow-hidden rounded-2xl bg-white shadow-sm ring-1 transition-all duration-300 ${
+              className={`overflow-hidden rounded-2xl bg-card shadow-sm ring-1 transition-all duration-300 ${
                 isOpen
-                  ? "ring-brand-red shadow-md"
-                  : "ring-brand-border hover:ring-brand-red/40"
+                  ? "ring-primary shadow-md"
+                  : "ring-border hover:ring-primary/40"
               }`}
             >
               <button
@@ -75,8 +75,8 @@ export default function FAQSection() {
                 <span
                   className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
                     isOpen
-                      ? "bg-brand-red text-white rotate-180"
-                      : "bg-brand-light-bg text-brand-red"
+                      ? "bg-primary text-white rotate-180"
+                      : "bg-muted text-primary"
                   }`}
                 >
                   {isOpen ? (

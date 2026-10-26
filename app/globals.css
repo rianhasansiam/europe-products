@@ -19,14 +19,17 @@
 @custom-variant can-hover (@media (hover: hover));
 
 /* Native system fonts provide script coverage without loading all locale fonts. */
-html:lang(bn) { font-family: var(--font-geist-sans), "Noto Sans Bengali", "Kohinoor Bangla", sans-serif; }
-html:lang(ar), html:lang(ur), html:lang(fa) { font-family: var(--font-geist-sans), "Noto Sans Arabic", "Geeza Pro", Arial, sans-serif; }
-html:lang(he) { font-family: var(--font-geist-sans), "Noto Sans Hebrew", Arial, sans-serif; }
-html:lang(zh) { font-family: var(--font-geist-sans), "PingFang SC", "PingFang TC", "Microsoft YaHei", sans-serif; }
+html:lang(bn) { font-family: var(--font-manrope), "Noto Sans Bengali", "Kohinoor Bangla", system-ui, sans-serif; }
+html:lang(ar), html:lang(ur), html:lang(fa) { font-family: var(--font-manrope), "Noto Sans Arabic", "Geeza Pro", Arial, system-ui, sans-serif; }
+html:lang(he) { font-family: var(--font-manrope), "Noto Sans Hebrew", Arial, system-ui, sans-serif; }
+html:lang(zh) { font-family: var(--font-manrope), "PingFang SC", "PingFang TC", "Microsoft YaHei", system-ui, sans-serif; }
 input[type="email"], input[type="tel"], input[autocomplete^="cc-"], [data-product-code] { direction: ltr; unicode-bidi: isolate; }
 
 
 @theme inline {
+  /* Existing bold utilities share the loaded Manrope heading weight. */
+  --font-weight-extrabold: 700;
+  --font-weight-black: 700;
   /*
    * SexToy brand color utilities.
    *
@@ -47,11 +50,20 @@ input[type="email"], input[type="tel"], input[autocomplete^="cc-"], [data-produc
   --color-brand-text-muted: var(--brand-text-muted);
   --color-brand-gold: var(--brand-gold);
 
+  --color-body: var(--body-text);
+  --color-primary-hover: var(--primary-hover);
+  --color-decorative: var(--decorative);
+  --color-success: var(--success);
+  --color-success-surface: var(--success-surface);
+  --color-warning: var(--warning);
+  --color-warning-surface: var(--warning-surface);
+  --color-info: var(--info);
+  --color-info-surface: var(--info-surface);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-heading: var(--font-manrope), system-ui, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -81,136 +93,152 @@ input[type="email"], input[type="tel"], input[autocomplete^="cc-"], [data-produc
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-xl: calc(var(--radius) + 2px);
+  --radius-2xl: calc(var(--radius) + 4px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 20px);
 }
 
 :root {
-  /*
-   * SexToy raw brand tokens — single source of truth.
-   *
-   * Each value is an OKLCH color perceptually equivalent (within an
-   * imperceptible tolerance) to its reference sRGB hex, listed alongside.
-   * Defined exactly once here with no media-query / breakpoint variants so
-   * the palette is identical across every viewport width (320px–2560px).
-   */
-  --brand-black: oklch(0.115 0 0); /* #050505 */
-  --brand-dark-surface: oklch(0.15 0 0); /* #0B0B0B */
-  --brand-red: oklch(0.573 0.233 29.4); /* #E10600 */
-  --brand-red-hover: oklch(0.492 0.202 29.2); /* #B80000 */
-  --brand-white: oklch(1 0 0); /* #FFFFFF */
-  --brand-light-bg: oklch(0.979 0 0); /* #F8F8F8 */
-  --brand-border: oklch(0.928 0.006 264); /* #E5E7EB */
-  --brand-text-dark: oklch(0.177 0 0); /* #111111 */
-  --brand-text-muted: oklch(0.551 0.023 264); /* #6B7280 */
-  --brand-gold: oklch(0.861 0.173 91.9); /* #FACC15 */
+  color-scheme: light;
+  --background: #FFF8FB;
+  --card: #FFFFFF;
+  --popover: var(--card);
+  --foreground: #30212B;
+  --body-text: #56444F;
+  --muted-foreground: #74646E; /* Slightly deeper for readable text on blush. */
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --primary: #8B2F55;
+  --primary-hover: #702344;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F6E4EC;
+  --secondary-foreground: var(--foreground);
+  --muted: var(--secondary);
+  --accent: var(--secondary);
+  --accent-foreground: var(--primary);
+  --decorative: #BC7A8C;
+  --border: #E8D6E0;
+  --input: #A88A9A;
+  --ring: var(--primary);
 
-  /*
-   * shadcn semantic tokens remapped to SexToy brand tokens (light theme).
-   *
-   * Each mapping references a raw --brand-* token with a CSS-native fallback
-   * (var(--token, <safe-default>)) so no element ever resolves to an
-   * undefined/transparent color: backgrounds fall back to Brand_White
-   * (#FFFFFF) and text falls back to Text_Dark (#111111). A fallback that
-   * differs from the requested token is itself the non-blocking signal that
-   * a token failed to resolve.
-   */
-  --background: var(--brand-white, #ffffff); /* Brand_White */
-  --foreground: var(--brand-text-dark, #111111); /* Text_Dark */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: var(--brand-red, #ffffff); /* Brand_Red (bg fallback Brand_White) */
-  --primary-foreground: var(--brand-white, #ffffff); /* Brand_White */
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: var(--brand-text-muted, #111111); /* Text_Muted (text fallback Text_Dark) */
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  /* Retained functional status color (red-600) — distinct from Brand_Red / Red_Hover, per Req 11.3 */
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: var(--brand-border, #e5e7eb); /* Border_Gray */
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Functional states remain distinct from the rose brand palette. */
+  --destructive: #B91C1C;
+  --success: #047857;
+  --success-surface: #ECFDF5;
+  --warning: #92400E;
+  --warning-surface: #FFFBEB;
+  --info: #1D4ED8;
+  --info-surface: #EFF6FF;
+  --chart-1: var(--primary);
+  --chart-2: var(--decorative);
+  --chart-3: var(--success);
+  --chart-4: var(--info);
+  --chart-5: var(--warning);
+  --radius: 0.75rem;
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
 }
 
 .dark {
-  /*
-   * shadcn semantic tokens remapped to SexToy brand tokens (dark theme).
-   *
-   * Mirrors the light-theme :root remap but resolves to the dark-theme brand
-   * Design_Tokens: page/surface backgrounds use Brand_Black / Dark_Surface and
-   * foreground text uses Brand_White, rather than the previous grayscale
-   * values (Req 1.6, 3.1, 3.2). Brand_Red is retained for high-emphasis
-   * primary elements. Each mapping carries a CSS-native fallback
-   * (var(--token, <safe-default>)) so no element resolves to an
-   * undefined/transparent color; a fallback differing from the requested
-   * token is itself the non-blocking signal that a token failed to resolve.
-   */
-  --background: var(--brand-black, #050505); /* Brand_Black */
-  --foreground: var(--brand-white, #ffffff); /* Brand_White */
-  --card: var(--brand-dark-surface, #0b0b0b); /* Dark_Surface */
-  --card-foreground: var(--brand-white, #ffffff); /* Brand_White */
-  --popover: var(--brand-dark-surface, #0b0b0b); /* Dark_Surface */
-  --popover-foreground: var(--brand-white, #ffffff); /* Brand_White */
-  --primary: var(--brand-red, #ffffff); /* Brand_Red (bg fallback Brand_White) */
-  --primary-foreground: var(--brand-white, #ffffff); /* Brand_White */
-  --secondary: var(--brand-dark-surface, #0b0b0b); /* Dark_Surface */
-  --secondary-foreground: var(--brand-white, #ffffff); /* Brand_White */
-  --muted: var(--brand-dark-surface, #0b0b0b); /* Dark_Surface */
-  --muted-foreground: var(--brand-text-muted, #ffffff); /* Text_Muted (text fallback Brand_White) */
-  --accent: var(--brand-dark-surface, #0b0b0b); /* Dark_Surface */
-  --accent-foreground: var(--brand-white, #ffffff); /* Brand_White */
-  /* Retained functional status color (dark-theme red) — distinct from Brand_Red / Red_Hover, per Req 11.3 */
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: var(--brand-border, #e5e7eb); /* Border_Gray */
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  color-scheme: dark;
+  --background: #20171D;
+  --card: #2B2027;
+  --popover: var(--card);
+  --foreground: #FFF0F6;
+  --body-text: #E2CDD7;
+  --muted-foreground: #C0A9B5;
+  --card-foreground: var(--foreground);
+  --popover-foreground: var(--foreground);
+  --primary: #E7A2BE;
+  --primary-hover: #F0BAD0;
+  --primary-foreground: #30212B;
+  --secondary: #412C37;
+  --secondary-foreground: var(--foreground);
+  --muted: var(--secondary);
+  --accent: var(--secondary);
+  --accent-foreground: var(--primary);
+  --decorative: #BC7A8C;
+  --border: #604552;
+  --input: #9F7E90;
+  --ring: var(--primary);
+  --destructive: #FCA5A5;
+  --success: #6EE7B7;
+  --success-surface: #14392E;
+  --warning: #FCD34D;
+  --warning-surface: #3D301C;
+  --info: #93C5FD;
+  --info-surface: #1E304D;
+}
+
+/* Compatibility aliases keep existing components on the shared theme. */
+:root, .dark {
+  --brand-black: var(--foreground);
+  --brand-dark-surface: var(--foreground);
+  --brand-red: var(--primary);
+  --brand-red-hover: var(--primary-hover);
+  --brand-white: var(--card);
+  --brand-light-bg: var(--background);
+  --brand-border: var(--border);
+  --brand-text-dark: var(--foreground);
+  --brand-text-muted: var(--muted-foreground);
+  --brand-gold: #FACC15;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-body;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-foreground;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  button, input, select, textarea {
+    font: inherit;
+  }
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--secondary);
+    color: var(--foreground);
+  }
+}
 
+/* Retain configured banner colors as a restrained tint behind the blush surface. */
+.storefront-banner {
+  background: linear-gradient(
+    color-mix(in srgb, var(--secondary) 94%, transparent),
+    color-mix(in srgb, var(--secondary) 94%, transparent)
+  ), var(--banner-background, var(--secondary));
+}
+
+/* Keep existing interactions comfortable for visitors who reduce motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

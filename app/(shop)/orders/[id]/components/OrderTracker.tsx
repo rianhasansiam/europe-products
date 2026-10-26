@@ -127,18 +127,18 @@ export default function OrderTracker({
   return (
     <section
       className={cn(
-        "rounded-3xl border border-brand-border bg-brand-white p-5 shadow-sm sm:p-6",
+        "rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-6",
         className,
       )}
       aria-label={i18n("Order tracking timeline")}
     >
       <header className="mb-5 flex items-center gap-2">
-        <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-light-bg text-brand-black">
+        <span className="grid h-8 w-8 place-items-center rounded-lg bg-background text-foreground">
           <Truck className="h-4 w-4" />
         </span>
         <div>
-          <h2 className="text-lg font-bold text-gray-900">{i18n("Order tracking")}</h2>
-          <p className="text-xs text-gray-500">
+          <h2 className="text-lg font-bold text-foreground">{i18n("Order tracking")}</h2>
+          <p className="text-xs text-muted-foreground">
             {i18n("Follow your package through every stage.")}</p>
         </div>
       </header>
@@ -224,10 +224,10 @@ function StepDot({ state, Icon }: { state: StepState; Icon: LucideIcon }) {
     <span
       className={cn(
         "relative grid h-9 w-9 shrink-0 place-items-center rounded-full ring-4 transition-colors",
-        state === "done" && "bg-emerald-500 text-white ring-emerald-100",
+        state === "done" && "bg-emerald-700 text-white ring-emerald-100",
         state === "current" &&
-          "bg-brand-red text-brand-white ring-brand-red/20 animate-pulse",
-        state === "todo" && "bg-gray-100 text-gray-400 ring-gray-50",
+          "bg-primary text-primary-foreground ring-ring/20 animate-pulse",
+        state === "todo" && "bg-secondary text-muted-foreground ring-secondary",
       )}
     >
       {state === "done" ? (
@@ -249,7 +249,7 @@ function VerticalStep({ step, isLast }: { step: StepView; isLast: boolean }) {
           <span
             className={cn(
               "w-0.5 flex-1",
-              step.state === "done" ? "bg-emerald-300" : "bg-gray-200",
+              step.state === "done" ? "bg-emerald-300" : "bg-muted",
             )}
           />
         )}
@@ -259,20 +259,20 @@ function VerticalStep({ step, isLast }: { step: StepView; isLast: boolean }) {
           <p
             className={cn(
               "text-sm font-semibold",
-              step.state === "todo" ? "text-gray-400" : "text-gray-900",
+              step.state === "todo" ? "text-muted-foreground" : "text-foreground",
             )}
           >
             {i18n(step.label)}
           </p>
           {step.state === "current" && (
-            <span className="rounded-full bg-brand-red/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-brand-red">
+            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary">
               {i18n("Current")}</span>
           )}
         </div>
         {step.stamp ? (
-          <p className="mt-0.5 text-xs text-gray-500">{step.stamp}</p>
+          <p className="mt-0.5 text-xs text-muted-foreground">{step.stamp}</p>
         ) : (
-          <p className="mt-0.5 text-xs text-gray-400">{i18n(step.description)}</p>
+          <p className="mt-0.5 text-xs text-muted-foreground">{i18n(step.description)}</p>
         )}
       </div>
     </li>
@@ -299,14 +299,14 @@ function HorizontalStep({
         <span
           className={cn(
             "h-0.5 flex-1",
-            isFirst ? "invisible" : leftDone ? "bg-emerald-300" : "bg-gray-200",
+            isFirst ? "invisible" : leftDone ? "bg-emerald-300" : "bg-muted",
           )}
         />
         <StepDot state={step.state} Icon={step.Icon} />
         <span
           className={cn(
             "h-0.5 flex-1",
-            isLast ? "invisible" : rightDone ? "bg-emerald-300" : "bg-gray-200",
+            isLast ? "invisible" : rightDone ? "bg-emerald-300" : "bg-muted",
           )}
         />
       </div>
@@ -314,17 +314,17 @@ function HorizontalStep({
         <p
           className={cn(
             "text-xs font-semibold leading-tight",
-            step.state === "todo" ? "text-gray-400" : "text-gray-900",
+            step.state === "todo" ? "text-muted-foreground" : "text-foreground",
           )}
         >
           {i18n(step.label)}
         </p>
         {step.state === "current" && (
-          <span className="mt-1 inline-block rounded-full bg-brand-red/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-brand-red">
+          <span className="mt-1 inline-block rounded-full bg-primary/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-primary">
             {i18n("Current")}</span>
         )}
         {step.stamp && (
-          <p className="mt-0.5 text-[10px] text-gray-500">{step.stamp}</p>
+          <p className="mt-0.5 text-[10px] text-muted-foreground">{step.stamp}</p>
         )}
       </div>
     </li>

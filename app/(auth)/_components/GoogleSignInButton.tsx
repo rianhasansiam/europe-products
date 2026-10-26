@@ -26,12 +26,12 @@ export function SocialDivider() {
   if (!googleSignInAvailable) return null;
   return (
     <div className="my-1 flex items-center gap-3">
-      <div className="h-px flex-1 bg-linear-to-r from-transparent via-brand-border to-brand-border" />
+      <div className="h-px flex-1 bg-linear-to-r from-transparent via-border to-border" />
 
-      <span className="text-[11px] font-bold uppercase tracking-wide text-brand-text-muted">
+      <span className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
         {i18n("or continue with")}</span>
 
-      <div className="h-px flex-1 bg-linear-to-l from-transparent via-brand-border to-brand-border" />
+      <div className="h-px flex-1 bg-linear-to-l from-transparent via-border to-border" />
     </div>
   );
 }
@@ -60,9 +60,9 @@ export function GoogleSignInButton({
         onClick={handleClick}
         disabled={isRedirecting}
         aria-busy={isRedirecting}
-        className="group flex items-center justify-center gap-2 rounded-xl border border-brand-border bg-white px-3 py-2.5 text-xs font-bold text-brand-text-dark transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-red hover:bg-brand-red/5 hover:text-brand-red hover:shadow-md disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
+        className="group flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-3 py-2.5 text-xs font-bold text-foreground transition-colors duration-200 hover:border-primary hover:bg-primary/5 hover:text-primary disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
       >
-        <span className="transition-transform duration-300 group-hover:scale-110">
+        <span className="transition-transform duration-300 ">
           {isRedirecting ? (
             <LoadingSpinner decorative size="sm" />
           ) : (

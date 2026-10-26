@@ -97,17 +97,14 @@ describe("ProductCard responsive actions", () => {
 
     expect(desktopCartButton).toContain("hidden");
     expect(desktopCartButton).toContain("sm:can-hover:flex");
-    expect(desktopCartButton).toContain(
-      "sm:can-hover:focus-visible:opacity-100",
-    );
-    expect(desktopCartButton).toContain(
-      "sm:can-hover:focus-visible:translate-y-0",
-    );
+    // Desktop actions stay visible and retain an explicit keyboard focus ring.
+    expect(desktopCartButton).not.toContain("opacity-0");
+    expect(desktopCartButton).toContain("focus-visible:ring-2");
     expect(desktopWishlistButton).toContain("hidden");
     expect(desktopWishlistButton).toContain("sm:can-hover:flex");
 
     expect(markup).toContain(
-      "border-brand-border/70 pt-2 sm:can-hover:hidden",
+      "border-border pt-3 sm:can-hover:hidden",
     );
     const imageContainer = divWithClass(markup, "aspect-4/3");
     const mobileActions = divWithClass(markup, "sm:can-hover:hidden");
@@ -118,22 +115,22 @@ describe("ProductCard responsive actions", () => {
     expect(buttonTags(mobileActions!.content, "Add to cart")).toHaveLength(1);
     expect(buttonTags(mobileActions!.content, "Add to wishlist")).toHaveLength(1);
 
-    // These content-sized controls use vertical padding rather than a fixed
-    // height. Preserve the compact widths and padding in the touch action row.
+    // Touch actions use a 44px minimum target and allow the cart label to fill
+    // the remaining space beside the wishlist control.
     expect(
       cartButtons.some(
         (tag) =>
           !tag.includes("absolute") &&
-          tag.includes("py-2") &&
-          tag.includes("max-w-24") &&
-          tag.includes("text-[11px]"),
+          tag.includes("min-h-11") &&
+          tag.includes("flex-1") &&
+          tag.includes("text-xs"),
       ),
     ).toBe(true);
     expect(
       wishlistButtons.some(
         (tag) =>
           !tag.includes("absolute") &&
-          tag.includes("py-2") &&
+          tag.includes("min-h-11") &&
           tag.includes("w-11"),
       ),
     ).toBe(true);

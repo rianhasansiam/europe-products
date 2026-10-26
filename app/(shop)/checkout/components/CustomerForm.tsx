@@ -2,6 +2,7 @@
 import { useInterfaceTranslations } from "@/components/i18n/translate";
 
 
+import { useId } from "react";
 import Link from "@/lib/i18n/navigation";
 import {
   AlertCircle,
@@ -56,11 +57,11 @@ export default function CustomerForm({
   const isProfileLoading = isAuthenticated && profileStatus === "loading";
 
   return (
-    <section className="rounded-3xl border border-brand-border bg-brand-white p-5 shadow-sm sm:p-6">
+    <section className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
       <header className="mb-4 flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-gray-900">{i18n("Delivery details")}</h2>
-          <p className="mt-0.5 text-xs text-gray-500">
+          <h2 className="text-lg font-bold text-foreground">{i18n("Delivery details")}</h2>
+          <p className="mt-0.5 text-xs text-muted-foreground">
             {isAuthenticated
               ? i18n("Pulled from your profile - update anything that's changed.")
               : i18n("We use these details only to deliver your order.")}
@@ -71,8 +72,8 @@ export default function CustomerForm({
             className={cn(
               "rounded-full px-2.5 py-1 text-[11px] font-semibold",
               isProfileLoading
-                ? "bg-brand-light-bg text-brand-text-muted"
-                : "bg-emerald-50 text-emerald-700",
+                ? "bg-muted text-muted-foreground"
+                : "bg-success-surface text-success",
             )}
           >
             {isProfileLoading ? i18n("Loading profile...") : i18n("Auto-filled")}
@@ -156,11 +157,11 @@ export default function CustomerForm({
           disabled={isProfileLoading}
         />
         <label className="block">
-          <span className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-gray-700">
-            <span className="text-brand-text-muted">
+          <span className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-body">
+            <span className="text-muted-foreground">
               <Truck className="h-4 w-4" />
             </span>
-            {i18n("Delivery area")}<span className="text-red-500">*</span>
+            {i18n("Delivery area")}<span className="text-destructive">*</span>
           </span>
           <select
             value={form.deliveryZone}
@@ -172,8 +173,8 @@ export default function CustomerForm({
             aria-invalid={Boolean(errors.deliveryZone)}
             aria-describedby={errors.deliveryZone ? "delivery-area-error" : undefined}
             className={cn(
-              "h-11 w-full rounded-xl border border-brand-border bg-white px-3 text-sm text-gray-900 outline-none transition-all duration-200 focus-visible:border-brand-red focus-visible:ring-4 focus-visible:ring-brand-red/30 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400",
-              errors.deliveryZone && "border-red-400 bg-red-50/30",
+              "h-11 w-full rounded-xl border border-input bg-card px-3 text-base text-foreground outline-none transition-all duration-200 focus-visible:border-primary focus-visible:ring-4 focus-visible:ring-primary/30 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground",
+              errors.deliveryZone && "border-destructive/25 bg-destructive/10",
             )}
           >
             <option value="" disabled>{i18n("Select delivery area")}</option>
@@ -181,7 +182,7 @@ export default function CustomerForm({
             <option value="OUTSIDE_DHAKA">{i18n("Delivery outside Dhaka")}</option>
           </select>
           {errors.deliveryZone && (
-            <p id="delivery-area-error" className="mt-1.5 text-xs font-medium text-red-500">{i18n(errors.deliveryZone)}</p>
+            <p id="delivery-area-error" className="mt-1.5 text-xs font-medium text-destructive">{i18n(errors.deliveryZone)}</p>
           )}
         </label>
         <Field
@@ -225,11 +226,11 @@ function EmailField({
   const i18n = useInterfaceTranslations("InterfaceCheckoutComponentsCustomerForm");
   return (
     <div className="block">
-      <span className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-gray-700">
-        <span className="text-brand-text-muted">
+      <span className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-body">
+        <span className="text-muted-foreground">
           <Mail className="h-4 w-4" />
         </span>
-        {i18n("Email")}<Lock className="h-3 w-3 text-gray-400" />
+        {i18n("Email")}<Lock className="h-3 w-3 text-muted-foreground" />
       </span>
       <div className="relative" dir="ltr">
         <input
@@ -241,17 +242,17 @@ function EmailField({
           placeholder={loading ? i18n("Loading your email...") : undefined}
           autoComplete="email"
           className={cn(
-            "h-11 w-full cursor-not-allowed rounded-xl border border-brand-border bg-brand-light-bg px-3 pe-10 text-sm font-medium text-gray-600 outline-none",
+            "h-11 w-full cursor-not-allowed rounded-xl border border-border bg-muted px-3 pe-10 text-sm font-medium text-body outline-none",
           )}
         />
-        <Lock className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+        <Lock className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       </div>
-      <p className="mt-1 flex flex-wrap items-center gap-1 text-[11px] text-gray-500">
+      <p className="mt-1 flex flex-wrap items-center gap-1 text-[11px] text-muted-foreground">
         <span>
           {i18n("Email is linked to your account. Update it from your profile page if needed.")}</span>
         <Link
           href="/profile?tab=settings"
-          className="font-semibold text-brand-red underline-offset-2 hover:text-brand-red-hover hover:underline"
+          className="font-semibold text-primary underline-offset-2 hover:text-primary-hover hover:underline"
         >
           {i18n("Update Profile")}</Link>
       </p>
@@ -282,13 +283,14 @@ function Field({
   required?: boolean;
   disabled?: boolean;
 }) {
+  const errorId = useId();
   const i18n = useInterfaceTranslations("InterfaceCheckoutComponentsCustomerForm");
   return (
     <label className="block">
-      <span className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-gray-700">
-        <span className="text-brand-text-muted">{icon}</span>
+      <span className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-body">
+        <span className="text-muted-foreground">{icon}</span>
         {i18n(label)}
-        {required && <span className="text-red-500">*</span>}
+        {required && <span className="text-destructive">*</span>}
       </span>
       <input
         value={value}
@@ -297,17 +299,20 @@ function Field({
         autoComplete={autoComplete}
         inputMode={inputMode}
         disabled={disabled}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? errorId : undefined}
+        aria-required={required}
         className={cn(
-          "h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-900 outline-none transition-all duration-200",
-          "focus-visible:border-brand-red focus-visible:ring-4 focus-visible:ring-brand-red/30",
-          "disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400",
+          "h-11 w-full rounded-xl border bg-card px-3 text-base text-foreground outline-none transition-all duration-200",
+          "focus-visible:border-primary focus-visible:ring-4 focus-visible:ring-primary/30",
+          "disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground",
           error
-            ? "border-red-300 focus-visible:border-red-500 focus-visible:ring-red-200"
-            : "border-brand-border",
+            ? "border-destructive/25 focus-visible:border-destructive focus-visible:ring-destructive/20"
+            : "border-input",
         )}
       />
       {error && (
-        <span className="mt-1 block text-xs font-medium text-red-600">
+        <span id={errorId} className="mt-1 block text-xs font-medium text-destructive">
           {i18n(error)}
         </span>
       )}
@@ -336,13 +341,14 @@ function FieldTextarea({
   placeholder?: string;
   disabled?: boolean;
 }) {
+  const errorId = useId();
   const i18n = useInterfaceTranslations("InterfaceCheckoutComponentsCustomerForm");
   return (
     <label className="block">
-      <span className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-gray-700">
-        <span className="text-brand-text-muted">{icon}</span>
+      <span className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-body">
+        <span className="text-muted-foreground">{icon}</span>
         {i18n(label)}
-        {required && <span className="text-red-500">*</span>}
+        {required && <span className="text-destructive">*</span>}
       </span>
       <textarea
         value={value}
@@ -351,17 +357,20 @@ function FieldTextarea({
         autoComplete={autoComplete}
         placeholder={i18n(placeholder)}
         disabled={disabled}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? errorId : undefined}
+        aria-required={required}
         className={cn(
-          "min-h-[88px] w-full rounded-xl border bg-white px-3 py-2 text-sm text-gray-900 outline-none transition-all duration-200",
-          "focus-visible:border-brand-red focus-visible:ring-4 focus-visible:ring-brand-red/30",
-          "disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400",
+          "min-h-[88px] w-full rounded-xl border bg-card px-3 py-2 text-base text-foreground outline-none transition-all duration-200",
+          "focus-visible:border-primary focus-visible:ring-4 focus-visible:ring-primary/30",
+          "disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground",
           error
-            ? "border-red-300 focus-visible:border-red-500 focus-visible:ring-red-200"
-            : "border-brand-border",
+            ? "border-destructive/25 focus-visible:border-destructive focus-visible:ring-destructive/20"
+            : "border-input",
         )}
       />
       {error && (
-        <span className="mt-1 block text-xs font-medium text-red-600">
+        <span id={errorId} className="mt-1 block text-xs font-medium text-destructive">
           {i18n(error)}
         </span>
       )}

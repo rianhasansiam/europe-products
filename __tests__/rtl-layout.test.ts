@@ -53,7 +53,7 @@ const categories:PublicCategoryNode[]=[{
 function withArabic(children:ComponentProps<typeof NextIntlClientProvider>["children"]){
   return createElement(NextIntlClientProvider,{locale:"ar",messages:arabic,timeZone:"Asia/Dhaka",children} satisfies ComponentProps<typeof NextIntlClientProvider>);
 }
-function navbar(open=false){return createElement(Navbar,{languages,categories,initialMobileMenuOpen:open});}
+function navbar(open=false){return createElement(Navbar,{categories,initialMobileMenuOpen:open});}
 function documentMarkup(styles:string[]=[],fontClass=""){
   return "<!DOCTYPE html>"+renderToStaticMarkup(withArabic(createElement("html",{lang:"ar",dir:"rtl",className:fontClass},
     createElement("head",null,
@@ -86,8 +86,8 @@ describe("unpublished RTL navigation layout",()=>{
     expect(html).toContain('href="/ar/cart"');
     expect(html).toContain('aria-label="فتح القائمة"');
     expect(html).toContain(`aria-label="السلة، ${new Intl.NumberFormat("ar").format(3)} منتجات"`);
-    expect(html).toContain('aria-label="اختيار اللغة: Arabic"');
-    expect(html).toContain('lang="ar">العربية');
+    expect(html).not.toContain('aria-label="اختيار اللغة: Arabic"');
+    expect(html).not.toContain('lang="ar">العربية');
     expect(html).toContain("جميع المنتجات");
     expect(html).not.toContain("Search products, codes, models and categories");
     expect((html.match(/placeholder="ابحث عن المنتجات أو الرموز أو الفئات…"/g)??[]).length).toBe(2);
@@ -111,10 +111,11 @@ describe("unpublished RTL navigation layout",()=>{
     expect(html).toContain("start-0");
     expect(html).toContain("border-e");
     expect(html).toContain("absolute start-3");
-    expect(html).toContain("ps-11 pe-9");
+    expect(html).toContain("ps-11 pe-11");
     expect(html).toContain("ps-10 text-[16px]");
     expect(html).not.toContain(" pl-10 ");
-    expect(html).toContain("rtl:hover:-translate-x-1");
+    expect(html).not.toContain("hover:translate-x-1");
+    expect(html).not.toContain("rtl:hover:-translate-x-1");
   });
   it("keeps the document direction, native language label and logical mobile selector alignment",()=>{
     const html=documentMarkup();

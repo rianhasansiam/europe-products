@@ -44,6 +44,6 @@ export default function PreparedLanguageLinksClient({ pathname, languages }: { p
         </a>
       </li>)}
     </ul>
-    <span role="status" aria-live="polite" className={error ? "mt-2 block text-xs text-red-600" : "sr-only"}>{error || (busy ? t("saving") : "")}</span>
+    <span role="status" aria-live="polite" className={error ? "mt-2 block text-xs text-destructive" : "sr-only"}>{error || (busy ? t("saving") : "")}</span>
   </nav>;
 }

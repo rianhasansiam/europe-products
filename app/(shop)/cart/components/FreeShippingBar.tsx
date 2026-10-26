@@ -22,16 +22,16 @@ export default function FreeShippingBar({
     <div
       className={`relative overflow-hidden rounded-2xl border px-4 py-3.5 transition-colors duration-300 ${
         reached
-          ? "border-emerald-200 bg-emerald-50"
-          : "border-brand-border bg-brand-white"
+          ? "border-success/25 bg-success-surface"
+          : "border-border bg-card"
       }`}
     >
       <div className="flex items-center gap-2.5">
         <span
           className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl text-white ${
             reached
-              ? "bg-emerald-500"
-              : "bg-brand-red"
+              ? "bg-success-surface0"
+              : "bg-primary"
           }`}
         >
           {reached ? (
@@ -42,22 +42,22 @@ export default function FreeShippingBar({
         </span>
         <div className="min-w-0 flex-1">
           {reached ? (
-            <p className="text-sm font-semibold text-emerald-800">
+            <p className="text-sm font-semibold text-success">
               {i18n("You've unlocked free shipping")}</p>
           ) : (
-            <p className="text-sm font-semibold text-gray-800">
+            <p className="text-sm font-semibold text-foreground">
               {i18n("Add")}{" "}
-              <span className="text-brand-red">
+              <span className="text-primary">
                 <CurrencyAmount amountUSD={remainingUSD} />
               </span>{" "}
               {i18n("more for free shipping")}</p>
           )}
-          <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-100">
+          <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
             <div
               className={`h-full rounded-full transition-all duration-500 ease-out ${
                 reached
-                  ? "bg-emerald-500"
-                  : "bg-brand-red"
+                  ? "bg-success-surface0"
+                  : "bg-primary"
               }`}
               style={{ width: `${progress}%` }}
             />

@@ -133,16 +133,16 @@ export default function SecurityTab({ user }: SecurityTabProps) {
 
   return (
     <div className="flex flex-col gap-4 sm:gap-5">
-      <section className="rounded-2xl border border-brand-border bg-brand-white p-4 shadow-sm sm:rounded-3xl sm:p-6">
+      <section className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:rounded-3xl sm:p-6">
         <header className="mb-5 flex items-center gap-3">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-light-bg text-brand-black">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-background text-foreground">
             <KeyRound className="h-4 w-4" />
           </span>
           <div className="min-w-0">
-            <h2 className="text-base font-bold text-gray-900 sm:text-lg">
+            <h2 className="text-base font-bold text-foreground sm:text-lg">
               {hasPassword ? i18n("Change password") : i18n("Set a password")}
             </h2>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground">
               {hasPassword
                 ? i18n("Use a unique password you don't reuse anywhere else.")
                 : i18n("Add a password so you can sign in with your email and password too.")}
@@ -151,7 +151,7 @@ export default function SecurityTab({ user }: SecurityTabProps) {
         </header>
 
         {isGoogleOnly && !hasPassword && (
-          <div className="mb-5 flex items-start gap-2 rounded-2xl border border-brand-border bg-brand-light-bg p-3 text-sm text-brand-black">
+          <div className="mb-5 flex items-start gap-2 rounded-2xl border border-border bg-background p-3 text-sm text-foreground">
             <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" />
             {i18n("You normally sign in with Google. Setting a password gives you a fallback if you ever lose access to your Google account.")}</div>
         )}
@@ -237,7 +237,7 @@ export default function SecurityTab({ user }: SecurityTabProps) {
               type="submit"
               disabled={!canSubmit}
               aria-busy={submitState.status === "saving"}
-              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-2xl bg-brand-red px-5 text-sm font-bold text-brand-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:translate-y-0 sm:w-auto"
+              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 text-sm font-bold text-primary-foreground shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-xl disabled:cursor-not-allowed disabled:bg-muted disabled:hover:translate-y-0 sm:w-auto"
             >
               {submitState.status === "saving" ? (
                 <ButtonLoader label={i18n("Saving...")} />
@@ -252,15 +252,15 @@ export default function SecurityTab({ user }: SecurityTabProps) {
         </form>
       </section>
 
-      <section className="rounded-2xl border border-brand-border bg-brand-white p-4 shadow-sm sm:rounded-3xl sm:p-6">
+      <section className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:rounded-3xl sm:p-6">
         <header className="mb-3 flex items-center gap-3">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-light-bg text-brand-black">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-background text-foreground">
             <ShieldCheck className="h-4 w-4" />
           </span>
           <div className="min-w-0">
-            <h2 className="text-base font-bold text-gray-900 sm:text-lg">
+            <h2 className="text-base font-bold text-foreground sm:text-lg">
               {i18n("Sign-in methods")}</h2>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground">
               {i18n("How you can access this account.")}</p>
           </div>
         </header>
@@ -311,21 +311,21 @@ function PasswordChecklist({ password }: { password: string }) {
   ];
 
   return (
-    <ul className="grid gap-1.5 rounded-2xl border border-brand-border bg-brand-light-bg p-3 text-xs">
+    <ul className="grid gap-1.5 rounded-2xl border border-border bg-background p-3 text-xs">
       {checks.map((check) => (
         <li
           key={check.label}
           className={
             check.ok
               ? "flex items-center gap-2 font-semibold text-emerald-700"
-              : "flex items-center gap-2 text-gray-600"
+              : "flex items-center gap-2 text-body"
           }
         >
           <span
             className={
               check.ok
-                ? "grid h-4 w-4 place-items-center rounded-full bg-emerald-500 text-white"
-                : "grid h-4 w-4 place-items-center rounded-full border border-gray-300 bg-white text-gray-400"
+                ? "grid h-4 w-4 place-items-center rounded-full bg-emerald-700 text-white"
+                : "grid h-4 w-4 place-items-center rounded-full border border-border bg-card text-muted-foreground"
             }
           >
             {check.ok ? "✓" : "·"}
@@ -352,14 +352,14 @@ function SignInMethod({
       className={
         connected
           ? "flex items-center gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-3"
-          : "flex items-center gap-3 rounded-2xl border border-brand-border bg-brand-white p-3"
+          : "flex items-center gap-3 rounded-2xl border border-border bg-card p-3"
       }
     >
       <span
         className={
           connected
             ? "grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-emerald-200 text-emerald-800"
-            : "grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gray-100 text-gray-500"
+            : "grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-secondary text-muted-foreground"
         }
       >
         {connected ? (
@@ -369,8 +369,8 @@ function SignInMethod({
         )}
       </span>
       <div className="min-w-0">
-        <p className="text-sm font-bold text-gray-900">{i18n(label)}</p>
-        <p className="text-[11px] text-gray-500">{i18n(description)}</p>
+        <p className="text-sm font-bold text-foreground">{i18n(label)}</p>
+        <p className="text-[11px] text-muted-foreground">{i18n(description)}</p>
       </div>
     </li>
   );

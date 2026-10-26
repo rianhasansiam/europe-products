@@ -30,24 +30,24 @@ export default function PasswordStrengthMeter({
             key={index}
             className={cn(
               "h-1.5 flex-1 rounded-full transition-all duration-500",
-              index < score ? colorClass : "bg-brand-border",
+              index < score ? colorClass : "bg-border",
             )}
           />
         ))}
       </div>
 
       <div className="mt-2 flex items-center justify-between text-[11px]">
-        <span className="font-bold uppercase tracking-wide text-brand-text-muted">
+        <span className="font-bold uppercase tracking-wide text-muted-foreground">
           {i18n("Strength")}</span>
 
         <span
           className={cn(
             "font-bold",
             score >= 3
-              ? "text-emerald-600"
+              ? "text-success"
               : score >= 2
                 ? "text-yellow-600"
-                : "text-red-500",
+                : "text-destructive",
           )}
         >
           {password ? i18n(label) : "—"}
@@ -75,15 +75,15 @@ function PasswordHints({ password }: { password: string }) {
           key={check.label}
           className={cn(
             "flex items-center gap-1.5 text-[11px] transition-colors",
-            check.passed ? "text-emerald-600" : "text-brand-text-muted",
+            check.passed ? "text-success" : "text-muted-foreground",
           )}
         >
           <span
             className={cn(
               "flex h-4 w-4 items-center justify-center rounded-full transition-all duration-300",
               check.passed
-                ? "bg-emerald-500 text-white"
-                : "bg-brand-border text-brand-text-muted",
+                ? "bg-success-surface0 text-white"
+                : "bg-border text-muted-foreground",
             )}
           >
             <Check className="h-3 w-3" />

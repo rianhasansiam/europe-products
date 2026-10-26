@@ -47,8 +47,9 @@ USD pricing must be reviewed before checkout opens. Follow
 - EmailJS requires the three public EmailJS settings; review its external email
   template and sender branding before enabling notifications.
 - Meta Pixel remains disabled when its public ID is blank.
-- Native LibreTranslate is optional for generating future translations. Existing
-  English/Bengali pages work without it. See [local translation setup](docs/translation-local-setup.md)
+- The website is English-only; language switching and translation management
+  have been removed. Stored catalogs and optional native LibreTranslate tooling
+  remain available. See [local translation setup](docs/translation-local-setup.md)
   and [translation architecture](docs/translation-architecture.md).
 - Uploads use a dedicated persistent filesystem directory outside the release;
   point `UPLOAD_PUBLIC_URL` to that deployment's upload path.
@@ -89,3 +90,6 @@ This repository intentionally starts with clean history. Database dumps, private
 operational reports, secrets, generated clients, build artifacts and translation
 runtime caches are excluded. Historical financial data belongs in private
 backups, not a public Git repository.
+
+
+npx prisma studio --port 5555

@@ -786,11 +786,11 @@ export default function CartPage() {
   if (catalogPricingReady === false) return <PricingUnavailable />;
 
   return (
-    <main className="min-h-screen bg-brand-light-bg">
+    <main className="min-h-screen bg-background">
       <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <CartHeader itemCount={cartTotals.itemCount} />
 
-        <div className="mt-2 flex items-center justify-between px-1 text-xs text-gray-500">
+        <div className="mt-2 flex items-center justify-between px-1 text-xs text-muted-foreground">
           <span>{i18n("Storage mode: {mode}", { mode: mode === "server" ? i18n("Server + Local") : i18n("Local only") })}</span>
           {isLoading && (
             <span className="inline-flex items-center gap-1.5">
@@ -800,7 +800,7 @@ export default function CartPage() {
         </div>
 
         {error && (
-          <div className="mt-3 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          <div className="mt-3 rounded-xl border border-destructive/25 bg-destructive/10 p-3 text-sm text-destructive">
             {i18n(error)}
           </div>
         )}
@@ -839,20 +839,20 @@ export default function CartPage() {
               )}
 
               <div className="flex flex-col gap-3">
-                <div className="flex items-center justify-between gap-3 rounded-2xl border border-brand-border bg-brand-white px-3 py-2.5 shadow-sm sm:px-4">
+                <div className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-card px-3 py-2.5 shadow-sm sm:px-4">
                   <button
                     type="button"
                     role="checkbox"
                     aria-checked={someItemsSelected ? "mixed" : allItemsSelected}
                     onClick={handleToggleSelectAll}
                     disabled={selectableItems.length === 0}
-                    className="inline-flex min-w-0 items-center gap-2.5 rounded-xl px-1 py-1 text-sm font-semibold text-gray-800 transition-colors hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex min-w-0 items-center gap-2.5 rounded-xl px-1 py-1 text-sm font-semibold text-foreground transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <span
                       className={`grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 transition-colors ${
                         allItemsSelected || someItemsSelected
-                          ? "border-brand-red bg-brand-red text-white"
-                          : "border-gray-300 bg-white text-transparent"
+                          ? "border-primary bg-primary text-white"
+                          : "border-border bg-card text-transparent"
                       }`}
                     >
                       {someItemsSelected ? (
@@ -863,7 +863,7 @@ export default function CartPage() {
                     </span>
                     <span>{allItemsSelected ? i18n("Deselect all") : i18n("Select all")}</span>
                   </button>
-                  <span className="shrink-0 text-xs font-medium text-gray-500">
+                  <span className="shrink-0 text-xs font-medium text-muted-foreground">
                     {i18n("{selected, number} of {total, number} selected", { selected: selectedItems.length, total: selectableItems.length })}</span>
                 </div>
 
@@ -893,11 +893,11 @@ export default function CartPage() {
                 </AnimatePresence>
               </div>
 
-              <div className="flex items-center justify-between rounded-2xl border border-dashed border-brand-border bg-brand-white/60 px-4 py-3 text-sm">
-                <p className="text-gray-600">{i18n("Looking for something else?")}</p>
+              <div className="flex items-center justify-between rounded-2xl border border-dashed border-border bg-brand-white/60 px-4 py-3 text-sm">
+                <p className="text-body">{i18n("Looking for something else?")}</p>
                 <Link
                   href="/products"
-                  className="font-semibold text-brand-red hover:underline"
+                  className="font-semibold text-primary hover:underline"
                 >
                   {i18n("Continue shopping")}{"->"}
                 </Link>
@@ -956,14 +956,14 @@ export default function CartPage() {
       </div>
 
       {!isEmpty && (
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-brand-border bg-brand-white/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-lg shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.15)] min-[360px]:px-4 lg:hidden">
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-brand-white/95 px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-lg shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.15)] min-[360px]:px-4 lg:hidden">
           <div className="mx-auto flex max-w-2xl items-center gap-2 min-[360px]:gap-3">
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] font-medium text-gray-500">
+              <p className="text-[11px] font-medium text-muted-foreground">
                 {verifiedSummary ? i18n("Total") : i18n("Subtotal")} ({selectedTotals.itemCount}{" "}
                 {selectedTotals.itemCount === 1 ? i18n("item") : i18n("items")})
               </p>
-              <p className="text-base font-extrabold text-brand-red min-[360px]:text-lg">
+              <p className="text-base font-bold text-primary min-[360px]:text-lg">
                 <CurrencyAmount amountUSD={mobileAmountUSD} />
               </p>
             </div>
@@ -976,7 +976,7 @@ export default function CartPage() {
                 selectedItems.length === 0
               }
               aria-busy={isCheckoutPending || isQuantitySyncing}
-              className="inline-flex h-12 shrink-0 items-center gap-2 rounded-2xl bg-brand-red px-3 text-sm font-bold text-brand-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 min-[360px]:px-5"
+              className="inline-flex h-12 shrink-0 items-center gap-2 rounded-2xl bg-primary px-3 text-sm font-bold text-primary-foreground shadow-md transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 min-[360px]:px-5"
             >
               {isQuantitySyncing ? (
                 <ButtonLoader

@@ -73,18 +73,18 @@ export default function FilterSidebar({
     <aside
       aria-label={i18n("Product filters")}
       className={cn(
-        "sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl border border-brand-border bg-white p-5 shadow-sm",
+        "sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl border border-border bg-card p-5 shadow-sm",
         className,
       )}
     >
-      <div className="mb-2 flex items-center justify-between border-b border-gray-100 pb-3">
-        <h2 className="text-base font-bold text-gray-900">{i18n("Filters")}</h2>
+      <div className="mb-2 flex items-center justify-between border-b border-border pb-3">
+        <h2 className="text-base font-bold text-foreground">{i18n("Filters")}</h2>
         <button
           type="button"
           onClick={onReset}
-          className="group flex items-center gap-1 text-xs font-semibold text-brand-red transition-colors hover:text-brand-red-hover"
+          className="group flex items-center gap-1 text-xs font-semibold text-primary transition-colors hover:text-primary-hover"
         >
-          <RotateCcw className="h-3 w-3 transition-transform duration-500 group-hover:-rotate-180" />
+          <RotateCcw className="h-3.5 w-3.5" />
           {i18n("Reset")}</button>
       </div>
 
@@ -134,10 +134,10 @@ export default function FilterSidebar({
               onClick={() => setMinRating(rating)}
               aria-pressed={filters.minRating === rating}
               className={cn(
-                "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition-colors",
+                "flex w-full items-center gap-2 min-h-11 rounded-xl px-2 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 filters.minRating === rating
-                  ? "bg-brand-red/10 text-brand-red"
-                  : "text-gray-700 hover:bg-gray-50",
+                  ? "bg-primary/10 text-primary"
+                  : "text-body hover:bg-background",
               )}
             >
               <span className="flex" aria-label={i18n("{value0} stars and up", { value0: rating })}>
@@ -149,7 +149,7 @@ export default function FilterSidebar({
                       "h-3.5 w-3.5",
                       index < rating
                         ? "fill-brand-gold text-brand-gold"
-                        : "text-gray-300",
+                        : "text-border",
                     )}
                   />
                 ))}
@@ -168,7 +168,7 @@ export default function FilterSidebar({
             id={brandFilterId}
             value={filters.brandSlug}
             onChange={(event) => update("brandSlug", event.target.value)}
-            className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-800 outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/20"
+            className="h-11 w-full rounded-xl border border-border bg-card px-3 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-ring/20"
           >
             <option value="">{i18n("All brands")}</option>
             {facets.brands.map((brand) => (
@@ -188,7 +188,7 @@ export default function FilterSidebar({
             id={manufacturerFilterId}
             value={filters.manufacturerSlug}
             onChange={(event) => update("manufacturerSlug", event.target.value)}
-            className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-800 outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/20"
+            className="h-11 w-full rounded-xl border border-border bg-card px-3 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-ring/20"
           >
             <option value="">{i18n("All manufacturers")}</option>
             {facets.manufacturers.map((manufacturer) => (
@@ -247,14 +247,14 @@ function FilterChoice({
       onClick={onClick}
       style={style}
       className={cn(
-        "flex w-full items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-start text-sm transition-colors",
+        "flex w-full items-center justify-between gap-2 min-h-11 rounded-xl px-2 py-2 text-start text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         active
-          ? "bg-brand-red/10 font-semibold text-brand-red"
-          : "text-gray-700 hover:bg-gray-50 hover:text-brand-red",
+          ? "bg-primary/10 font-semibold text-primary"
+          : "text-body hover:bg-background hover:text-primary",
       )}
     >
       <span className="min-w-0 truncate">{i18n(label)}</span>
-      <span className="shrink-0 text-[11px] text-gray-400">{count}</span>
+      <span className="shrink-0 text-[11px] text-muted-foreground">{count}</span>
     </button>
   );
 }
@@ -313,7 +313,7 @@ function PriceFilter({
       }}
     >
       <div className="grid grid-cols-2 gap-2">
-        <label className="text-[11px] font-medium text-gray-500">
+        <label className="text-xs font-medium text-body">
           {i18n("Minimum (")}{currencyContext.currency})
           <input
             inputMode="decimal"
@@ -323,10 +323,10 @@ function PriceFilter({
             value={min}
             onChange={(event) => setMin(event.target.value)}
             placeholder={String(displayBounds.min)}
-            className="mt-1 h-9 w-full rounded-lg border border-gray-200 px-2 text-sm text-gray-800 outline-none focus:border-brand-red"
+            className="mt-1 h-11 w-full rounded-xl bg-card border border-border px-2 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-ring/25"
           />
         </label>
-        <label className="text-[11px] font-medium text-gray-500">
+        <label className="text-xs font-medium text-body">
           {i18n("Maximum (")}{currencyContext.currency})
           <input
             inputMode="decimal"
@@ -336,13 +336,13 @@ function PriceFilter({
             value={max}
             onChange={(event) => setMax(event.target.value)}
             placeholder={String(displayBounds.max)}
-            className="mt-1 h-9 w-full rounded-lg border border-gray-200 px-2 text-sm text-gray-800 outline-none focus:border-brand-red"
+            className="mt-1 h-11 w-full rounded-xl bg-card border border-border px-2 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-ring/25"
           />
         </label>
       </div>
       <button
         type="submit"
-        className="h-9 w-full rounded-lg border border-brand-red/20 bg-brand-red/5 text-xs font-semibold text-brand-red transition-colors hover:bg-brand-red/10"
+        className="h-11 w-full rounded-xl border border-primary/20 bg-primary/5 text-xs font-semibold text-primary transition-colors hover:bg-primary/10"
       >
         {i18n("Apply price")}</button>
     </form>
@@ -360,8 +360,8 @@ function FilterGroup({
 }) {
   const i18n = useInterfaceTranslations("InterfaceProductsComponentsFilterSidebar");
   return (
-    <section className={`py-4 ${last ? "" : "border-b border-gray-100"}`}>
-      <h3 className="mb-3 text-xs font-bold uppercase tracking-wide text-gray-900">
+    <section className={`py-4 ${last ? "" : "border-b border-border"}`}>
+      <h3 className="mb-3 text-sm font-semibold text-foreground">
         {i18n(title)}
       </h3>
       {children}

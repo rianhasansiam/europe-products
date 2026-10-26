@@ -51,17 +51,17 @@ export default function ProductsGrid({
   const i18n = useInterfaceTranslations("InterfaceProductsComponentsProductsGrid");
   if (products.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-2xl border border-brand-border bg-white px-6 py-16 text-center shadow-sm">
-        <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-brand-light-bg">
-          <PackageX className="h-10 w-10 text-brand-text-muted" />
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-border bg-card px-6 py-16 text-center shadow-sm">
+        <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-background">
+          <PackageX className="h-10 w-10 text-muted-foreground" />
         </div>
-        <h3 className="mb-1 text-lg font-bold text-gray-900">
+        <h3 className="mb-1 text-lg font-bold text-foreground">
           {i18n("No products found")}</h3>
-        <p className="mb-5 max-w-md text-sm text-gray-500">
+        <p className="mb-5 max-w-md text-sm text-muted-foreground">
           {i18n("Try adjusting your filters to find what you're looking for.")}</p>
         <button
           onClick={onClearFilters}
-          className="rounded-full bg-brand-red px-5 py-2 text-sm font-semibold text-brand-white transition hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-lg"
+          className="min-h-11 rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           {i18n("Clear all filters")}</button>
       </div>
@@ -76,7 +76,7 @@ export default function ProductsGrid({
             key={p.id}
             className={
               idx >= animateFrom
-                ? "animate-in fade-in slide-in-from-bottom-2 duration-500"
+                ? "motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 duration-300"
                 : undefined
             }
             style={
@@ -97,7 +97,7 @@ export default function ProductsGrid({
 
   return (
     <div
-      className={`grid grid-cols-2 gap-2 transition-[grid-template-columns] duration-300 ease-in-out sm:grid-cols-3 sm:gap-4 md:grid-cols-3 ${
+      className={`grid grid-cols-2 gap-3 transition-[grid-template-columns] duration-300 ease-in-out sm:grid-cols-3 sm:gap-4 md:grid-cols-3 ${
         wide ? "lg:grid-cols-4 xl:grid-cols-5" : "lg:grid-cols-3 xl:grid-cols-4"
       }`}
     >
@@ -106,7 +106,7 @@ export default function ProductsGrid({
           key={p.id}
           className={
             idx >= animateFrom
-              ? "min-w-0 animate-in fade-in slide-in-from-bottom-3 duration-500"
+              ? "min-w-0 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 duration-300"
               : "min-w-0"
           }
           style={
@@ -208,25 +208,25 @@ function ListItem({ product }: { product: Product }) {
   };
 
   return (
-    <div className="group flex gap-3 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:border-brand-red hover:shadow-md sm:gap-4">
+    <div className="group flex gap-3 overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-primary/35 hover:shadow-md sm:gap-4">
       <Link
         href={`/products/${product.slug}`}
-        className="relative aspect-square w-28 shrink-0 overflow-hidden bg-gray-50 sm:w-40 md:w-48"
+        className="relative aspect-square w-28 shrink-0 overflow-hidden bg-background sm:w-40 md:w-48"
       >
         <Image
           src={product.image}
           alt={product.name}
           fill
           sizes="(max-width: 640px) 112px, (max-width: 768px) 160px, 192px"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover transition-transform duration-300 motion-safe:group-hover:scale-[1.025]"
         />
         {product.badge ? (
-          <span className="absolute start-2 top-2 rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-semibold text-brand-white">
+          <span className="absolute start-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
             {product.badge}
           </span>
         ) : (
           discount > 0 && (
-            <span className="absolute start-2 top-2 rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-semibold text-brand-white">
+            <span className="absolute start-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
               -{discount}%
             </span>
           )
@@ -236,15 +236,15 @@ function ListItem({ product }: { product: Product }) {
       <div className="flex min-w-0 flex-1 flex-col py-2 pe-3 sm:py-3 sm:pe-4">
         <div className="mb-1 flex items-start justify-between gap-2">
           <Link href={`/products/${product.slug}`} className="min-w-0">
-            <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-gray-900 transition hover:text-brand-red sm:text-base">
+            <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-foreground transition hover:text-primary sm:text-base">
               {product.name}
             </h3>
           </Link>
           <button
             aria-label={i18n("Add to wishlist")}
-            className="shrink-0 rounded-full p-1.5 transition hover:bg-brand-light-bg"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <Heart className="h-4 w-4 text-gray-500 transition-colors hover:text-brand-red" />
+            <Heart className="h-4 w-4 text-muted-foreground transition-colors hover:text-primary" />
           </button>
         </div>
 
@@ -255,17 +255,17 @@ function ListItem({ product }: { product: Product }) {
               className={`h-3 w-3 ${
                 i < Math.round(product.rating)
                   ? "fill-brand-gold text-brand-gold"
-                  : "text-gray-200"
+                  : "text-border"
               }`}
             />
           ))}
-          <span className="ms-0.5 text-[11px] text-gray-500">
+          <span className="ms-0.5 text-[11px] text-muted-foreground">
             ({product.reviewCount})
           </span>
         </div>
 
         {product.description && (
-          <p className="mb-2 hidden line-clamp-2 text-xs text-gray-600 md:block">
+          <p className="mb-2 hidden line-clamp-2 text-xs text-body md:block">
             {product.description}
           </p>
         )}
@@ -274,15 +274,15 @@ function ListItem({ product }: { product: Product }) {
           <div className="flex flex-wrap items-baseline gap-1.5">
             <CurrencyAmount
               amountUSD={finalPrice}
-              className="text-base font-bold text-brand-red sm:text-lg"
+              className="text-base font-bold text-primary sm:text-lg"
             />
             {hasDiscount && (
               <>
                 <CurrencyAmount
                   amountUSD={product.price}
-                  className="text-xs text-gray-400 line-through"
+                  className="text-xs text-muted-foreground line-through"
                 />
-                <span className="text-[10px] font-bold text-brand-red sm:text-xs">
+                <span className="text-[10px] font-bold text-primary sm:text-xs">
                   {discount}{i18n("% off")}</span>
               </>
             )}
@@ -296,7 +296,7 @@ function ListItem({ product }: { product: Product }) {
               title={pricingReady === false ? "Prices are temporarily unavailable" : undefined}
           disabled={pricingReady === false || isCartBusy}
               aria-busy={isCartBusy}
-              className="hidden items-center gap-1.5 rounded-full bg-brand-red px-3 py-1.5 text-xs font-semibold text-brand-white shadow-sm transition hover:bg-brand-red-hover hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 sm:flex"
+              className="hidden min-h-11 items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:flex"
             >
               {isCartBusy ? (
                 <ButtonLoader label={i18n("Adding...")} />

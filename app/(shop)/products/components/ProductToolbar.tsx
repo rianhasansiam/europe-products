@@ -57,18 +57,18 @@ export default function ProductToolbar({
 }: Props) {
   const i18n = useInterfaceTranslations("InterfaceProductsComponentsProductToolbar");
   return (
-    <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-brand-border bg-white px-3 py-2.5 shadow-sm transition-shadow duration-300 hover:shadow-md sm:flex-nowrap sm:px-4">
+    <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border bg-card px-3 py-2.5 shadow-sm sm:flex-nowrap sm:px-4">
       <div className="flex min-w-0 items-center gap-2">
         <Button
           type="button"
           onClick={onOpenMobileFilter}
           variant="secondary"
           size="sm"
-          className="h-10 bg-brand-light-bg text-brand-black transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-border active:translate-y-0 sm:h-7 lg:hidden"
+          className="h-11 bg-secondary text-foreground transition-colors hover:bg-accent lg:hidden"
         >
           <SlidersHorizontal className="size-4" />
           {i18n("Filters")}{activeFilterCount > 0 && (
-            <span className="rounded-full bg-brand-red px-1.5 py-0.5 text-[10px] leading-none text-white">
+            <span className="rounded-full bg-primary px-1.5 py-0.5 text-[10px] leading-none text-white">
               {activeFilterCount}
             </span>
           )}
@@ -81,7 +81,7 @@ export default function ProductToolbar({
           size="sm"
           aria-label={sidebarOpen ? i18n("Hide filters") : i18n("Show filters")}
           aria-pressed={sidebarOpen}
-          className="hidden bg-brand-light-bg text-brand-black transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-border active:translate-y-0 lg:flex"
+          className="hidden h-11 bg-secondary text-foreground transition-colors hover:bg-accent lg:flex"
         >
           <SlidersHorizontal
             className={cn(
@@ -92,10 +92,10 @@ export default function ProductToolbar({
           {sidebarOpen ? i18n("Hide Filters") : i18n("Show Filters")}
         </Button>
 
-        <p className="hidden text-xs text-gray-600 sm:block sm:text-sm">
+        <p className="hidden text-xs text-body sm:block sm:text-sm">
           {i18n("Showing {shown, number} of {total, number}", { shown: resultsCount, total: totalCount })}
         </p>
-        <p className="min-w-0 truncate text-xs text-gray-600 sm:hidden">
+        <p className="min-w-0 truncate text-xs text-body sm:hidden">
           {i18n("{count, plural, one {# result} other {# results}}", { count: totalCount })}</p>
       </div>
 
@@ -106,7 +106,7 @@ export default function ProductToolbar({
               type="button"
               variant="outline"
               size="sm"
-              className="group h-10 max-w-full bg-brand-light-bg text-brand-black transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-light-bg hover:text-brand-red active:translate-y-0 data-[state=open]:bg-brand-light-bg data-[state=open]:text-brand-red sm:h-7"
+              className="group h-11 max-w-full bg-card text-body transition-colors hover:bg-secondary hover:text-primary data-[state=open]:bg-secondary data-[state=open]:text-primary"
             >
               <span className="hidden sm:inline">{i18n("Sort:")}</span>
               <span className="font-semibold">{i18n(SORT_LABELS[sort])}</span>
@@ -129,11 +129,11 @@ export default function ProductToolbar({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <label className="hidden items-center gap-1 text-xs text-gray-500 md:flex">
+        <label className="hidden items-center gap-1 text-xs text-muted-foreground md:flex">
           {i18n("Show")}<select
             value={pageSize}
             onChange={(event) => onPageSizeChange(Number(event.target.value))}
-            className="h-8 rounded-md border border-gray-200 bg-white px-1.5 text-xs font-semibold text-gray-800 outline-none focus:border-brand-red"
+            className="h-11 rounded-xl border border-border bg-card px-2 text-sm font-medium text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-ring/25"
             aria-label={i18n("Products per page")}
           >
             {[12, 24, 48].map((size) => (
@@ -144,7 +144,7 @@ export default function ProductToolbar({
           </select>
         </label>
 
-        <div className="hidden items-center rounded-lg border border-gray-200 bg-gray-50 p-0.5 sm:flex">
+        <div className="hidden items-center rounded-lg border border-border bg-background p-0.5 sm:flex">
           <ViewToggle
             active={viewMode === "grid"}
             onClick={() => onViewModeChange("grid")}
@@ -184,10 +184,10 @@ function ViewToggle({
       aria-label={i18n(label)}
       aria-pressed={active}
       className={cn(
-        "rounded-md p-1.5 transition-all duration-200",
+        "flex h-10 w-10 items-center justify-center rounded-lg transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         active
-          ? "scale-100 bg-white text-brand-red shadow-sm"
-          : "text-brand-text-muted hover:scale-105 hover:text-brand-red",
+          ? "bg-card text-primary shadow-sm"
+          : "text-muted-foreground hover:bg-secondary hover:text-primary",
       )}
     >
       {children}

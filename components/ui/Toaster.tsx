@@ -28,17 +28,17 @@ const ICONS = {
 } as const;
 
 const STYLES = {
-  success: "bg-emerald-50 border-emerald-200 text-emerald-800",
-  error: "bg-rose-50 border-rose-200 text-rose-800",
-  info: "bg-brand-red/5 border-brand-red/20 text-brand-red",
-  warning: "bg-amber-50 border-amber-200 text-amber-800",
+  success: "bg-success-surface border-success/25 text-success",
+  error: "bg-card border-destructive/30 text-destructive",
+  info: "bg-info-surface border-info/25 text-info",
+  warning: "bg-warning-surface border-warning/25 text-warning",
 } as const;
 
 const ICON_STYLES = {
-  success: "text-emerald-500",
-  error: "text-rose-500",
-  info: "text-brand-red",
-  warning: "text-amber-500",
+  success: "text-success",
+  error: "text-destructive",
+  info: "text-info",
+  warning: "text-warning",
 } as const;
 
 function ToastCard({
@@ -76,7 +76,7 @@ function ToastCard({
         type="button"
         onClick={() => onDismiss(item.id)}
         aria-label={i18n("Dismiss notification")}
-        className="shrink-0 rounded-lg p-0.5 opacity-60 transition-opacity hover:opacity-100"
+        className="flex size-9 shrink-0 items-center justify-center rounded-lg opacity-80 transition-opacity hover:opacity-100"
       >
         <X className="h-4 w-4" />
       </button>

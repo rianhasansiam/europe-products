@@ -143,20 +143,20 @@ export default function ProfileClient() {
         ? state.message
         : "Failed to load your profile. Please try again.";
     return (
-      <main className="min-h-screen bg-brand-light-bg">
+      <main className="min-h-screen bg-background">
         <div className="mx-auto w-full max-w-2xl px-3 py-8 sm:px-6 sm:py-16">
-          <div className="rounded-2xl border border-rose-200 bg-white p-6 text-center shadow-sm sm:rounded-3xl sm:p-10">
+          <div className="rounded-2xl border border-rose-200 bg-card p-6 text-center shadow-sm sm:rounded-3xl sm:p-10">
             <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-rose-100 text-rose-700">
               <AlertCircle className="h-7 w-7" />
             </div>
-            <h1 className="mt-4 text-2xl font-extrabold text-gray-900">
+            <h1 className="mt-4 text-2xl font-bold text-foreground">
               {i18n("Profile unavailable")}</h1>
-            <p className="mt-2 text-sm text-gray-600">{i18n(message)}</p>
+            <p className="mt-2 text-sm text-body">{i18n(message)}</p>
             <div className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-3">
               {isUnauth ? (
                 <Link
                   href="/login?callbackUrl=/profile"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-red px-5 py-2.5 text-sm font-bold text-brand-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-xl sm:w-auto"
                 >
                   <LogIn className="h-4 w-4" />
                   {i18n("Sign in")}</Link>
@@ -164,7 +164,7 @@ export default function ProfileClient() {
                 <button
                   type="button"
                   onClick={() => router.refresh()}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-red px-5 py-2.5 text-sm font-bold text-brand-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-xl sm:w-auto"
                 >
                   {i18n("Try again")}</button>
               )}
@@ -182,7 +182,7 @@ export default function ProfileClient() {
   const { user, stats } = state.overview;
 
   return (
-    <main className="min-h-screen bg-brand-light-bg">
+    <main className="min-h-screen bg-background">
       <div className="mx-auto w-full max-w-6xl px-3 py-4 sm:px-6 sm:py-8 lg:py-10">
         <ProfileHeader user={user} stats={stats} />
 

@@ -106,21 +106,21 @@ export default function TransactionsTab() {
 
   return (
     <div className="flex flex-col gap-4 sm:gap-5">
-      <header className="rounded-2xl border border-brand-border bg-brand-white p-4 shadow-sm sm:rounded-3xl sm:p-6">
+      <header className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:rounded-3xl sm:p-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-light-bg text-brand-black">
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-background text-foreground">
               <ReceiptText className="h-4 w-4" />
             </span>
             <div className="min-w-0">
-              <h2 className="text-base font-bold text-gray-900 sm:text-lg">
+              <h2 className="text-base font-bold text-foreground sm:text-lg">
                 {i18n("Payment transactions")}</h2>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 {i18n("Payment attempts recorded for orders on this account.")}</p>
             </div>
           </div>
           {state.status === "ready" && (
-            <p className="text-xs font-medium text-gray-500">
+            <p className="text-xs font-medium text-muted-foreground">
               {state.meta.total}{" "}
               {state.meta.total === 1 ? i18n("transaction") : i18n("transactions")} {i18n("total")}</p>
           )}
@@ -137,8 +137,8 @@ export default function TransactionsTab() {
                 aria-pressed={active}
                 className={
                   active
-                    ? "inline-flex shrink-0 snap-start rounded-xl bg-brand-red px-3 py-1.5 text-xs font-bold text-brand-white shadow-sm"
-                    : "inline-flex shrink-0 snap-start rounded-xl border border-brand-border bg-brand-white px-3 py-1.5 text-xs font-bold text-foreground transition hover:border-brand-red hover:text-brand-red"
+                    ? "inline-flex shrink-0 snap-start rounded-xl bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground shadow-sm"
+                    : "inline-flex shrink-0 snap-start rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold text-foreground transition hover:border-primary hover:text-primary"
                 }
               >
                 {i18n(filter.label)}
@@ -167,7 +167,7 @@ export default function TransactionsTab() {
             <button
               type="button"
               onClick={() => setRefreshKey((value) => value + 1)}
-              className="mt-2 rounded-lg border border-rose-200 bg-white px-2.5 py-1 text-xs font-bold text-rose-700 transition hover:bg-rose-100"
+              className="mt-2 rounded-lg border border-rose-200 bg-card px-2.5 py-1 text-xs font-bold text-rose-700 transition hover:bg-rose-100"
             >
               {i18n("Try again")}</button>
           </div>
@@ -175,13 +175,13 @@ export default function TransactionsTab() {
       )}
 
       {state.status === "ready" && state.items.length === 0 && (
-        <div className="rounded-2xl border border-brand-border bg-brand-white p-6 text-center shadow-sm sm:rounded-3xl sm:p-10">
-          <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand-light-bg text-brand-black">
+        <div className="rounded-2xl border border-border bg-card p-6 text-center shadow-sm sm:rounded-3xl sm:p-10">
+          <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-background text-foreground">
             <ReceiptText className="h-6 w-6" />
           </div>
-          <h3 className="mt-4 text-lg font-extrabold text-gray-900">
+          <h3 className="mt-4 text-lg font-bold text-foreground">
             {i18n("No transactions found")}</h3>
-          <p className="mt-1 text-sm text-gray-600">
+          <p className="mt-1 text-sm text-body">
             {statusFilter === "ALL"
               ? i18n("Your recorded payment attempts will appear here.")
               : i18n("There are no {value0} transactions.", { value0: i18n(TRANSACTION_STATUS_META[statusFilter].label) })}
@@ -224,11 +224,11 @@ function TransactionCard({
       : null;
 
   return (
-    <li className="overflow-hidden rounded-2xl border border-brand-border bg-brand-white shadow-sm sm:rounded-3xl">
+    <li className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm sm:rounded-3xl">
       <div className="flex flex-col gap-4 p-4 sm:p-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex min-w-0 items-start gap-3">
-            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-light-bg text-brand-red">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-background text-primary">
               <CreditCard className="h-4 w-4" />
             </span>
             <div className="min-w-0">
@@ -245,19 +245,19 @@ function TransactionCard({
                 )}
               </div>
               <p
-                className="mt-2 break-all font-mono text-xs font-semibold text-gray-700"
+                className="mt-2 break-all font-mono text-xs font-semibold text-body"
                 title={reference}
               >
                 {reference}
               </p>
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-muted-foreground">
                 {paymentProviderLabel(transaction.provider)}
                 {transaction.cardType ? ` · ${transaction.cardType}` : ""}
               </p>
             </div>
           </div>
 
-          <p className="text-start text-lg font-extrabold text-brand-red sm:text-end">
+          <p className="text-start text-lg font-bold text-primary sm:text-end">
             {formatTransactionAmount(
               transaction.amount,
               transaction.currency,
@@ -266,36 +266,36 @@ function TransactionCard({
           </p>
         </div>
 
-        <div className="grid gap-3 border-t border-brand-border pt-3 text-xs sm:grid-cols-3">
+        <div className="grid gap-3 border-t border-border pt-3 text-xs sm:grid-cols-3">
           <div>
-            <p className="font-semibold uppercase tracking-wide text-gray-400">
+            <p className="font-semibold uppercase tracking-wide text-muted-foreground">
               {i18n("Order")}</p>
             <Link
               href={`/orders/${transaction.order.id}`}
-              className="mt-1 inline-flex font-bold text-brand-red hover:underline"
+              className="mt-1 inline-flex font-bold text-primary hover:underline"
             >
               #{transaction.order.orderNumber}
             </Link>
           </div>
           <div>
-            <p className="font-semibold uppercase tracking-wide text-gray-400">
+            <p className="font-semibold uppercase tracking-wide text-muted-foreground">
               {i18n("Initiated")}</p>
-            <p className="mt-1 font-medium text-gray-700">
+            <p className="mt-1 font-medium text-body">
               {formatTransactionDate(transaction.createdAt, locale)}
             </p>
           </div>
           <div>
-            <p className="font-semibold uppercase tracking-wide text-gray-400">
+            <p className="font-semibold uppercase tracking-wide text-muted-foreground">
               {completion?.label ?? i18n("Paid")}
             </p>
-            <p className="mt-1 font-medium text-gray-700">
+            <p className="mt-1 font-medium text-body">
               {formatTransactionDate(completion?.value ?? null, locale)}
             </p>
           </div>
         </div>
 
         {transaction.bankTransactionId && (
-          <p className="break-all rounded-xl bg-brand-light-bg px-3 py-2 font-mono text-[11px] text-gray-600">
+          <p className="break-all rounded-xl bg-background px-3 py-2 font-mono text-[11px] text-body">
             {i18n("Bank reference:")}{transaction.bankTransactionId}
           </p>
         )}
@@ -315,13 +315,13 @@ function TransactionPagination({
 }) {
   const i18n = useInterfaceTranslations("InterfaceProfileComponentsTransactionsTab");
   return (
-    <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 rounded-2xl border border-brand-border bg-brand-white p-2.5 text-xs font-semibold text-gray-600 shadow-sm sm:p-3">
+    <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 rounded-2xl border border-border bg-card p-2.5 text-xs font-semibold text-body shadow-sm sm:p-3">
       <button
         type="button"
         onClick={() => onChange(Math.max(1, page - 1))}
         disabled={page <= 1}
         aria-label={i18n("Previous transaction page")}
-        className="inline-flex items-center gap-1 rounded-xl border border-brand-border px-3 py-1.5 transition hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex items-center gap-1 rounded-xl border border-border px-3 py-1.5 transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
       >
         <ChevronLeft className="h-3.5 w-3.5 rtl:rotate-180" />
         <span className="hidden min-[380px]:inline">{i18n("Previous")}</span>
@@ -334,7 +334,7 @@ function TransactionPagination({
         onClick={() => onChange(Math.min(totalPages, page + 1))}
         disabled={page >= totalPages}
         aria-label={i18n("Next transaction page")}
-        className="inline-flex items-center gap-1 rounded-xl border border-brand-border px-3 py-1.5 transition hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex items-center gap-1 rounded-xl border border-border px-3 py-1.5 transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
       >
         <span className="hidden min-[380px]:inline">{i18n("Next")}</span>
         <ChevronRight className="h-3.5 w-3.5 rtl:rotate-180" />

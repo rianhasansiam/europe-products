@@ -168,7 +168,7 @@ const ProductGallery = ({
     <div className="space-y-3">
       {/* Main Image */}
       <div
-        className="relative aspect-4/5 overflow-hidden rounded-2xl border border-gray-100 bg-white"
+        className="relative aspect-4/5 overflow-hidden rounded-2xl border border-border bg-card"
         style={{ position: "relative" }}
       >
         <Image
@@ -185,7 +185,7 @@ const ProductGallery = ({
           className="object-contain p-4"
         />
         {isVariantImage && (
-          <span className="absolute bottom-3 start-3 rounded-full bg-brand-red px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm">
+          <span className="absolute bottom-3 start-3 rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm">
             {i18n("Selected variant")}</span>
         )}
       </div>
@@ -201,10 +201,10 @@ const ProductGallery = ({
               onClick={() => setSelectedImageUrl(item.url)}
               style={{ position: "relative" }}
               className={cn(
-                "relative aspect-4/5 w-14 shrink-0 overflow-hidden rounded-lg border-2 transition-all",
+                "relative aspect-4/5 w-14 shrink-0 overflow-hidden rounded-xl border-2 bg-card transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                 selectedImage === index
-                  ? "border-brand-red"
-                  : "border-gray-200 hover:border-brand-red",
+                  ? "border-primary"
+                  : "border-border hover:border-primary",
               )}
               aria-label={
                 itemIsVariant && item.label
@@ -228,7 +228,7 @@ const ProductGallery = ({
                   aria-hidden
                   className={cn(
                     "absolute end-1 top-1 h-2.5 w-2.5 rounded-full ring-2 ring-white",
-                    selectedImage === index ? "bg-brand-red" : "bg-gray-500",
+                    selectedImage === index ? "bg-primary" : "bg-background0",
                   )}
                 />
               )}

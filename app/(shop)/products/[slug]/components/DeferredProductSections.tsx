@@ -11,7 +11,7 @@ function SectionFallback({ label }: { label: string }) {
       aria-label={i18n(label)}
       aria-busy="true"
       role="status"
-      className="min-h-28 animate-pulse rounded-2xl border border-brand-border bg-white"
+      className="min-h-28 animate-pulse rounded-2xl border border-border bg-card"
     />
   );
 }

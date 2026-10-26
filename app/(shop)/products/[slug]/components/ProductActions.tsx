@@ -388,19 +388,19 @@ const ProductActions = ({
   };
 
   return (
-    <div className="min-w-0 space-y-5 border-t border-gray-100 pt-4">
+    <div className="min-w-0 space-y-5 border-t border-border pt-4">
       <div className="flex min-w-0 flex-wrap items-baseline gap-3">
         <CurrencyAmount
           amountUSD={unitPrice}
-          className="max-w-full text-3xl font-bold text-gray-900 [overflow-wrap:anywhere]"
+          className="max-w-full text-3xl font-bold tabular-nums text-foreground [overflow-wrap:anywhere]"
         />
         {discount > 0 && (
           <>
             <CurrencyAmount
               amountUSD={currentListPrice}
-              className="text-lg text-gray-600 line-through"
+              className="text-lg text-body line-through"
             />
-            <span className="rounded-full bg-red-50 px-2 py-0.5 text-xs font-bold text-red-700">
+            <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-primary">
               -{discount}%
             </span>
           </>
@@ -412,7 +412,7 @@ const ProductActions = ({
           className="min-w-0 space-y-2"
           aria-describedby="variant-selection-help"
         >
-          <legend className="text-sm font-semibold text-gray-900">
+          <legend className="text-sm font-semibold text-foreground">
             {i18n("Choose an option")}</legend>
           <p id="variant-selection-help" className="sr-only">
             {i18n("The first option is selected by default. Choose another available combination if you prefer.")}</p>
@@ -447,12 +447,12 @@ const ProductActions = ({
                     ...options.map((option) => `${option.key}: ${option.value}`),
                     ...(isOutOfStock ? ["Out of stock"] : []),
                   ].join(", ")}
-                  className={`inline-flex min-h-11 min-w-0 max-w-full items-center gap-2 rounded-lg border px-3 py-2 text-start transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 ${
+                  className={`inline-flex min-h-11 min-w-0 max-w-full items-center gap-2 rounded-xl border px-3 py-2 text-start transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                     isSelected
-                      ? "border-brand-red bg-brand-red/5 ring-1 ring-brand-red"
+                      ? "border-primary bg-primary/5 ring-1 ring-ring"
                       : isOutOfStock
-                        ? "cursor-not-allowed border-gray-200 bg-gray-50 opacity-60"
-                        : "border-gray-200 bg-white hover:border-brand-red/70 hover:bg-brand-red/5"
+                        ? "cursor-not-allowed border-border bg-background opacity-60"
+                        : "border-border bg-card hover:border-primary/70 hover:bg-primary/5"
                   }`}
                 >
                   {colorOption && colorIsHex(colorOption.value) && (
@@ -463,24 +463,24 @@ const ProductActions = ({
                     />
                   )}
                   <span className="flex min-w-0 flex-wrap items-baseline gap-x-1.5 gap-y-0.5 [overflow-wrap:anywhere]">
-                    <span className="min-w-0 text-[13px] font-semibold leading-5 text-gray-900">
+                    <span className="min-w-0 text-[13px] font-semibold leading-5 text-foreground">
                       {variantLabel(variant)}
                     </span>
                     {combinationOptions.map((option) => (
                       <span
                         key={`${variant.id}:${option.key}`}
-                        className="min-w-0 text-[11px] leading-4 text-gray-500"
+                        className="min-w-0 text-[11px] leading-4 text-muted-foreground"
                       >
                         {option.key}: {option.value}
                       </span>
                     ))}
                     {isOutOfStock && (
-                      <span className="text-[11px] font-medium leading-4 text-rose-600">
+                      <span className="text-[11px] font-medium leading-4 text-destructive">
                         {i18n("Out of stock")}</span>
                     )}
                   </span>
                   <Check
-                    className={`h-3.5 w-3.5 shrink-0 text-brand-red ${
+                    className={`h-3.5 w-3.5 shrink-0 text-primary ${
                       isSelected ? "opacity-100" : "opacity-0"
                     }`}
                     aria-hidden="true"
@@ -491,7 +491,7 @@ const ProductActions = ({
           </div>
           {selectedVariant && (
             <div
-              className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-[11px] leading-4 text-gray-500 [overflow-wrap:anywhere]"
+              className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-[11px] leading-4 text-muted-foreground [overflow-wrap:anywhere]"
               aria-live="polite"
             >
               {variantDisplayOptions(selectedVariant).map((option) => (
@@ -508,7 +508,7 @@ const ProductActions = ({
               )}
               <span
                 className={`font-medium ${
-                  isPurchasable ? "text-emerald-700" : "text-rose-600"
+                  isPurchasable ? "text-emerald-700" : "text-destructive"
                 }`}
               >
                 {isPurchasable ? i18n("{value0} available", { value0: stockCount }) : i18n("Out of stock")}
@@ -521,8 +521,8 @@ const ProductActions = ({
       {activeVariants.length === 1 &&
         selectedVariant &&
         variantDisplayOptions(selectedVariant).length > 0 && (
-          <div className="rounded-xl border border-gray-200 bg-gray-50 p-3">
-            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          <div className="rounded-xl border border-border bg-background p-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               {i18n("Included option")}</p>
             <dl className="mt-2 flex min-w-0 flex-wrap gap-x-5 gap-y-2 text-sm">
               {variantDisplayOptions(selectedVariant).map((option) => (
@@ -530,10 +530,10 @@ const ProductActions = ({
                   key={option.key}
                   className="flex min-w-0 max-w-full flex-wrap gap-1.5 [overflow-wrap:anywhere]"
                 >
-                  <dt className="min-w-0 text-gray-500 [overflow-wrap:anywhere]">
+                  <dt className="min-w-0 text-muted-foreground [overflow-wrap:anywhere]">
                     {option.key}:
                   </dt>
-                  <dd className="min-w-0 font-medium text-gray-900 [overflow-wrap:anywhere]">
+                  <dd className="min-w-0 font-medium text-foreground [overflow-wrap:anywhere]">
                     {option.value}
                   </dd>
                 </div>
@@ -543,11 +543,11 @@ const ProductActions = ({
         )}
 
       <p
-        className="text-xs font-medium text-gray-500 [overflow-wrap:anywhere]"
+        className="text-xs font-medium text-muted-foreground [overflow-wrap:anywhere]"
         aria-live="polite"
       >
         {activeVariants.length === 0 ? (
-          <span className="text-rose-600">
+          <span className="text-destructive">
             {i18n("This product is currently unavailable.")}</span>
         ) : hasMultipleVariants && !selectedVariant ? (
           i18n("Choose an option combination to see its availability.")
@@ -560,22 +560,22 @@ const ProductActions = ({
             )}
           </>
         ) : (
-          <span className="text-rose-600">{i18n("Out of stock")}</span>
+          <span className="text-destructive">{i18n("Out of stock")}</span>
         )}
       </p>
 
       <div className="grid grid-cols-1 items-center gap-2 min-[360px]:grid-cols-[auto_minmax(0,1fr)]">
-        <div className="flex w-fit items-center overflow-hidden rounded-lg border border-gray-200">
+        <div className="flex w-fit items-center overflow-hidden rounded-xl border border-border">
           <button
             type="button"
             onClick={() => handleQuantityChange(-1)}
             disabled={!isPurchasable || quantity <= 1}
             aria-label={i18n("Decrease quantity")}
-            className="flex h-11 w-11 items-center justify-center transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-11 w-11 items-center justify-center transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <Minus className="h-4 w-4 text-gray-600" />
+            <Minus className="h-4 w-4 text-body" />
           </button>
-          <span className="w-11 text-center font-medium text-gray-900">
+          <span className="w-11 text-center font-medium text-foreground">
             {quantity}
           </span>
           <button
@@ -583,9 +583,9 @@ const ProductActions = ({
             onClick={() => handleQuantityChange(1)}
             disabled={!isPurchasable || quantity >= stockCount}
             aria-label={i18n("Increase quantity")}
-            className="flex h-11 w-11 items-center justify-center transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-11 w-11 items-center justify-center transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <Plus className="h-4 w-4 text-gray-600" />
+            <Plus className="h-4 w-4 text-body" />
           </button>
         </div>
 
@@ -597,10 +597,10 @@ const ProductActions = ({
           title={pricingReady === false ? "Prices are temporarily unavailable" : undefined}
           disabled={pricingReady === false || !isPurchasable || isCartBusy}
           aria-busy={isCartBusy}
-          className={`flex min-h-11 min-w-0 w-full items-center justify-center gap-2 rounded-lg px-3 py-2.5 font-medium transition-all sm:px-6 ${
+          className={`flex min-h-11 min-w-0 w-full items-center justify-center gap-2 rounded-xl px-3 py-2.5 font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:px-6 ${
             isPurchasable
-              ? "bg-brand-red text-brand-white hover:bg-brand-red-hover"
-              : "cursor-not-allowed bg-gray-300 text-gray-500"
+              ? "border border-primary bg-card text-primary hover:bg-secondary"
+              : "cursor-not-allowed bg-muted text-muted-foreground"
           }`}
         >
           {isCartBusy ? (
@@ -624,10 +624,10 @@ const ProductActions = ({
         title={pricingReady === false ? "Prices are temporarily unavailable" : undefined}
           disabled={pricingReady === false || !isPurchasable || isBuyNowPending}
         aria-busy={isBuyNowPending}
-        className={`flex w-full items-center justify-center gap-2 rounded-lg px-6 py-2.5 text-sm font-bold transition-all ${
+        className={`flex min-h-11 w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
           isPurchasable
-            ? "bg-brand-black text-brand-white shadow-md hover:-translate-y-0.5 hover:bg-brand-dark-surface hover:shadow-lg"
-            : "cursor-not-allowed bg-gray-200 text-gray-500"
+            ? "bg-primary text-primary-foreground hover:bg-primary-hover"
+            : "cursor-not-allowed bg-muted text-muted-foreground"
         }`}
       >
         {isBuyNowPending ? (
@@ -639,7 +639,7 @@ const ProductActions = ({
         )}
       </button>
 
-      <div className="fixed inset-x-0 bottom-0 z-60 border-t border-brand-border bg-brand-white/95 px-2 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.2)] backdrop-blur-lg lg:hidden sm:px-4 sm:pt-3">
+      <div className="fixed inset-x-0 bottom-0 z-60 border-t border-border bg-card/95 px-2 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.2)] backdrop-blur-lg lg:hidden sm:px-4 sm:pt-3">
           <div className="mx-auto flex max-w-2xl items-center gap-2 sm:gap-3">
             <button
               type="button"
@@ -655,8 +655,8 @@ const ProductActions = ({
               aria-busy={isWishlistBusy}
               className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition sm:h-12 sm:w-12 ${
                 isWishlisted
-                  ? "border-brand-red bg-brand-red/10 text-brand-red"
-                  : "border-brand-border bg-white text-gray-700 hover:border-brand-red/40 hover:text-brand-red"
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-border bg-card text-body hover:border-primary/40 hover:text-primary"
               } disabled:cursor-not-allowed disabled:opacity-60`}
             >
               {isWishlistBusy ? (
@@ -676,7 +676,7 @@ const ProductActions = ({
               title={pricingReady === false ? "Prices are temporarily unavailable" : undefined}
           disabled={pricingReady === false || !isPurchasable || isCartBusy}
               aria-busy={isCartBusy}
-              className="flex h-11 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl border border-brand-red bg-white px-2 text-xs font-bold text-brand-red transition hover:bg-brand-red/5 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-400 sm:h-12 sm:px-4 sm:text-sm"
+              className="flex h-11 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl border border-primary bg-card px-2 text-xs font-bold text-primary transition hover:bg-primary/5 disabled:cursor-not-allowed disabled:border-border disabled:text-muted-foreground sm:h-12 sm:px-4 sm:text-sm"
             >
               {isCartBusy ? (
                 <ButtonLoader label={i18n("Adding...")} />
@@ -698,7 +698,7 @@ const ProductActions = ({
               title={pricingReady === false ? "Prices are temporarily unavailable" : undefined}
           disabled={pricingReady === false || !isPurchasable || isBuyNowPending}
               aria-busy={isBuyNowPending}
-              className="flex h-11 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl bg-brand-red px-2 text-xs font-bold text-brand-white shadow-sm transition hover:bg-brand-red-hover disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 sm:h-12 sm:px-4 sm:text-sm"
+              className="flex h-11 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary px-2 text-xs font-bold text-primary-foreground shadow-sm transition hover:bg-primary-hover disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground sm:h-12 sm:px-4 sm:text-sm"
             >
               {isBuyNowPending ? (
                 <ButtonLoader label={i18n("Opening...")} />

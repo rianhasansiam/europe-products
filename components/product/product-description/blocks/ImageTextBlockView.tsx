@@ -47,13 +47,13 @@ export default function ImageTextBlockView({
         {block.heading?.trim() && (
           <h2
             id={`it-${block.id}`}
-            className="text-xl font-bold text-gray-900 [overflow-wrap:anywhere] sm:text-2xl"
+            className="text-xl font-bold text-foreground [overflow-wrap:anywhere] sm:text-2xl"
           >
             {block.heading}
           </h2>
         )}
         {block.description?.trim() && (
-          <p className="leading-relaxed text-gray-600 [overflow-wrap:anywhere]">
+          <p className="leading-relaxed text-body [overflow-wrap:anywhere]">
             {block.description}
           </p>
         )}
@@ -66,7 +66,7 @@ export default function ImageTextBlockView({
                   rel: "noopener noreferrer",
                 }
               : {})}
-            className="inline-flex min-h-11 w-fit max-w-full items-center justify-center gap-2 whitespace-normal rounded-xl bg-brand-red px-5 py-2.5 text-center text-sm font-semibold text-white transition [overflow-wrap:anywhere] hover:bg-brand-red-hover"
+            className="inline-flex min-h-11 w-fit max-w-full items-center justify-center gap-2 whitespace-normal rounded-xl bg-primary px-5 py-2.5 text-center text-sm font-semibold text-primary-foreground transition [overflow-wrap:anywhere] hover:bg-primary-hover"
           >
             {block.ctaLabel}
           </Link>

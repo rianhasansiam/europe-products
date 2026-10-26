@@ -148,20 +148,18 @@ export default function ContactForm() {
     >
       {/* Left: Contextual panel */}
       <div className="lg:col-span-2">
-        <div className="relative h-full overflow-hidden rounded-3xl bg-brand-black p-6 sm:p-8 text-white shadow-xl">
-          <div className="absolute top-0 end-0 h-32 w-32 rounded-full bg-white/10 -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 start-0 h-40 w-40 rounded-full bg-white/5 translate-y-1/3 -translate-x-1/3" />
+        <div className="relative h-full overflow-hidden rounded-3xl bg-secondary border border-border p-6 sm:p-8 text-foreground shadow-sm">
 
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 backdrop-blur-sm ring-1 ring-white/20">
-              <MessageSquare className="h-3.5 w-3.5 text-brand-gold" />
+            <div className="inline-flex items-center gap-2 rounded-full bg-card/80 px-3 py-1.5 ring-1 ring-border">
+              <MessageSquare className="h-3.5 w-3.5 text-primary" />
               <span className="text-[11px] font-bold uppercase tracking-wide">
                 {i18n("Drop a line")}</span>
             </div>
 
-            <h2 className="mt-4 text-2xl font-black leading-tight tracking-tight sm:text-3xl">
+            <h2 className="mt-4 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
               {i18n("Let's start a conversation")}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-white/90">
+            <p className="mt-3 text-sm leading-relaxed text-body">
               {i18n("Tell us about your question, idea, or feedback. The more context, the better we can help.")}</p>
 
             <ul className="mt-6 space-y-3">
@@ -171,18 +169,18 @@ export default function ContactForm() {
                 i18n("Available 7 days a week, 9am to 9pm"),
               ].map((tip) => (
                 <li key={tip} className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-gold" />
-                  <span className="text-white/90">{tip}</span>
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <span className="text-body">{tip}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-8 rounded-2xl bg-white/10 p-4 ring-1 ring-white/15 backdrop-blur-sm">
-              <p className="text-xs uppercase tracking-wide text-white/70">
+            <div className="mt-8 rounded-2xl bg-card/70 p-4 ring-1 ring-border ">
+              <p className="text-xs uppercase tracking-wide text-body">
                 {i18n("Prefer email?")}</p>
               <a
                 href={`mailto:${siteConfig.contact.email}`}
-                className="mt-1 block text-base font-black text-brand-gold hover:underline"
+                className="mt-1 block text-base font-bold text-primary hover:underline"
               >
                 {siteConfig.contact.email}
               </a>
@@ -193,13 +191,13 @@ export default function ContactForm() {
 
       {/* Right: Form */}
       <div className="lg:col-span-3">
-        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-brand-border sm:p-8">
-          <h3 className="text-xl font-black tracking-tight text-foreground sm:text-2xl">
+        <div className="rounded-3xl bg-card p-6 shadow-sm ring-1 ring-border sm:p-8">
+          <h3 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
             {i18n("Send us a message")}</h3>
           <p className="mt-1 text-sm text-muted-foreground">
             {i18n("Fill in the details below and we'll get back to you shortly.")}</p>
 
-          <div className="my-5 h-0.5 w-full bg-brand-border rounded-full" />
+          <div className="my-5 h-0.5 w-full bg-border rounded-full" />
 
           <form data-locale-recoverable onSubmit={handleSubmit} className="space-y-4" aria-busy={isSending}>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -236,7 +234,7 @@ export default function ContactForm() {
               />
 
               <div>
-                <label htmlFor="contact-subject" className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-foreground">
+                <label htmlFor="contact-subject" className="mb-1.5 block text-sm font-medium text-foreground">
                   {i18n("Subject")}</label>
                 <div className="relative">
                   <Tag className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -246,7 +244,7 @@ export default function ContactForm() {
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     disabled={fieldsDisabled}
-                    className="h-11 w-full appearance-none rounded-xl border border-brand-border bg-white ps-9 pe-9 text-sm text-foreground shadow-sm transition-colors focus:border-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red/30"
+                    className="h-11 w-full appearance-none rounded-xl border border-border bg-card ps-9 pe-9 text-base text-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
                   >
                     {subjects.map((s) => (
                       <option key={s} value={s}>
@@ -262,7 +260,7 @@ export default function ContactForm() {
             </div>
 
             <div>
-              <label htmlFor="contact-message" className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-foreground">
+              <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium text-foreground">
                 {i18n("Message")}</label>
               <textarea
                 id="contact-message"
@@ -273,14 +271,14 @@ export default function ContactForm() {
                 rows={5}
                 required
                 disabled={fieldsDisabled}
-                className="w-full resize-none rounded-xl border border-brand-border bg-white p-3 text-sm text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus:border-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red/30"
+                className="w-full resize-none rounded-xl border border-border bg-card p-3 text-base text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
               />
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
               <p className="text-xs text-muted-foreground">
                 {i18n.rich("By sending, you agree to our <policy>Privacy Policy</policy>.", {
-                  policy: (chunks) => <Link href="/privacy-policy" className="font-semibold text-brand-red hover:underline">{chunks}</Link>,
+                  policy: (chunks) => <Link href="/privacy-policy" className="font-semibold text-primary hover:underline">{chunks}</Link>,
                 })}
               </p>
 
@@ -288,7 +286,7 @@ export default function ContactForm() {
                 type="submit"
                 disabled={fieldsDisabled}
                 aria-busy={isSending}
-                className="group inline-flex items-center gap-2 rounded-full bg-brand-red px-6 py-2.5 text-sm font-bold text-brand-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-80"
+                className="group inline-flex items-center gap-2 min-h-11 rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-md transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-80"
               >
                 {status === "sending" && (
                   <ButtonLoader label={i18n("Sending...")} />
@@ -307,7 +305,7 @@ export default function ContactForm() {
             </div>
 
             {status === "error" && errorMsg && (
-              <div className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+              <div className="flex items-start gap-2 rounded-xl border border-destructive/25 bg-destructive/10 p-3 text-sm text-destructive">
                 <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                 <span>{i18n(errorMsg)}</span>
               </div>
@@ -344,7 +342,7 @@ function Field({
   const i18n = useInterfaceTranslations("InterfaceContactComponentsContactForm");
   return (
     <div>
-      <label htmlFor={inputId} className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-foreground">
+      <label htmlFor={inputId} className="mb-1.5 block text-sm font-medium text-foreground">
         {i18n(label)}
       </label>
       <div className="relative" dir={type === "email" || type === "tel" ? "ltr" : undefined}>
@@ -360,7 +358,7 @@ function Field({
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
           placeholder={i18n(placeholder)}
-          className="h-11 w-full rounded-xl border border-brand-border bg-white ps-9 pe-3 text-sm text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus:border-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red/30"
+          className="h-11 w-full rounded-xl border border-border bg-card ps-9 pe-3 text-base text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
         />
       </div>
     </div>

@@ -33,7 +33,7 @@ export default function RegisterFooter({
         type="button"
         onClick={onBack}
         disabled={currentStep === 0 || isSubmitting}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-brand-text-muted transition-all hover:-translate-x-0.5 hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-x-0 min-[380px]:w-auto"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-muted-foreground transition-all hover:-translate-x-0.5 hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-x-0 min-[380px]:w-auto"
       >
         <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
         {i18n("Back")}</button>
@@ -43,15 +43,14 @@ export default function RegisterFooter({
         onClick={onNext}
         disabled={!canContinue || isSubmitting}
         aria-busy={isSubmitting}
-        className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-brand-red px-7 py-2.5 text-sm font-bold text-brand-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-lg disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none disabled:hover:translate-y-0 min-[380px]:w-auto"
+        className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden min-h-11 rounded-xl bg-primary px-7 py-2.5 text-sm font-semibold text-primary-foreground shadow-md transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none disabled:hover:translate-y-0 min-[380px]:w-auto"
       >
-        <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
 
         {isSubmitting ? (
           <ButtonLoader label={i18n("Creating account...")} />
         ) : isLastStep ? (
           <>
-            {i18n("Create account")}<CheckCircle2 className="h-4 w-4 transition-transform group-hover:scale-110" />
+            {i18n("Create account")}<CheckCircle2 className="h-4 w-4 transition-transform " />
           </>
         ) : (
           <>

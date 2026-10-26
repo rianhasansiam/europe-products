@@ -89,7 +89,7 @@ export default function ProductDescriptionRenderer({
   // If we have valid visible blocks, render them.
   if (visibleBlocks.length > 0) {
     return (
-      <div className="min-w-0 divide-y divide-brand-border overflow-hidden rounded-2xl border border-brand-border bg-white">
+      <div className="min-w-0 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card">
         {visibleBlocks.map((block) => {
           let blockNode: React.ReactNode;
           switch (block.type) {
@@ -121,8 +121,8 @@ export default function ProductDescriptionRenderer({
   const trimmed = legacyDescription?.trim();
   if (trimmed) {
     return (
-      <div className="min-w-0 overflow-hidden rounded-2xl border border-brand-border bg-white">
-        <p className="whitespace-pre-line px-4 py-6 leading-relaxed text-gray-600 [overflow-wrap:anywhere] sm:px-5">
+      <div className="min-w-0 overflow-hidden rounded-2xl border border-border bg-card">
+        <p className="whitespace-pre-line px-4 py-6 leading-relaxed text-body [overflow-wrap:anywhere] sm:px-5">
           {trimmed}
         </p>
       </div>

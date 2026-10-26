@@ -61,12 +61,12 @@ export default function OrderSummary({
 
   return (
     <aside
-      className="sticky top-[88px] flex min-w-0 flex-col gap-4 rounded-3xl border border-brand-border bg-brand-white p-5 shadow-sm sm:p-6"
+      className="sticky top-[88px] flex min-w-0 flex-col gap-4 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6"
       aria-busy={isPricingLoading || isCheckingOut || isCartSyncing}
     >
       <div className="flex min-w-0 flex-wrap items-center justify-between gap-2 sm:gap-3">
-        <h2 className="min-w-0 text-lg font-bold text-gray-900">{i18n("Order Summary")}</h2>
-        <span className="max-w-full rounded-full bg-brand-light-bg px-2.5 py-0.5 text-xs font-semibold text-brand-black">
+        <h2 className="min-w-0 text-lg font-bold text-foreground">{i18n("Order Summary")}</h2>
+        <span className="max-w-full rounded-full bg-muted px-2.5 py-0.5 text-xs font-semibold text-foreground">
           {verifiedSummary
             ? i18n("Server-priced")
             : isPricingLoading
@@ -84,7 +84,7 @@ export default function OrderSummary({
         isApplying={isApplyingPromo}
       />
 
-      <div className="space-y-2.5 border-t border-dashed border-brand-border pt-4 text-sm">
+      <div className="space-y-2.5 border-t border-dashed border-border pt-4 text-sm">
         <SummaryRow label={i18n("Subtotal")} valueUSD={subtotalUSD} />
         {verifiedSummary?.discountUSD && promo ? (
           <SummaryRow
@@ -125,24 +125,24 @@ export default function OrderSummary({
         )}
       </div>
 
-      <div className="rounded-2xl border border-brand-border bg-brand-light-bg p-4">
+      <div className="rounded-2xl border border-border bg-secondary p-4">
         <div className="flex min-w-0 flex-wrap items-baseline justify-between gap-2 sm:gap-3">
-          <span className="text-sm font-semibold text-gray-700">
+          <span className="text-sm font-semibold text-body">
             {verifiedSummary ? i18n("Total") : i18n("Subtotal")}
           </span>
-          <span className="min-w-0 text-2xl font-extrabold text-brand-red sm:text-3xl">
+          <span className="min-w-0 text-2xl font-bold text-primary sm:text-3xl">
             <CurrencyAmount
               amountUSD={verifiedSummary?.totalUSD ?? subtotalUSD}
             />
           </span>
         </div>
         {verifiedSummary && totalSavedUSD > 0 && (
-          <p className="mt-1 inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">
+          <p className="mt-1 inline-flex items-center gap-1 rounded-md bg-success-surface px-2 py-0.5 text-[11px] font-semibold text-success">
             <Sparkles className="h-3 w-3" />
             {i18n.rich("You're saving <amount></amount> today", { amount: () => <CurrencyAmount amountUSD={totalSavedUSD} /> })}</p>
         )}
         {!verifiedSummary && (
-          <p className="mt-1 text-[11px] text-gray-500">
+          <p className="mt-1 text-[11px] text-muted-foreground">
             {i18n("Shipping, tax, and promotions are verified before checkout.")}</p>
         )}
       </div>
@@ -152,7 +152,7 @@ export default function OrderSummary({
         onClick={onCheckout}
         disabled={isCheckingOut || isCartSyncing || isCheckoutDisabled}
         aria-busy={isCheckingOut || isCartSyncing}
-        className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-brand-red px-5 text-base font-bold text-brand-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
+        className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 text-base font-semibold text-primary-foreground shadow-md transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isCartSyncing ? (
           <ButtonLoader label={i18n("Updating cart...")} />
@@ -168,8 +168,8 @@ export default function OrderSummary({
         )}
       </button>
 
-      <div className="flex min-w-0 flex-wrap items-center justify-center gap-1.5 text-center text-[11px] text-gray-500">
-        <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
+      <div className="flex min-w-0 flex-wrap items-center justify-center gap-1.5 text-center text-[11px] text-muted-foreground">
+        <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-success" />
         <span className="min-w-0 break-words">
           {i18n("Pricing verified by server · Buyer protection included")}</span>
       </div>
@@ -181,8 +181,8 @@ function SummaryTextRow({ label, value }: { label: string; value: string }) {
   const i18n = useInterfaceTranslations("InterfaceCartComponentsOrderSummary");
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="text-gray-600">{i18n(label)}</span>
-      <span className="font-semibold text-gray-500">{value}</span>
+      <span className="text-body">{i18n(label)}</span>
+      <span className="font-semibold text-muted-foreground">{value}</span>
     </div>
   );
 }
@@ -201,17 +201,17 @@ function SummaryRow({
   const i18n = useInterfaceTranslations("InterfaceCartComponentsOrderSummary");
   return (
     <div className="flex items-start justify-between gap-2 sm:items-center">
-      <span className="min-w-0 flex-1 text-gray-600 [overflow-wrap:anywhere]">
+      <span className="min-w-0 flex-1 text-body [overflow-wrap:anywhere]">
         {i18n(label)}
       </span>
       {freeLabel ? (
-        <span className="shrink-0 font-bold uppercase tracking-wider text-emerald-600">
+        <span className="shrink-0 font-bold uppercase tracking-wider text-success">
           {freeLabel}
         </span>
       ) : (
         <span
           className={`shrink-0 text-end font-semibold ${
-            tone === "success" ? "text-emerald-600" : "text-gray-900"
+            tone === "success" ? "text-success" : "text-foreground"
           }`}
         >
           {valueUSD < 0 ? "-" : null}

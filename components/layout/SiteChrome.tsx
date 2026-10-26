@@ -37,7 +37,7 @@ export default function SiteChrome({
       {navbar}
       {children}
       {hasMobileBottomActions ? (
-        <div className="bg-brand-black pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
+        <div className="bg-secondary pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
           {footer}
         </div>
       ) : (

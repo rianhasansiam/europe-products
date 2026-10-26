@@ -6,38 +6,34 @@ import { ChevronRight, Sparkles, PackageCheck } from "lucide-react";
 export default function AboutHero() {
   const i18n = useInterfaceTranslations("InterfaceAboutComponentsAboutHero");
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-brand-black px-6 py-12 text-white shadow-xl sm:px-10 sm:py-16 lg:px-14 lg:py-20">
-      {/* Decorative blobs */}
-      <div className="absolute -end-20 -top-20 h-60 w-60 rounded-full bg-white/10 blur-2xl" />
-      <div className="absolute -bottom-24 -start-24 h-72 w-72 rounded-full bg-brand-red/20 blur-3xl" />
-      <div className="absolute end-10 top-10 hidden h-24 w-24 rounded-full bg-brand-red/20 blur-xl sm:block" />
+    <section className="relative overflow-hidden rounded-3xl bg-secondary border border-border px-6 py-12 text-foreground shadow-sm sm:px-10 sm:py-16 lg:px-14 lg:py-20">
 
       <div className="relative z-10 grid items-center gap-8 lg:grid-cols-2">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 backdrop-blur-sm ring-1 ring-white/20">
-            <Sparkles className="h-3.5 w-3.5 text-brand-gold" />
+          <div className="inline-flex items-center gap-2 rounded-full bg-card/80 px-3 py-1.5 ring-1 ring-border">
+            <Sparkles className="h-3.5 w-3.5 text-primary" />
             <span className="text-[11px] font-bold uppercase tracking-wide">
               {i18n("About SexToy")}</span>
           </div>
 
-          <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-            {i18n.rich("Curated China-Imported <highlight>Products for Modern Buyers.</highlight>", { highlight: (chunks) => <span className="block text-brand-red drop-shadow-md">{chunks}</span> })}
+          <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+            {i18n.rich("Curated China-Imported <highlight>Products for Modern Buyers.</highlight>", { highlight: (chunks) => <span className="block text-primary">{chunks}</span> })}
           </h1>
 
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-body sm:text-base">
             {i18n("SexToy brings carefully selected China-imported products to your doorstep with a focus on quality, trendy collections, fair pricing, and a smooth online shopping experience.")}</p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <Link
               href="/products"
-              className="group inline-flex items-center gap-2 rounded-full bg-brand-red px-5 py-2.5 text-sm font-bold text-brand-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-lg"
+              className="group inline-flex items-center gap-2 min-h-11 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-md transition-colors duration-200 hover:bg-primary-hover"
             >
               {i18n("Explore Products")}<ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 rtl:rotate-180" />
             </Link>
 
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-sm font-bold text-white ring-1 ring-white/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20"
+              className="inline-flex items-center gap-2 min-h-11 rounded-xl bg-card/70 px-5 py-2.5 text-sm font-bold text-primary ring-1 ring-border transition-colors duration-200 hover:bg-card"
             >
               {i18n("Contact Us")}</Link>
           </div>
@@ -45,15 +41,15 @@ export default function AboutHero() {
 
         {/* Right floating card */}
         <div className="relative hidden justify-center lg:flex">
-          <div className="relative w-full max-w-sm rounded-3xl bg-white/15 p-6 shadow-2xl backdrop-blur-md ring-1 ring-white/20">
+          <div className="relative w-full max-w-sm rounded-3xl bg-card/80 p-6 shadow-sm ring-1 ring-border">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-white text-brand-red shadow-lg">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-card text-primary shadow-lg">
                 <PackageCheck className="h-6 w-6" />
               </div>
 
               <div>
                 <p className="text-sm font-bold">{i18n("SexToy Imported Collection")}</p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-body">
                   {i18n("Trendy products selected with care")}</p>
               </div>
             </div>
@@ -67,10 +63,10 @@ export default function AboutHero() {
               ].map((item) => (
                 <div
                   key={i18n(item.v)}
-                  className="rounded-xl bg-white/10 px-3 py-2.5 ring-1 ring-white/15"
+                  className="rounded-xl bg-card/70 px-3 py-2.5 ring-1 ring-border"
                 >
-                  <p className="text-lg font-black text-brand-gold">{item.k}</p>
-                  <p className="text-[11px] uppercase tracking-wide text-white/80">
+                  <p className="text-lg font-bold text-primary">{item.k}</p>
+                  <p className="text-[11px] uppercase tracking-wide text-body">
                     {i18n(item.v)}
                   </p>
                 </div>

@@ -64,10 +64,10 @@ export default function WishlistCard({
     return (
       <article
         className={cn(
-          "group relative flex gap-2 rounded-2xl border bg-white p-3 shadow-sm transition-all duration-300 sm:gap-4 sm:p-4",
+          "group relative flex gap-2 rounded-2xl border bg-card p-3 shadow-sm transition-all duration-300 sm:gap-4 sm:p-4",
           selected
-            ? "border-brand-red ring-2 ring-brand-red/20"
-            : "border-brand-border hover:border-brand-red hover:shadow-md",
+            ? "border-primary ring-2 ring-ring/20"
+            : "border-border hover:border-primary hover:shadow-md",
         )}
       >
         <SelectCheckbox
@@ -78,17 +78,17 @@ export default function WishlistCard({
 
         <Link
           href={`/products/${item.slug ?? item.id}`}
-          className="relative aspect-square w-20 shrink-0 self-start overflow-hidden rounded-xl bg-gray-50 min-[360px]:w-24 sm:w-32"
+          className="relative aspect-square w-20 shrink-0 self-start overflow-hidden rounded-xl bg-background min-[360px]:w-24 sm:w-32"
         >
           <Image
             src={item.image}
             alt={item.name}
             fill
             sizes="(max-width: 359px) 80px, (max-width: 639px) 96px, 128px"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-300 motion-safe:group-hover:scale-[1.025]"
           />
           {!item.inStock && (
-            <span className="absolute inset-0 grid place-items-center bg-black/40 text-[11px] font-semibold uppercase tracking-wide text-white">
+            <span className="absolute inset-0 grid place-items-center bg-black/65 text-[11px] font-semibold uppercase tracking-wide text-white">
               {i18n("Out of stock")}</span>
           )}
         </Link>
@@ -96,12 +96,12 @@ export default function WishlistCard({
         <div className="flex min-w-0 flex-1 flex-col">
           <div className="flex min-w-0 flex-col gap-1.5 min-[400px]:flex-row min-[400px]:items-start min-[400px]:justify-between min-[400px]:gap-2">
             <div className="min-w-0">
-              <p className="truncate text-[11px] font-semibold uppercase tracking-wide text-brand-text-muted">
+              <p className="truncate text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 {item.brand} • {item.category}
               </p>
               <Link
                 href={`/products/${item.slug ?? item.id}`}
-                className="mt-0.5 line-clamp-2 text-sm font-semibold text-brand-black [overflow-wrap:anywhere] hover:text-brand-red sm:text-base"
+                className="mt-0.5 line-clamp-2 text-sm font-semibold text-foreground [overflow-wrap:anywhere] hover:text-primary sm:text-base"
               >
                 {item.name}
               </Link>
@@ -109,7 +109,7 @@ export default function WishlistCard({
             <Badges item={item} discount={discount} />
           </div>
 
-          <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500 sm:flex-nowrap">
+          <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground sm:flex-nowrap">
             <RatingStars rating={item.rating} />
             <span>({item.reviewCount.toLocaleString(locale)})</span>
             <span aria-hidden>•</span>
@@ -134,14 +134,14 @@ export default function WishlistCard({
   return (
     <article
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-300",
+        "group relative flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm transition-all duration-300",
         selected
-          ? "border-brand-red ring-2 ring-brand-red/20"
-          : "border-brand-border hover:-translate-y-1 hover:border-brand-red hover:shadow-xl",
+          ? "border-primary ring-2 ring-ring/20"
+          : "border-border hover:-translate-y-1 hover:border-primary hover:shadow-xl",
       )}
     >
       {/* Image */}
-      <div className="relative aspect-4/5 overflow-hidden bg-gray-50">
+      <div className="relative aspect-4/5 overflow-hidden bg-background">
         <Link href={`/products/${item.slug ?? item.id}`}>
           <Image
             src={item.image}
@@ -149,7 +149,7 @@ export default function WishlistCard({
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className={cn(
-              "object-cover transition-transform duration-700 ease-out group-hover:scale-110",
+              "object-cover transition-transform duration-300 motion-safe:group-hover:scale-[1.025]",
               !item.inStock && "grayscale",
             )}
           />
@@ -182,25 +182,24 @@ export default function WishlistCard({
         {/* Badges (left) */}
         <div className="pointer-events-none absolute start-2.5 top-16 flex max-w-[calc(100%-1.25rem)] flex-col gap-1.5">
           {item.badge && (
-            <span className="block max-w-full truncate rounded-full bg-brand-red px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-brand-white shadow-md">
+            <span className="block max-w-full truncate rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-primary-foreground shadow-md">
               {item.badge}
             </span>
           )}
           {discount > 0 && (
-            <span className="rounded-full bg-brand-red px-2.5 py-1 text-[10px] font-bold text-brand-white shadow-md">
+            <span className="rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold text-primary-foreground shadow-md">
               -{discount}%
             </span>
           )}
         </div>
 
         {hasPriceDrop && (
-          <div className="absolute bottom-2.5 start-2.5 inline-flex max-w-[calc(100%-1.25rem)] items-center gap-1.5 rounded-full bg-emerald-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-md">
+          <div className="absolute bottom-2.5 start-2.5 inline-flex max-w-[calc(100%-1.25rem)] items-center gap-1.5 rounded-full bg-success-surface px-2.5 py-1 text-[11px] font-semibold text-success shadow-md">
             <TrendingDown className="h-3 w-3 shrink-0" />
             <span className="min-w-0 truncate">
               <span className="hidden min-[360px]:inline">{i18n("Dropped")}</span>
               <CurrencyAmount amountUSD={item.priceDropFromAdded ?? 0} />
             </span>
-            <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-emerald-400 opacity-60" />
           </div>
         )}
 
@@ -212,16 +211,16 @@ export default function WishlistCard({
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-3 sm:p-4">
-        <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-brand-text-muted">
+        <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
           {item.brand} • {item.category}
         </p>
         <Link href={`/products/${item.slug ?? item.id}`}>
-          <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-semibold leading-tight text-brand-black transition-colors [overflow-wrap:anywhere] hover:text-brand-red">
+          <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-semibold leading-tight text-foreground transition-colors [overflow-wrap:anywhere] hover:text-primary">
             {item.name}
           </h3>
         </Link>
 
-        <div className="mt-1.5 flex min-w-0 items-center gap-1.5 text-[11px] text-gray-500">
+        <div className="mt-1.5 flex min-w-0 items-center gap-1.5 text-[11px] text-muted-foreground">
           <RatingStars rating={item.rating} />
           <span className="min-w-0 truncate">
             ({item.reviewCount.toLocaleString(locale)})
@@ -230,7 +229,7 @@ export default function WishlistCard({
 
         <div className="mt-auto pt-3">
           <PriceBlock item={item} hasPriceDrop={hasPriceDrop} />
-          <p className="mt-1 text-[11px] text-gray-400">
+          <p className="mt-1 text-[11px] text-muted-foreground">
             {i18n("Saved")}{timeAgo(item.addedAt)}
           </p>
 
@@ -241,8 +240,8 @@ export default function WishlistCard({
             className={cn(
               "mt-3 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-200",
               item.inStock
-                ? "bg-brand-red text-brand-white shadow-sm hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-md"
-                : "cursor-not-allowed bg-gray-100 text-gray-400",
+                ? "bg-primary text-primary-foreground shadow-sm hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-md"
+                : "cursor-not-allowed bg-secondary text-muted-foreground",
             )}
           >
             <ShoppingCart className="h-4 w-4" />
@@ -273,12 +272,12 @@ function Badges({
   return (
     <div className="flex min-w-0 max-w-full flex-col items-start gap-1 min-[400px]:shrink-0 min-[400px]:items-end">
       {item.badge && (
-        <span className="block max-w-full truncate rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-brand-white">
+        <span className="block max-w-full truncate rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary-foreground">
           {item.badge}
         </span>
       )}
       {discount > 0 && (
-        <span className="rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-bold text-brand-white">
+        <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold text-primary-foreground">
           -{discount}%
         </span>
       )}
@@ -296,11 +295,11 @@ function PriceBlock({
   const i18n = useInterfaceTranslations("InterfaceWishlistComponentsWishlistCard");
   return (
     <div className="flex max-w-full flex-wrap items-baseline gap-x-2 gap-y-1">
-      <span className="max-w-full text-base font-extrabold text-brand-red [overflow-wrap:anywhere] sm:text-lg">
+      <span className="max-w-full text-base font-bold text-primary [overflow-wrap:anywhere] sm:text-lg">
         <CurrencyAmount amountUSD={item.price} />
       </span>
       {item.originalPrice && item.originalPrice > item.price && (
-        <span className="max-w-full text-xs text-gray-400 line-through [overflow-wrap:anywhere]">
+        <span className="max-w-full text-xs text-muted-foreground line-through [overflow-wrap:anywhere]">
           <CurrencyAmount amountUSD={item.originalPrice} />
         </span>
       )}
@@ -323,7 +322,7 @@ function RatingStars({ rating }: { rating: number }) {
             "h-3 w-3",
             i < Math.round(rating)
               ? "fill-brand-gold text-brand-gold"
-              : "text-gray-200",
+              : "text-border",
           )}
         />
       ))}
@@ -350,8 +349,8 @@ function SelectCheckbox({
       className={cn(
         "grid h-11 w-11 place-items-center rounded-xl border-2 backdrop-blur-md transition-all duration-200",
         selected
-          ? "border-brand-red bg-brand-red text-brand-white shadow-md"
-          : "border-white/80 bg-white/70 text-transparent hover:border-brand-red hover:text-brand-red",
+          ? "border-primary bg-primary text-primary-foreground shadow-md"
+          : "border-white/80 bg-card/70 text-transparent hover:border-primary hover:text-primary",
         className,
       )}
     >
@@ -378,10 +377,10 @@ function IconAction({
       onClick={onClick}
       aria-label={i18n(label)}
       className={cn(
-        "grid h-11 w-11 place-items-center rounded-full bg-white/90 shadow-sm backdrop-blur-md transition-all duration-200 hover:scale-105 active:scale-95",
+        "grid h-11 w-11 place-items-center rounded-full bg-card/90 shadow-sm backdrop-blur-md transition-all duration-200 hover:scale-105 active:scale-95",
         tone === "danger"
           ? "text-rose-600 hover:bg-rose-50"
-          : "text-gray-600 hover:bg-brand-light-bg hover:text-brand-red",
+          : "text-body hover:bg-background hover:text-primary",
       )}
     >
       {children}
@@ -407,7 +406,7 @@ function ActionButtons({
         type="button"
         onClick={onShare}
         aria-label={i18n("Share")}
-        className="grid h-11 w-11 place-items-center rounded-xl border border-brand-border bg-brand-white text-gray-600 transition-colors hover:border-brand-red hover:bg-brand-light-bg hover:text-brand-red"
+        className="grid h-11 w-11 place-items-center rounded-xl border border-border bg-card text-body transition-colors hover:border-primary hover:bg-background hover:text-primary"
       >
         <Share2 className="h-4 w-4" />
       </button>
@@ -426,8 +425,8 @@ function ActionButtons({
         className={cn(
           "inline-flex h-11 items-center gap-1.5 rounded-xl px-3 text-sm font-semibold transition-all duration-200",
           inStock
-            ? "bg-brand-red text-brand-white shadow-sm hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-md"
-            : "cursor-not-allowed bg-gray-100 text-gray-400",
+            ? "bg-primary text-primary-foreground shadow-sm hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-md"
+            : "cursor-not-allowed bg-secondary text-muted-foreground",
         )}
       >
         <ShoppingCart className="h-4 w-4" />

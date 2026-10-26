@@ -37,23 +37,23 @@ export default function FloatField({
 
   const validationClass =
     valid === true
-      ? "focus-within:border-emerald-500 focus-within:ring-emerald-200"
+      ? "focus-within:border-success focus-within:ring-success/20"
       : valid === false
-        ? "border-red-300 focus-within:border-red-500 focus-within:ring-red-200"
-        : "focus-within:border-brand-red focus-within:ring-brand-red/20";
+        ? "border-destructive/25 focus-within:border-destructive focus-within:ring-destructive/20"
+        : "focus-within:border-primary focus-within:ring-primary/20";
 
   const iconClass =
     valid === true
-      ? "text-emerald-600"
+      ? "text-success"
       : valid === false
-        ? "text-red-500"
-        : "text-brand-text-muted group-focus-within:text-brand-red";
+        ? "text-destructive"
+        : "text-muted-foreground group-focus-within:text-primary";
 
   return (
     <div
       dir={type === "email" || type === "tel" ? "ltr" : undefined}
       className={cn(
-        "group relative rounded-xl border border-brand-border bg-white shadow-sm transition-all duration-300 focus-within:ring-4",
+        "group relative rounded-xl border border-input bg-card shadow-sm transition-all duration-300 focus-within:ring-4",
         validationClass,
       )}
     >
@@ -76,7 +76,7 @@ export default function FloatField({
         onBlur={() => setFocused(false)}
         onChange={(event) => onChange(event.target.value)}
         placeholder=" "
-        className="h-12 w-full rounded-xl bg-transparent ps-9 pe-10 text-sm text-brand-text-dark outline-none placeholder:text-transparent"
+        className="h-12 w-full rounded-xl bg-transparent ps-9 pe-10 text-base text-foreground outline-none placeholder:text-transparent"
       />
 
       <label
@@ -84,8 +84,8 @@ export default function FloatField({
         className={cn(
           "pointer-events-none absolute transition-all duration-200 ease-out",
           float
-            ? "-top-2 start-3 bg-white px-1.5 text-[11px] font-bold uppercase tracking-wide text-brand-text-dark"
-            : "start-9 top-1/2 -translate-y-1/2 text-sm font-normal normal-case tracking-normal text-brand-text-muted",
+            ? "-top-2 start-3 bg-card px-1.5 text-[11px] font-bold uppercase tracking-wide text-foreground"
+            : "start-9 top-1/2 -translate-y-1/2 text-sm font-normal normal-case tracking-normal text-muted-foreground",
         )}
       >
         {i18n(label)}
@@ -107,11 +107,11 @@ function ValidationIcon({ valid }: { valid: boolean }) {
     <span className="absolute end-3 top-1/2 -translate-y-1/2">
       {valid ? (
         <CheckCircle2
-          className="h-4 w-4 text-emerald-500"
+          className="h-4 w-4 text-success"
           style={{ animation: "pop 0.3s ease-out" }}
         />
       ) : (
-        <span className="text-xs font-bold text-red-500">!</span>
+        <span className="text-xs font-bold text-destructive">!</span>
       )}
     </span>
   );

@@ -101,7 +101,7 @@ export default function OverviewTab({
               <Sparkles className="h-4 w-4" />
             </span>
             <div className="min-w-0 flex-1">
-              <h3 className="text-sm font-extrabold text-amber-900">
+              <h3 className="text-sm font-bold text-amber-900">
                 {i18n("Finish setting up your profile")}</h3>
               <p className="mt-0.5 text-xs text-amber-800">
                 {i18n("Add your")}{" "}
@@ -125,19 +125,19 @@ export default function OverviewTab({
       )}
 
       {/* Order status breakdown */}
-      <section className="rounded-2xl border border-brand-border bg-brand-white p-4 shadow-sm sm:rounded-3xl sm:p-6">
+      <section className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:rounded-3xl sm:p-6">
         <header className="mb-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-light-bg text-brand-black">
+            <span className="grid h-8 w-8 place-items-center rounded-lg bg-background text-foreground">
               <ClipboardList className="h-4 w-4" />
             </span>
-            <h2 className="text-base font-bold text-gray-900 sm:text-lg">
+            <h2 className="text-base font-bold text-foreground sm:text-lg">
               {i18n("Order activity")}</h2>
           </div>
           <button
             type="button"
             onClick={() => onJumpToTab("orders")}
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-red hover:text-brand-red-hover"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-hover"
           >
             {i18n("View all")}<ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
           </button>
@@ -149,17 +149,17 @@ export default function OverviewTab({
             return (
               <div
                 key={key}
-                className="rounded-2xl border border-brand-border bg-brand-white p-3"
+                className="rounded-2xl border border-border bg-card p-3"
               >
                 <span
                   className={`inline-flex max-w-full items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold leading-tight ${tone.pill}`}
                 >
                   {i18n(tone.label)}
                 </span>
-                <p className="mt-2 text-2xl font-extrabold text-gray-900">
+                <p className="mt-2 text-2xl font-bold text-foreground">
                   {count}
                 </p>
-                <p className="text-[11px] text-gray-500">
+                <p className="text-[11px] text-muted-foreground">
                   {count === 1 ? i18n("order") : i18n("orders")}
                 </p>
               </div>
@@ -167,21 +167,21 @@ export default function OverviewTab({
           })}
         </div>
 
-        <p className="mt-4 text-xs text-gray-500">
+        <p className="mt-4 text-xs text-muted-foreground">
           {i18n("Last order placed:")}{" "}
-          <span className="font-semibold text-gray-700">
+          <span className="font-semibold text-body">
             {formatDate(stats.lastOrderAt, locale)}
           </span>
         </p>
       </section>
 
       {/* Quick actions */}
-      <section className="rounded-2xl border border-brand-border bg-brand-white p-4 shadow-sm sm:rounded-3xl sm:p-6">
+      <section className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:rounded-3xl sm:p-6">
         <header className="mb-4 flex items-center gap-2">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-light-bg text-brand-black">
+          <span className="grid h-8 w-8 place-items-center rounded-lg bg-background text-foreground">
             <Gift className="h-4 w-4" />
           </span>
-          <h2 className="text-base font-bold text-gray-900 sm:text-lg">
+          <h2 className="text-base font-bold text-foreground sm:text-lg">
             {i18n("Quick actions")}</h2>
         </header>
         <div className="grid gap-3 @md:grid-cols-2 @2xl:grid-cols-3">
@@ -214,24 +214,24 @@ const TONE_STYLES: Record<
   { surface: string; iconBg: string; iconText: string }
 > = {
   violet: {
-    surface: "bg-brand-light-bg",
-    iconBg: "bg-brand-white",
-    iconText: "text-brand-black",
+    surface: "bg-background",
+    iconBg: "bg-card",
+    iconText: "text-foreground",
   },
   indigo: {
-    surface: "bg-brand-light-bg",
-    iconBg: "bg-brand-white",
-    iconText: "text-brand-black",
+    surface: "bg-background",
+    iconBg: "bg-card",
+    iconText: "text-foreground",
   },
   fuchsia: {
-    surface: "bg-brand-light-bg",
-    iconBg: "bg-brand-white",
-    iconText: "text-brand-black",
+    surface: "bg-background",
+    iconBg: "bg-card",
+    iconText: "text-foreground",
   },
   rose: {
-    surface: "bg-brand-light-bg",
-    iconBg: "bg-brand-white",
-    iconText: "text-brand-black",
+    surface: "bg-background",
+    iconBg: "bg-card",
+    iconText: "text-foreground",
   },
 };
 
@@ -254,7 +254,7 @@ function MetricCard({
   const styles = TONE_STYLES[tone];
   return (
     <div
-      className={`min-w-0 rounded-2xl border border-brand-border ${styles.surface} p-3 shadow-sm sm:rounded-3xl sm:p-4`}
+      className={`min-w-0 rounded-2xl border border-border ${styles.surface} p-3 shadow-sm sm:rounded-3xl sm:p-4`}
     >
       <div className="flex items-center justify-between gap-2">
         <span
@@ -266,17 +266,17 @@ function MetricCard({
           <button
             type="button"
             onClick={onAction}
-            className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-brand-red hover:text-brand-red-hover"
+            className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-primary hover:text-primary-hover"
           >
             {actionLabel}
             <ArrowRight className="h-3 w-3 rtl:rotate-180" />
           </button>
         )}
       </div>
-      <p className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-gray-500">
+      <p className="mt-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
         {i18n(label)}
       </p>
-      <p className="mt-0.5 wrap-break-word text-xl font-extrabold text-gray-900 sm:text-2xl">
+      <p className="mt-0.5 wrap-break-word text-xl font-bold text-foreground sm:text-2xl">
         {value}
       </p>
     </div>
@@ -298,24 +298,24 @@ function QuickAction({
 }) {
   const i18n = useInterfaceTranslations("InterfaceProfileComponentsOverviewTab");
   const className =
-    "group flex items-center justify-between gap-3 rounded-2xl border border-brand-border bg-brand-white p-3 text-start transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-red hover:shadow-md";
+    "group flex items-center justify-between gap-3 rounded-2xl border border-border bg-card p-3 text-start transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow-md";
 
   const inner = (
     <>
       <div className="flex min-w-0 items-center gap-3">
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-light-bg text-brand-black">
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-background text-foreground">
           {icon}
         </span>
         <span className="min-w-0">
-          <span className="block truncate text-sm font-bold text-gray-900">
+          <span className="block truncate text-sm font-bold text-foreground">
             {i18n(label)}
           </span>
-          <span className="block truncate text-[11px] text-gray-500">
+          <span className="block truncate text-[11px] text-muted-foreground">
             {i18n(description)}
           </span>
         </span>
       </div>
-      <ArrowRight className="h-4 w-4 shrink-0 text-gray-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-brand-red rtl:rotate-180" />
+      <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-primary rtl:rotate-180" />
     </>
   );
 

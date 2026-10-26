@@ -275,8 +275,8 @@ export default function ProductCard({
   };
 
   return (
-    <div className="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-brand-border bg-brand-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-brand-border hover:shadow-lg">
-      <div className="relative aspect-4/3 shrink-0 overflow-hidden bg-brand-light-bg">
+    <div className="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-primary/35 hover:shadow-md">
+      <div className="relative aspect-4/3 shrink-0 overflow-hidden bg-background">
         <Link
           href={productHref}
           aria-label={i18n("View {value0}", { value0: name })}
@@ -286,19 +286,19 @@ export default function ProductCard({
             src={image}
             alt={name}
             fill
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+            className="object-cover transition-transform duration-300 motion-safe:group-hover:scale-[1.025]"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
           />
         </Link>
 
         {badge && (
-          <span className="absolute start-2 top-2 z-10 max-w-[calc(100%-1rem)] truncate rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-semibold text-brand-white sm:max-w-[calc(100%-3.75rem)]">
+          <span className="absolute start-2 top-2 z-10 max-w-[calc(100%-1rem)] truncate rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground sm:max-w-[calc(100%-3.75rem)]">
             {i18n(badge)}
           </span>
         )}
 
         {discount > 0 && !badge && (
-          <span className="absolute start-2 top-2 z-10 rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-semibold text-brand-white">
+          <span className="absolute start-2 top-2 z-10 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
             -{discount}%
           </span>
         )}
@@ -311,16 +311,16 @@ export default function ProductCard({
           aria-busy={isBusy}
           aria-label={isWishlisted ? i18n("Remove from wishlist") : i18n("Add to wishlist")}
           aria-pressed={isWishlisted}
-          className="absolute end-2 top-2 z-20 hidden h-9 w-9 items-center justify-center rounded-full bg-brand-white/90 p-0 shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-brand-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 sm:can-hover:flex"
+          className="absolute end-2 top-2 z-20 hidden h-11 w-11 items-center justify-center rounded-xl border border-border bg-card/95 p-0 shadow-sm transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:can-hover:flex"
         >
           {isBusy ? (
-            <LoadingSpinner decorative size="sm" className="text-brand-red" />
+            <LoadingSpinner decorative size="sm" className="text-primary" />
           ) : (
             <Heart
               className={`h-4 w-4 transition-all duration-300 ${
                 isWishlisted
-                  ? "scale-110 fill-brand-red text-brand-red"
-                  : "text-brand-text-muted hover:text-brand-red"
+                  ? "scale-110 fill-primary text-primary"
+                  : "text-muted-foreground hover:text-primary"
               }`}
             />
           )}
@@ -335,7 +335,7 @@ export default function ProductCard({
           aria-label={
             requiresOptionSelection ? i18n("Select product options") : i18n("Add to cart")
           }
-          className="absolute bottom-2 left-1/2 z-20 hidden -translate-x-1/2 items-center justify-center gap-1.5 rounded-full bg-brand-white/95 px-3 py-1.5 text-xs font-semibold text-brand-red opacity-100 shadow-md backdrop-blur-sm transition-all duration-300 hover:bg-brand-red hover:text-brand-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 sm:can-hover:flex sm:can-hover:translate-y-2 sm:can-hover:opacity-0 sm:can-hover:group-hover:translate-y-0 sm:can-hover:group-hover:opacity-100 sm:can-hover:focus-visible:translate-y-0 sm:can-hover:focus-visible:opacity-100 disabled:cursor-not-allowed disabled:opacity-60 "
+          className="absolute bottom-2 left-1/2 z-20 hidden min-h-11 -translate-x-1/2 items-center justify-center gap-1.5 rounded-xl border border-border bg-card/95 px-4 py-2 text-sm font-semibold text-primary shadow-sm transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:can-hover:flex disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isCartBusy ? (
             <>
@@ -357,7 +357,7 @@ export default function ProductCard({
         </button>
       </div>
 
-      <div className="flex flex-1 flex-col p-2 sm:p-2.5">
+      <div className="flex flex-1 flex-col p-3 sm:p-4">
         {rating > 0 && (
           <div className="mb-1 flex items-center gap-0.5">
             <div className="flex items-center">
@@ -372,30 +372,30 @@ export default function ProductCard({
                 />
               ))}
             </div>
-            <span className="ms-0.5 text-[10px] text-brand-text-muted">({reviewCount})</span>
+            <span className="ms-0.5 text-[10px] text-muted-foreground">({reviewCount})</span>
           </div>
         )}
 
-        <Link href={productHref}>
-          <h3 lang={nameLocale} dir="auto" className="line-clamp-2 min-h-8 text-xs font-semibold leading-tight text-foreground transition-colors hover:text-brand-black sm:line-clamp-1 sm:min-h-0 sm:text-sm">
+        <Link href={productHref} className="rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+          <h3 lang={nameLocale} dir="auto" className="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-foreground [overflow-wrap:anywhere] transition-colors hover:text-primary">
             {name}
           </h3>
         </Link>
 
-        <div className="mt-auto flex min-w-0 flex-wrap items-baseline gap-x-1.5 gap-y-0.5 pt-1.5">
+        <div className="mt-auto flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1 pt-3">
           <CurrencyAmount
             amountUSD={price}
-            className="max-w-full text-sm font-bold text-brand-red [overflow-wrap:anywhere]"
+            className="max-w-full text-base font-bold tabular-nums text-foreground [overflow-wrap:anywhere]"
           />
           {originalPrice && originalPrice > price && (
             <CurrencyAmount
               amountUSD={originalPrice}
-              className="max-w-full text-[11px] text-brand-text-muted line-through [overflow-wrap:anywhere]"
+              className="max-w-full text-[11px] text-muted-foreground line-through [overflow-wrap:anywhere]"
             />
           )}
         </div>
 
-        <div className="mt-2 flex items-center justify-center gap-1.5 border-t border-brand-border/70 pt-2 sm:can-hover:hidden">
+        <div className="mt-3 flex items-center gap-2 border-t border-border pt-3 sm:can-hover:hidden">
           <button
             type="button"
             onClick={handleCartClick}
@@ -405,7 +405,7 @@ export default function ProductCard({
             aria-label={
               requiresOptionSelection ? i18n("Select product options") : i18n("Add to cart")
             }
-            className="flex py-2 min-w-0 max-w-24 flex-1 items-center justify-center rounded-lg bg-brand-red px-1.5 text-[11px] font-semibold text-brand-white shadow-sm transition-colors hover:bg-brand-red-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 active:bg-brand-red-hover disabled:cursor-not-allowed disabled:opacity-60 "
+            className="flex min-h-11 min-w-0 flex-1 items-center justify-center rounded-xl bg-primary px-2 py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
           >
             <span className="truncate">
               {isCartBusy
@@ -424,14 +424,14 @@ export default function ProductCard({
             aria-busy={isBusy}
             aria-label={isWishlisted ? i18n("Remove from wishlist") : i18n("Add to wishlist")}
             aria-pressed={isWishlisted}
-            className={`flex py-2 w-11 shrink-0 items-center justify-center rounded-lg border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 ${
+            className={`flex min-h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 ${
               isWishlisted
-                ? "border-brand-red/30 bg-red-50 text-brand-red"
-                : "border-brand-border bg-brand-white text-brand-text-muted hover:border-brand-red/40 hover:text-brand-red"
+                ? "border-primary/30 bg-secondary text-primary"
+                : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary"
             }`}
           >
             {isBusy ? (
-              <LoadingSpinner decorative size="sm" className="text-brand-red" />
+              <LoadingSpinner decorative size="sm" className="text-primary" />
             ) : (
               <Heart
                 className={`h-4 w-4 transition-transform duration-200 ${

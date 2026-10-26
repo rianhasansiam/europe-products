@@ -27,7 +27,7 @@ export default function PolicyLayout({
   const locale = useLocale();
   const language = useTranslations("Language");
   return (
-    <div className="min-h-screen bg-brand-light-bg">
+    <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-6 sm:py-10 space-y-8 sm:space-y-12">
         {locale !== "en" && (
           <p role="status" className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950">

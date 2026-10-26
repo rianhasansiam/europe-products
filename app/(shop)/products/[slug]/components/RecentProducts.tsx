@@ -30,8 +30,8 @@ const RecentProducts: React.FC<RecentProductsProps> = ({
   }
 
   return (
-    <div className="min-w-0 rounded-2xl border border-gray-100 bg-white p-4">
-      <h3 className="mb-4 text-lg font-bold text-gray-900 [overflow-wrap:anywhere]">
+    <div className="min-w-0 rounded-2xl border border-border bg-card p-4">
+      <h3 className="mb-4 text-lg font-bold text-foreground [overflow-wrap:anywhere]">
         {i18n(title)}
       </h3>
 
@@ -40,11 +40,11 @@ const RecentProducts: React.FC<RecentProductsProps> = ({
           <Link
             key={product.id}
             href={`/products/${product.slug}`}
-            className="group flex min-w-0 gap-3 rounded-xl p-2 transition-colors hover:bg-brand-light-bg"
+            className="group flex min-w-0 gap-3 rounded-xl p-2 transition-colors hover:bg-background"
           >
             {/* Thumbnail */}
             <div
-              className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0"
+              className="relative w-16 h-16 rounded-lg overflow-hidden bg-secondary shrink-0"
               style={{ position: "relative" }}
             >
               <Image
@@ -58,18 +58,18 @@ const RecentProducts: React.FC<RecentProductsProps> = ({
 
             {/* Info */}
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-medium text-gray-900 line-clamp-2 group-hover:text-brand-red transition-colors">
+              <h4 className="text-sm font-medium text-foreground line-clamp-2 group-hover:text-primary transition-colors">
                 {product.name}
               </h4>
               <div className="mt-1 flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5">
                 <CurrencyAmount
                   amountUSD={product.price}
-                  className="max-w-full whitespace-nowrap text-sm font-bold text-brand-red"
+                  className="max-w-full whitespace-nowrap text-sm font-bold text-primary"
                 />
                 {product.discount > 0 && (
                   <CurrencyAmount
                     amountUSD={product.originalPrice}
-                    className="max-w-full whitespace-nowrap text-xs text-gray-400 line-through"
+                    className="max-w-full whitespace-nowrap text-xs text-muted-foreground line-through"
                   />
                 )}
               </div>

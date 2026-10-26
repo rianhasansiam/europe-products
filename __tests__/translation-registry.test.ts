@@ -8,7 +8,7 @@ describe("central language registry",()=>{
       expect(codes).toContain(code);
       if(code!=="en")expect(getLocaleDefinition(code)).toMatchObject({prepared:false,published:false,available:false});
     }
-    expect(getPublishedLocales().map(locale=>locale.code)).toEqual(["en","bn"]);
+    expect(getPublishedLocales().map(locale=>locale.code)).toEqual(["en"]);
   });
   it("distinguishes regional and writing-system variants using official API codes",()=>{
     expect(getLocaleDefinition("pt-BR")).toMatchObject({code:"pt-BR",providerCode:"pt-BR"});
@@ -21,6 +21,6 @@ describe("central language registry",()=>{
   });
   it("keeps provider availability separate from a complete published catalog",()=>{
     expect(getLocaleDefinition("en")).toMatchObject({prepared:true,published:true,available:false});
-    expect(getLocaleDefinition("bn")).toMatchObject({prepared:true,published:true,available:false});
+    expect(getLocaleDefinition("bn")).toMatchObject({prepared:false,published:false,available:false});
   });
 });

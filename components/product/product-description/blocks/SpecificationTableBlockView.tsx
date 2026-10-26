@@ -23,26 +23,26 @@ export default function SpecificationTableBlockView({
       {block.heading?.trim() && (
         <h2
           id={`st-${block.id}`}
-          className="mb-4 text-xl font-bold text-gray-900 [overflow-wrap:anywhere]"
+          className="mb-4 text-xl font-bold text-foreground [overflow-wrap:anywhere]"
         >
           {block.heading}
         </h2>
       )}
-      <div className="max-w-full overflow-x-auto rounded-2xl border border-brand-border">
+      <div className="max-w-full overflow-x-auto rounded-2xl border border-border">
         <table className="w-full border-collapse text-start text-sm">
           <caption className="sr-only">
             {block.heading?.trim() ?? i18n("Specification table")}
           </caption>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-border">
             {visibleRows.map((row) => (
-              <tr key={row.id} className="even:bg-brand-light-bg">
+              <tr key={row.id} className="even:bg-background">
                 <th
                   scope="row"
-                  className="w-2/5 px-4 py-3 align-top font-semibold text-gray-900 [overflow-wrap:anywhere] sm:px-5"
+                  className="w-2/5 px-4 py-3 align-top font-semibold text-foreground [overflow-wrap:anywhere] sm:px-5"
                 >
                   {i18n(row.label)}
                 </th>
-                <td className="px-4 py-3 text-gray-600 [overflow-wrap:anywhere] sm:px-5">
+                <td className="px-4 py-3 text-body [overflow-wrap:anywhere] sm:px-5">
                   {row.value}
                 </td>
               </tr>

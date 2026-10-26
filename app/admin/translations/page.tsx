@@ -1,3 +1,5 @@
-import TranslationsManager from "./TranslationsManager";
+import { notFound } from "next/navigation";
 
-export default function TranslationsPage(){return <TranslationsManager/>;}
+export default function TranslationsPage() {
+  notFound();
+}

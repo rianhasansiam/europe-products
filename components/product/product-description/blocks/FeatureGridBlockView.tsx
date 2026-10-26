@@ -37,7 +37,7 @@ export default function FeatureGridBlockView({
       {block.heading?.trim() && (
         <h2
           id={`fg-${block.id}`}
-          className="mb-6 text-xl font-bold text-gray-900 [overflow-wrap:anywhere]"
+          className="mb-6 text-xl font-bold text-foreground [overflow-wrap:anywhere]"
         >
           {block.heading}
         </h2>
@@ -49,18 +49,18 @@ export default function FeatureGridBlockView({
         {block.items.map((item) => (
           <li
             key={item.id}
-            className="flex min-w-0 flex-col gap-2 rounded-2xl border border-brand-border bg-white p-4 sm:p-5"
+            className="flex min-w-0 flex-col gap-2 rounded-2xl border border-border bg-card p-4 sm:p-5"
           >
             {item.icon && (
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-red/10 text-brand-red">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <LucideIcon name={item.icon} className="h-5 w-5" />
               </span>
             )}
-            <p className="font-semibold text-gray-900 [overflow-wrap:anywhere]">
+            <p className="font-semibold text-foreground [overflow-wrap:anywhere]">
               {item.title}
             </p>
             {item.description?.trim() && (
-              <p className="text-sm text-gray-600 [overflow-wrap:anywhere]">
+              <p className="text-sm text-body [overflow-wrap:anywhere]">
                 {item.description}
               </p>
             )}

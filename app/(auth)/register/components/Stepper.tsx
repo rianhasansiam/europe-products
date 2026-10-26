@@ -27,10 +27,10 @@ export default function Stepper({ currentStep }: { currentStep: RegisterStep }) 
                 className={cn(
                   "relative flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold transition-all duration-500",
                   isCompleted
-                    ? "bg-brand-red text-brand-white shadow-md shadow-brand-red/30"
+                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/30"
                     : isActive
-                      ? "bg-brand-white text-brand-red ring-2 ring-brand-red"
-                      : "bg-brand-light-bg text-brand-text-muted ring-1 ring-brand-border",
+                      ? "bg-card text-primary ring-2 ring-primary"
+                      : "bg-muted text-muted-foreground ring-1 ring-border",
                 )}
               >
                 {isCompleted ? (
@@ -43,14 +43,14 @@ export default function Stepper({ currentStep }: { currentStep: RegisterStep }) 
                 )}
 
                 {isActive && (
-                  <span className="absolute -inset-1 -z-10 animate-ping rounded-full bg-brand-red/30" />
+                  <span className="absolute -inset-1 -z-10 rounded-full bg-primary/30" />
                 )}
               </div>
 
               <p
                 className={cn(
                   "mt-2 hidden text-[11px] font-bold uppercase tracking-wide transition-colors sm:block",
-                  isCompleted || isActive ? "text-brand-red" : "text-brand-text-muted",
+                  isCompleted || isActive ? "text-primary" : "text-muted-foreground",
                 )}
               >
                 {i18n(stepItem.label)}
@@ -58,9 +58,9 @@ export default function Stepper({ currentStep }: { currentStep: RegisterStep }) 
             </div>
 
             {index < REGISTER_STEPS.length - 1 && (
-              <div className="relative mx-2 h-0.5 flex-1 overflow-hidden rounded-full bg-brand-border sm:mx-3">
+              <div className="relative mx-2 h-0.5 flex-1 overflow-hidden rounded-full bg-border sm:mx-3">
                 <div
-                  className="absolute inset-y-0 start-0 bg-brand-red transition-all duration-700 ease-out"
+                  className="absolute inset-y-0 start-0 bg-primary transition-all duration-700 ease-out"
                   style={{ width: index < currentStep ? "100%" : "0%" }}
                 />
               </div>

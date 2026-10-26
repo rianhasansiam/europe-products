@@ -11,7 +11,7 @@ const Breadcrumbs = ({
 }) => {
   const i18n = useInterfaceTranslations("InterfaceProductsSlugComponentsBreadcrumbs");
   return (
-    <div className="flex min-w-0 flex-col gap-4 border-b border-gray-100 pb-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex min-w-0 flex-col gap-4 border-b border-border pb-4 sm:flex-row sm:items-center sm:justify-between">
       {/* Breadcrumb Navigation */}
       <nav
         aria-label={i18n("Breadcrumb")}
@@ -20,23 +20,23 @@ const Breadcrumbs = ({
         <Link
           href="/"
           aria-label={i18n("Home")}
-          className="flex items-center gap-1 text-gray-500 hover:text-brand-red transition-colors shrink-0"
+          className="flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors shrink-0"
         >
           <Home className="w-4 h-4" aria-hidden="true" />
           <span className="hidden sm:inline">{i18n("Home")}</span>
         </Link>
         {items.map((item, index) => (
           <Fragment key={index}>
-            <ChevronRight className="w-4 h-4 text-gray-300 shrink-0 rtl:rotate-180" />
+            <ChevronRight className="w-4 h-4 text-border shrink-0 rtl:rotate-180" />
             {item.href ? (
               <Link
                 href={item.href}
-                className="text-gray-500 hover:text-brand-red transition-colors shrink-0"
+                className="text-muted-foreground hover:text-primary transition-colors shrink-0"
               >
                 {item.label}
               </Link>
             ) : (
-              <span className="min-w-0 truncate font-medium text-brand-black">
+              <span className="min-w-0 truncate font-medium text-foreground">
                 {item.label}
               </span>
             )}

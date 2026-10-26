@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { SessionProvider } from "next-auth/react";
 import { Provider as ReduxProvider } from "react-redux";
+import { MotionConfig } from "framer-motion";
 
 import CurrencyProvider from "@/components/currency/CurrencyProvider";
 import { makeStore } from "@/store";
@@ -13,7 +14,6 @@ import {
 import Toaster from "@/components/ui/Toaster";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import StoreHydrator from "@/components/layout/StoreHydrator";
-import LocaleDraftMonitor from "@/components/i18n/LocaleDraftMonitor";
 
 /**
  * Single client-side provider tree mounted by the root layout.
@@ -40,16 +40,17 @@ export default function Providers({
   const [store] = useState(makeStore);
 
   return (
-    <CurrencyProvider initialContext={initialCurrencyContext}>
-      <SessionProvider>
-        <LocaleDraftMonitor />
-        <ReduxProvider store={store}>
-          <StoreHydrator />
-          {children}
-          <Toaster />
-          <ConfirmDialog />
-        </ReduxProvider>
-      </SessionProvider>
-    </CurrencyProvider>
+    <MotionConfig reducedMotion="user">
+      <CurrencyProvider initialContext={initialCurrencyContext}>
+        <SessionProvider>
+          <ReduxProvider store={store}>
+            <StoreHydrator />
+            {children}
+            <Toaster />
+            <ConfirmDialog />
+          </ReduxProvider>
+        </SessionProvider>
+      </CurrencyProvider>
+    </MotionConfig>
   );
 }

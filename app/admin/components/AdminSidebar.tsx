@@ -9,17 +9,15 @@ import { Home, LogOut, ShieldCheck, X } from "lucide-react";
 import { ADMIN_NAV_GROUPS } from "./data";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/seo/site";
-import LanguageSelector, { type SelectableLanguage } from "@/components/i18n/LanguageSelector";
 import { useLocale } from "next-intl";
 import { localizeHref } from "@/lib/i18n/paths";
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  languages: SelectableLanguage[];
 };
 
-export default function AdminSidebar({ open, onClose, languages }: Props) {
+export default function AdminSidebar({ open, onClose }: Props) {
   const locale = useLocale();
   const i18n = useInterfaceTranslations("AdminAdminComponentsAdminSidebar");
   const pathname = usePathname();
@@ -120,7 +118,6 @@ export default function AdminSidebar({ open, onClose, languages }: Props) {
 
         {/* Footer */}
         <div className="space-y-1 border-t border-brand-border p-3">
-          <LanguageSelector languages={languages} mobile />
           <Link
             href="/"
             onClick={onClose}

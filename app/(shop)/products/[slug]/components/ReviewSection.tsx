@@ -113,14 +113,14 @@ export default function ReviewSection({ productId }: { productId: string }) {
   return (
     <div className="min-w-0 space-y-8">
       <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="flex min-w-0 items-center gap-2 text-xl font-bold text-gray-900 sm:text-2xl">
-          <span className="h-6 w-1.5 shrink-0 rounded-full bg-brand-red" />
+        <h2 className="flex min-w-0 items-center gap-2 text-xl font-bold text-foreground sm:text-2xl">
+          <span className="h-6 w-1.5 shrink-0 rounded-full bg-primary" />
           <span className="min-w-0 [overflow-wrap:anywhere]">
             {i18n("Customer Reviews")}</span>
         </h2>
         <button
           onClick={() => setShowForm((open) => !open)}
-          className="inline-flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-brand-red px-4 py-2 text-sm font-medium text-brand-white shadow-lg transition-all hover:bg-brand-red-hover sm:w-auto"
+          className="inline-flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-lg transition-all hover:bg-primary-hover sm:w-auto"
         >
           {showForm ? (
             <X className="w-4 h-4" />
@@ -142,11 +142,11 @@ export default function ReviewSection({ productId }: { productId: string }) {
       )}
 
       {/* Rating Overview */}
-      <div className="bg-white rounded-2xl border border-brand-border p-4 sm:p-6">
+      <div className="bg-card rounded-2xl border border-border p-4 sm:p-6">
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {/* Average Rating */}
-          <div className="text-center md:text-start md:border-e md:border-brand-border md:pe-8">
-            <div className="text-4xl sm:text-5xl font-bold text-brand-black mb-2">
+          <div className="text-center md:text-start md:border-e md:border-border md:pe-8">
+            <div className="text-4xl sm:text-5xl font-bold text-foreground mb-2">
               {summary.averageRating.toFixed(1)}
             </div>
             <div className="flex items-center justify-center md:justify-start gap-1 mb-2">
@@ -156,12 +156,12 @@ export default function ReviewSection({ productId }: { productId: string }) {
                   className={`w-5 h-5 ${
                     star <= Math.round(summary.averageRating)
                       ? "fill-brand-gold text-brand-gold"
-                      : "text-gray-200"
+                      : "text-border"
                   }`}
                 />
               ))}
             </div>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
               {i18n("Based on {count, plural, one {# review} other {# reviews}}", { count: summary.totalReviews })}
             </p>
           </div>
@@ -178,18 +178,18 @@ export default function ReviewSection({ productId }: { productId: string }) {
                 }
                 className={`w-full flex items-center gap-3 p-1.5 rounded-lg transition-all ${
                   filterRating === item.stars
-                    ? "bg-brand-red/10"
-                    : "hover:bg-gray-50"
+                    ? "bg-primary/10"
+                    : "hover:bg-background"
                 }`}
               >
-                <span className="text-sm text-gray-600 w-8">{item.stars}★</span>
-                <div className="flex-1 h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                <span className="text-sm text-body w-8">{item.stars}★</span>
+                <div className="flex-1 h-2.5 bg-secondary rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-brand-red rounded-full transition-all"
+                    className="h-full bg-primary rounded-full transition-all"
                     style={{ width: `${item.percentage}%` }}
                   />
                 </div>
-                <span className="text-sm text-gray-500 w-12 text-end">
+                <span className="text-sm text-muted-foreground w-12 text-end">
                   {item.count}
                 </span>
               </button>
@@ -201,8 +201,8 @@ export default function ReviewSection({ productId }: { productId: string }) {
       {/* Filters & Sort */}
       <div className="flex min-w-0 flex-wrap items-center justify-between gap-4">
         <div className="flex min-w-0 flex-wrap items-center gap-2">
-          <Filter className="h-4 w-4 shrink-0 text-gray-400" />
-          <span className="min-w-0 text-sm text-gray-500 [overflow-wrap:anywhere]">
+          <Filter className="h-4 w-4 shrink-0 text-muted-foreground" />
+          <span className="min-w-0 text-sm text-muted-foreground [overflow-wrap:anywhere]">
             {filterRating
               ? i18n("Showing {rating}-star reviews", { rating: filterRating })
               : i18n("All {count, plural, one {# review} other {# reviews}}", { count: visibleReviews.length })}
@@ -210,7 +210,7 @@ export default function ReviewSection({ productId }: { productId: string }) {
           {filterRating && (
             <button
               onClick={() => setFilterRating(null)}
-              className="text-sm text-brand-red hover:underline"
+              className="text-sm text-primary hover:underline"
             >
               {i18n("Clear filter")}</button>
           )}
@@ -220,12 +220,12 @@ export default function ReviewSection({ productId }: { productId: string }) {
             aria-label={i18n("Sort reviews")}
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortKey)}
-            className="appearance-none ps-3 pe-8 py-2 bg-white border border-brand-border rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-red"
+            className="appearance-none ps-3 pe-8 py-2 bg-card border border-border rounded-lg text-sm text-body focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="newest">{i18n("Newest First")}</option>
             <option value="rating">{i18n("Highest Rated")}</option>
           </select>
-          <ChevronDown className="absolute end-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+          <ChevronDown className="absolute end-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
         </div>
       </div>
 
@@ -237,7 +237,7 @@ export default function ReviewSection({ productId }: { productId: string }) {
           {loadError}
         </div>
       ) : visibleReviews.length === 0 ? (
-        <div className="rounded-xl border border-brand-border bg-white p-10 text-center text-sm text-gray-600">
+        <div className="rounded-xl border border-border bg-card p-10 text-center text-sm text-body">
           {reviews.length === 0
             ? i18n("No reviews yet. Be the first to review this product after it is delivered.")
             : i18n("No reviews match the current filter.")}
@@ -247,11 +247,11 @@ export default function ReviewSection({ productId }: { productId: string }) {
           {visibleReviews.map((review) => (
             <div
               key={review.id}
-              className="min-w-0 rounded-xl border border-brand-border bg-white p-4 transition-shadow hover:shadow-md sm:p-5"
+              className="min-w-0 rounded-xl border border-border bg-card p-4 transition-shadow hover:shadow-md sm:p-5"
             >
               <div className="flex items-start gap-4">
                 <div
-                  className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 bg-brand-light-bg"
+                  className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 bg-background"
                   style={{ position: "relative" }}
                 >
                   <Image
@@ -265,7 +265,7 @@ export default function ReviewSection({ productId }: { productId: string }) {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="min-w-0 font-semibold text-gray-900 [overflow-wrap:anywhere]">
+                    <span className="min-w-0 font-semibold text-foreground [overflow-wrap:anywhere]">
                       {review.authorName}
                     </span>
                     {review.verified && (
@@ -282,12 +282,12 @@ export default function ReviewSection({ productId }: { productId: string }) {
                           className={`w-3.5 h-3.5 ${
                             star <= review.rating
                               ? "fill-brand-gold text-brand-gold"
-                              : "text-gray-200"
+                              : "text-border"
                           }`}
                         />
                       ))}
                     </div>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-muted-foreground">
                       {formatDate(review.createdAt, locale)}
                     </span>
                   </div>
@@ -297,12 +297,12 @@ export default function ReviewSection({ productId }: { productId: string }) {
               {(review.title || review.comment) && (
                 <div className="mt-3">
                   {review.title && (
-                    <h4 className="font-medium text-gray-900 [overflow-wrap:anywhere]">
+                    <h4 className="font-medium text-foreground [overflow-wrap:anywhere]">
                       {review.title}
                     </h4>
                   )}
                   {review.comment && (
-                    <p className="mt-1 text-sm leading-relaxed text-gray-600 [overflow-wrap:anywhere]">
+                    <p className="mt-1 text-sm leading-relaxed text-body [overflow-wrap:anywhere]">
                       {review.comment}
                     </p>
                   )}
@@ -372,11 +372,11 @@ function WriteReviewForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="min-w-0 rounded-2xl border border-brand-border bg-white p-4 sm:p-5"
+      className="min-w-0 rounded-2xl border border-border bg-card p-4 sm:p-5"
     >
-      <h3 className="text-base font-bold text-gray-900">
+      <h3 className="text-base font-bold text-foreground">
         {i18n("Share your experience")}</h3>
-      <p className="mt-0.5 text-xs text-gray-500">
+      <p className="mt-0.5 text-xs text-muted-foreground">
         {i18n("You can review a product once it has been delivered to you.")}</p>
 
       <div className="mt-4 flex items-center gap-1">
@@ -394,7 +394,7 @@ function WriteReviewForm({
               className={`w-6 h-6 transition-colors ${
                 star <= (hover || rating)
                   ? "fill-brand-gold text-brand-gold"
-                  : "text-gray-300"
+                  : "text-border"
               }`}
             />
           </button>
@@ -408,7 +408,7 @@ function WriteReviewForm({
           onChange={(event) => setTitle(event.target.value)}
           placeholder={i18n("Title (optional)")}
           maxLength={120}
-          className="h-10 w-full rounded-xl border border-brand-border px-3 text-sm text-gray-900 outline-none transition focus:border-brand-red"
+          className="h-10 w-full rounded-xl border border-border px-3 text-sm text-foreground outline-none transition focus:border-primary"
         />
         <textarea
           value={comment}
@@ -416,7 +416,7 @@ function WriteReviewForm({
           placeholder={i18n("Tell others what you liked or disliked (optional)")}
           rows={3}
           maxLength={2000}
-          className="w-full rounded-xl border border-brand-border px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-brand-red"
+          className="w-full rounded-xl border border-border px-3 py-2 text-sm text-foreground outline-none transition focus:border-primary"
         />
       </div>
 
@@ -431,7 +431,7 @@ function WriteReviewForm({
           type="submit"
           disabled={submitting}
           aria-busy={submitting}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-red text-brand-white text-sm font-medium rounded-xl hover:bg-brand-red-hover transition-all shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-xl hover:bg-primary-hover transition-all shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitting ? (
             <ButtonLoader label={i18n("Submitting...")} />

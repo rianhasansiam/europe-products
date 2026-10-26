@@ -62,7 +62,7 @@ export default function LoginFormView({
       {errorMessage && (
         <div
           role="alert"
-          className="flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50/70 p-3 text-xs text-red-700"
+          className="flex items-start gap-2.5 rounded-xl border border-destructive/25 bg-destructive/10 p-3 text-xs text-destructive"
         >
           <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
           <span className="leading-relaxed">{i18n(errorMessage)}</span>
@@ -99,7 +99,7 @@ export default function LoginFormView({
       <div className="flex flex-wrap items-center justify-end gap-2 pt-1">
         <Link
           href="/login"
-          className="text-xs font-semibold text-brand-red underline-offset-2 hover:underline"
+          className="text-xs font-semibold text-primary underline-offset-2 hover:underline"
         >
           {i18n("Forgot password?")}</Link>
       </div>
@@ -108,9 +108,8 @@ export default function LoginFormView({
         type="submit"
         disabled={!canSubmit || isSubmitting}
         aria-busy={isSubmitting}
-        className="group relative mt-2 inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-brand-red px-7 py-3 text-sm font-bold text-brand-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-lg disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none disabled:hover:translate-y-0"
+        className="group relative mt-2 inline-flex items-center justify-center gap-2 overflow-hidden min-h-11 rounded-xl bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground shadow-md transition-colors duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground disabled:shadow-none disabled:hover:translate-y-0"
       >
-        <span className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
 
         {isSubmitting ? (
           <ButtonLoader label={i18n("Signing you in...")} />
@@ -125,17 +124,17 @@ export default function LoginFormView({
       <SocialDivider />
       <GoogleSignInButton callbackUrl={callbackUrl} />
 
-      <p className="mt-2 text-center text-[11px] text-brand-text-muted">
+      <p className="mt-2 text-center text-[11px] text-muted-foreground">
         {i18n("By signing in you agree to our")}{" "}
         <Link
           href="/terms-and-conditions"
-          className="font-semibold text-brand-red hover:underline"
+          className="font-semibold text-primary hover:underline"
         >
           {i18n("Terms")}</Link>{" "}
         {i18n("and")}{" "}
         <Link
           href="/privacy-policy"
-          className="font-semibold text-brand-red hover:underline"
+          className="font-semibold text-primary hover:underline"
         >
           {i18n("Privacy Policy")}</Link>
         .

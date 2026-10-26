@@ -174,21 +174,21 @@ export default function OrdersTab() {
 
   return (
     <div className="flex flex-col gap-4 sm:gap-5">
-      <header className="rounded-2xl border border-brand-border bg-brand-white p-4 shadow-sm sm:rounded-3xl sm:p-6">
+      <header className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:rounded-3xl sm:p-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-light-bg text-brand-black">
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-background text-foreground">
               <Package className="h-4 w-4" />
             </span>
             <div className="min-w-0">
-              <h2 className="text-base font-bold text-gray-900 sm:text-lg">
+              <h2 className="text-base font-bold text-foreground sm:text-lg">
                 {i18n("My orders")}</h2>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 {i18n("Review every order placed on this account.")}</p>
             </div>
           </div>
           {meta && (
-            <p className="text-xs font-medium text-gray-500">
+            <p className="text-xs font-medium text-muted-foreground">
               {meta.total} {meta.total === 1 ? i18n("order") : i18n("orders")} {i18n("total")}</p>
           )}
         </div>
@@ -203,8 +203,8 @@ export default function OrdersTab() {
                 onClick={() => handleStatusFilterChange(filter.id)}
                 className={
                   active
-                    ? "inline-flex shrink-0 snap-start items-center gap-1.5 rounded-xl bg-brand-red px-3 py-1.5 text-xs font-bold text-brand-white shadow-sm"
-                    : "inline-flex shrink-0 snap-start items-center gap-1.5 rounded-xl border border-brand-border bg-brand-white px-3 py-1.5 text-xs font-bold text-foreground hover:border-brand-red hover:text-brand-red"
+                    ? "inline-flex shrink-0 snap-start items-center gap-1.5 rounded-xl bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground shadow-sm"
+                    : "inline-flex shrink-0 snap-start items-center gap-1.5 rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold text-foreground hover:border-primary hover:text-primary"
                 }
                 aria-pressed={active}
               >
@@ -233,20 +233,20 @@ export default function OrdersTab() {
       )}
 
       {state.status === "ready" && filteredEmpty && (
-        <div className="rounded-2xl border border-brand-border bg-brand-white p-6 text-center shadow-sm sm:rounded-3xl sm:p-10">
-          <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand-light-bg text-brand-black">
+        <div className="rounded-2xl border border-border bg-card p-6 text-center shadow-sm sm:rounded-3xl sm:p-10">
+          <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-background text-foreground">
             <Package className="h-6 w-6" />
           </div>
-          <h3 className="mt-4 text-lg font-extrabold text-gray-900">
+          <h3 className="mt-4 text-lg font-bold text-foreground">
             {i18n("No orders here yet")}</h3>
-          <p className="mt-1 text-sm text-gray-600">
+          <p className="mt-1 text-sm text-body">
             {statusFilter === "ALL"
               ? i18n("Your purchases will appear here as soon as you place an order.")
               : i18n("No {value0} orders right now.", { value0: i18n(STATUS_FILTERS.find((f) => f.id === statusFilter)?.label ?? statusFilter) })}
           </p>
           <Link
             href="/products"
-            className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-brand-red px-5 py-2.5 text-sm font-bold text-brand-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl"
+            className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-xl"
           >
             <ShoppingBag className="h-4 w-4" />
             {i18n("Start shopping")}</Link>
@@ -319,7 +319,7 @@ function OrderRow({
       : null;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-brand-border bg-brand-white shadow-sm sm:rounded-3xl">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm sm:rounded-3xl">
       <div className="flex flex-col gap-4 p-4 sm:p-5 lg:flex-row lg:items-center lg:gap-6">
         <div className="flex min-w-0 flex-1 flex-col items-start gap-3 sm:flex-row sm:gap-4">
           <div className="flex shrink-0 -space-x-3">
@@ -333,7 +333,7 @@ function OrderRow({
               />
             ))}
             {moreItems > 0 && (
-              <span className="grid h-12 w-12 place-items-center rounded-xl border-2 border-white bg-brand-light-bg text-xs font-bold text-brand-black shadow-sm sm:h-16 sm:w-16">
+              <span className="grid h-12 w-12 place-items-center rounded-xl border-2 border-white bg-background text-xs font-bold text-foreground shadow-sm sm:h-16 sm:w-16">
                 +{moreItems}
               </span>
             )}
@@ -341,7 +341,7 @@ function OrderRow({
 
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-xs font-bold text-gray-700">
+              <span className="font-mono text-xs font-bold text-body">
                 #{order.orderNumber}
               </span>
               <span
@@ -355,17 +355,17 @@ function OrderRow({
                 {i18n(PAYMENT_STATUS_META[order.paymentStatus].label)}
               </span>
             </div>
-            <p className="mt-1.5 truncate text-sm font-bold text-gray-900">
+            <p className="mt-1.5 truncate text-sm font-bold text-foreground">
               {order.items[0]?.productName ?? i18n("Order items")}
               {order.items.length > 1 && (
-                <span className="text-gray-500">
+                <span className="text-muted-foreground">
                   {" "}
                   + {order.items.length - 1}{" "}
                   {order.items.length - 1 === 1 ? i18n("more") : i18n("more")}
                 </span>
               )}
             </p>
-            <p className="mt-0.5 text-xs text-gray-500">
+            <p className="mt-0.5 text-xs text-muted-foreground">
               {itemCount} {itemCount === 1 ? i18n("item") : i18n("items")} ·{" "}
               {formatDate(order.createdAt, locale)}
             </p>
@@ -377,11 +377,11 @@ function OrderRow({
             <FormattedCurrencyAmount
               amount={order.totalAmount}
               currency={order.currency}
-              className="text-lg font-extrabold text-brand-red"
+              className="text-lg font-bold text-primary"
             />
             {order.paymentMethod === "CASH_ON_DELIVERY" &&
               order.currency !== order.paymentCurrency && (
-                <p className="mt-0.5 text-[11px] font-medium text-gray-500">
+                <p className="mt-0.5 text-[11px] font-medium text-muted-foreground">
                   {i18n("COD due")}{" "}
                   <FormattedCurrencyAmount
                     amount={Math.max(
@@ -396,7 +396,7 @@ function OrderRow({
           <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
             <Link
               href={`/orders/${order.id}`}
-              className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-brand-border bg-brand-white px-3 text-xs font-bold text-brand-red transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-red hover:bg-brand-light-bg"
+              className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-border bg-card px-3 text-xs font-bold text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-background"
             >
               <Eye className="h-3.5 w-3.5" />
               {i18n("View")}</Link>
@@ -413,14 +413,14 @@ function OrderRow({
             ) : reviewableProductId ? (
               <Link
                 href={`/products/${reviewableProductId}#reviews`}
-                className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl bg-brand-red px-3 text-xs font-bold text-brand-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-md"
+                className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl bg-primary px-3 text-xs font-bold text-primary-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-md"
               >
                 <Star className="h-3.5 w-3.5" />
                 {i18n("Review")}</Link>
             ) : (
               <Link
                 href="/products"
-                className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl bg-brand-red px-3 text-xs font-bold text-brand-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-md"
+                className="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl bg-primary px-3 text-xs font-bold text-primary-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-md"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 {i18n("Reorder")}</Link>
@@ -443,12 +443,12 @@ function Pagination({
 }) {
   const i18n = useInterfaceTranslations("InterfaceProfileComponentsOrdersTab");
   return (
-    <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 rounded-2xl border border-brand-border bg-brand-white p-2.5 text-xs font-semibold text-gray-600 shadow-sm sm:p-3">
+    <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 rounded-2xl border border-border bg-card p-2.5 text-xs font-semibold text-body shadow-sm sm:p-3">
       <button
         type="button"
         onClick={() => onChange(Math.max(1, page - 1))}
         disabled={page <= 1}
-        className="inline-flex items-center gap-1 rounded-xl border border-brand-border bg-brand-white px-3 py-1.5 transition-all duration-200 hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-brand-border disabled:hover:text-gray-600"
+        className="inline-flex items-center gap-1 rounded-xl border border-border bg-card px-3 py-1.5 transition-all duration-200 hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-border disabled:hover:text-body"
       >
         <ChevronLeft className="h-3.5 w-3.5 rtl:rotate-180" />
         <span className="hidden min-[380px]:inline">{i18n("Previous")}</span>
@@ -460,7 +460,7 @@ function Pagination({
         type="button"
         onClick={() => onChange(Math.min(totalPages, page + 1))}
         disabled={page >= totalPages}
-        className="inline-flex items-center gap-1 rounded-xl border border-brand-border bg-brand-white px-3 py-1.5 transition-all duration-200 hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-brand-border disabled:hover:text-gray-600"
+        className="inline-flex items-center gap-1 rounded-xl border border-border bg-card px-3 py-1.5 transition-all duration-200 hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-border disabled:hover:text-body"
       >
         <span className="hidden min-[380px]:inline">{i18n("Next")}</span>
         <ChevronRight className="h-3.5 w-3.5 rtl:rotate-180" />

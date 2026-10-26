@@ -142,7 +142,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
 
   return (
     <div className="min-w-0 space-y-6">
-      <h2 className="text-xl font-bold text-brand-black [overflow-wrap:anywhere]">
+      <h2 className="text-xl font-bold text-foreground [overflow-wrap:anywhere]">
         {i18n(title)}
       </h2>
 
@@ -150,12 +150,12 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
         {visibleProducts.map((product) => (
           <article
             key={product.id}
-            className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-gray-100 bg-white transition-all hover:border-brand-red hover:shadow-lg"
+            className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary hover:shadow-lg"
           >
             {/* Image Container */}
             <Link href={`/products/${product.slug}`} className="block min-w-0">
               <div
-                className="relative aspect-square bg-gray-50 p-2"
+                className="relative aspect-square bg-background p-2"
                 style={{ position: "relative" }}
               >
                 <Image
@@ -168,7 +168,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
 
                 {/* Discount Badge */}
                 {product.discount > 0 && (
-                  <span className="absolute top-2 start-2 px-1.5 py-0.5 bg-brand-red text-brand-white text-[10px] font-semibold rounded">
+                  <span className="absolute top-2 start-2 px-1.5 py-0.5 bg-primary text-primary-foreground text-[10px] font-semibold rounded">
                     -{product.discount}%
                   </span>
                 )}
@@ -179,24 +179,24 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
             <div className="flex min-w-0 flex-1 flex-col p-3">
               <Link href={`/products/${product.slug}`} className="block min-w-0">
                 {/* Delivery Time */}
-                <p className="text-[10px] text-gray-400 mb-1">{i18n("Delivery 2 Hours")}</p>
+                <p className="text-[10px] text-muted-foreground mb-1">{i18n("Delivery 2 Hours")}</p>
 
                 {/* Price */}
                 <div className="mb-2 flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5">
                   <CurrencyAmount
                     amountUSD={product.price}
-                    className="max-w-full whitespace-nowrap text-sm font-bold text-gray-900"
+                    className="max-w-full whitespace-nowrap text-sm font-bold text-foreground"
                   />
                   {product.discount > 0 && (
                     <CurrencyAmount
                       amountUSD={product.originalPrice}
-                      className="max-w-full whitespace-nowrap text-[10px] text-gray-400 line-through"
+                      className="max-w-full whitespace-nowrap text-[10px] text-muted-foreground line-through"
                     />
                   )}
                 </div>
 
                 {/* Product Name */}
-                <h3 className="mb-3 line-clamp-1 text-xs text-gray-700 [overflow-wrap:anywhere]">
+                <h3 className="mb-3 line-clamp-1 text-xs text-body [overflow-wrap:anywhere]">
                   {product.name}
                 </h3>
               </Link>
@@ -209,7 +209,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
                 title={pricingReady === false ? "Prices are temporarily unavailable" : undefined}
                 disabled={pricingReady === false || cartBusyId !== null}
                 aria-busy={cartBusyId === product.id}
-                className="flex min-h-11 w-full min-w-0 items-center justify-center gap-1 rounded-lg bg-brand-red px-2 py-1.5 text-xs font-medium text-brand-white transition-colors hover:bg-brand-red-hover"
+                className="flex min-h-11 w-full min-w-0 items-center justify-center gap-1 rounded-lg bg-primary px-2 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary-hover"
               >
                 {cartBusyId === product.id ? (
                   <ButtonLoader label={i18n("Adding...")} />
@@ -232,7 +232,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
             onClick={handleLoadMore}
             disabled={isLoading}
             aria-busy={isLoading}
-            className="inline-flex items-center gap-2 px-8 py-2.5 bg-white border-2 border-gray-200 text-gray-700 font-medium rounded-lg hover:border-brand-red hover:bg-brand-light-bg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center gap-2 px-8 py-2.5 bg-card border-2 border-border text-body font-medium rounded-lg hover:border-primary hover:bg-background transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <ButtonLoader label={i18n("Loading...")} />

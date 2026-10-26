@@ -638,7 +638,7 @@ export default async function ProductDetailsPage({ params }: Props) {
     : null;
 
   return (
-    <main className="min-h-screen bg-brand-light-bg pb-[calc(3.75rem+env(safe-area-inset-bottom))] lg:pb-0">
+    <main className="min-h-screen bg-background pb-[calc(3.75rem+env(safe-area-inset-bottom))] lg:pb-0">
       {pricingReady && <ProductView item={{
         productId: product.id,
         productCode: product.productCode,
@@ -681,25 +681,25 @@ export default async function ProductDetailsPage({ params }: Props) {
         >
           <Link
             href="/products"
-            className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-gray-700 transition hover:border-brand-red hover:text-brand-red"
+            className="rounded-full border border-border bg-card px-3 py-1.5 text-body transition hover:border-primary hover:text-primary"
           >
             Shop All
           </Link>
           <Link
             href="/products?sort=latest"
-            className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-gray-700 transition hover:border-brand-red hover:text-brand-red"
+            className="rounded-full border border-border bg-card px-3 py-1.5 text-body transition hover:border-primary hover:text-primary"
           >
             New Arrivals
           </Link>
           <Link
             href={`/categories/${categoryPath}`}
-            className="max-w-full rounded-full border border-gray-200 bg-white px-3 py-1.5 text-gray-700 transition [overflow-wrap:anywhere] hover:border-brand-red hover:text-brand-red"
+            className="max-w-full rounded-full border border-border bg-card px-3 py-1.5 text-body transition [overflow-wrap:anywhere] hover:border-primary hover:text-primary"
           >
             {product.category.name}
           </Link>
           <Link
             href="/contact"
-            className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-gray-700 transition hover:border-brand-red hover:text-brand-red"
+            className="rounded-full border border-border bg-card px-3 py-1.5 text-body transition hover:border-primary hover:text-primary"
           >
             Contact Us
           </Link>
@@ -717,7 +717,7 @@ export default async function ProductDetailsPage({ params }: Props) {
           </div>
 
           <div className="min-w-0 md:col-span-6 lg:col-span-5">
-            <div className="min-w-0 rounded-2xl border border-gray-100 bg-white p-4 sm:p-6">
+            <div className="min-w-0 rounded-2xl border border-border bg-card p-4 sm:p-6">
               <ProductInfo
                 name={product.name}
                 nameLocale={product.fieldLocales.name}

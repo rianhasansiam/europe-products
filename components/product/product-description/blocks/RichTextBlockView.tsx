@@ -51,7 +51,7 @@ function RichTextContent({ html }: { html: string }) {
   // This is the same approach used by @tiptap/static-renderer internally.
   return (
     <div
-      className="prose prose-sm min-w-0 max-w-none [overflow-wrap:anywhere] prose-headings:font-bold prose-a:text-brand-red prose-a:no-underline [&_img]:h-auto [&_img]:max-w-full [&_pre]:max-w-full [&_pre]:overflow-x-auto hover:prose-a:underline"
+      className="prose prose-sm min-w-0 max-w-none [overflow-wrap:anywhere] prose-headings:font-bold prose-a:text-primary prose-a:no-underline [&_img]:h-auto [&_img]:max-w-full [&_pre]:max-w-full [&_pre]:overflow-x-auto hover:prose-a:underline"
       // This is safe because the HTML is produced by Tiptap's own generateHTML
       // from a validated JSONContent AST — not from arbitrary user string input.
       dangerouslySetInnerHTML={{ __html: html }}

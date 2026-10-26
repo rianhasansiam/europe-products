@@ -238,13 +238,13 @@ export default function ProductsExplorer({
   ].filter((value) => value !== "" && value != null && value !== 0).length;
 
   return (
-    <div className="min-h-screen bg-brand-light-bg">
+    <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-7xl px-3 py-4 sm:px-4 sm:py-6 lg:px-6">
         <div className="mb-4 min-w-0">
-          <h1 className="text-2xl font-bold tracking-tight text-gray-950 [overflow-wrap:anywhere] sm:text-3xl">
+          <h1 className="text-2xl font-bold tracking-tight text-foreground [overflow-wrap:anywhere] sm:text-3xl">
             {query.search ? i18n("Results for “{query}”", { query: query.search }) : i18n("All products")}
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-muted-foreground">
             {i18n("Browse the catalog with live availability and verified customer ratings.")}</p>
           <ActiveFilterChips
             query={query.search}
@@ -316,10 +316,10 @@ export default function ProductsExplorer({
                   {isLoadingMore ? (
                     <div
                       role="status"
-                      className="flex items-center gap-2 text-sm font-medium text-gray-600"
+                      className="flex items-center gap-2 text-sm font-medium text-body"
                     >
                       <LoaderCircle
-                        className="h-5 w-5 animate-spin text-brand-red"
+                        className="h-5 w-5 animate-spin text-primary"
                         aria-hidden="true"
                       />
                       {i18n("Loading more products…")}</div>
@@ -334,12 +334,12 @@ export default function ProductsExplorer({
                       <button
                         type="button"
                         onClick={() => void loadMoreProducts()}
-                        className="mt-2 rounded-lg border border-brand-red px-3 py-1.5 text-sm font-semibold text-brand-red transition-colors hover:bg-brand-red hover:text-white"
+                        className="mt-2 rounded-lg border border-primary px-3 py-1.5 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
                       >
                         {i18n("Try again")}</button>
                     </div>
                   ) : !hasMore && products.length > 0 ? (
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-muted-foreground">
                       {i18n("You’ve reached the end of the products.")}</p>
                   ) : null}
                 </div>
@@ -436,7 +436,7 @@ function ActiveFilterChips({
           key={chip.key}
           type="button"
           onClick={() => onRemove(chip.key)}
-          className="inline-flex max-w-full min-w-0 items-center gap-1 rounded-full border border-brand-red/20 bg-white px-2.5 py-1 text-start text-xs font-medium text-gray-700 transition-colors hover:border-brand-red hover:text-brand-red"
+          className="inline-flex max-w-full min-w-0 items-center gap-1 rounded-full border border-primary/20 bg-card px-2.5 py-1 text-start text-xs font-medium text-body transition-colors hover:border-primary hover:text-primary"
           aria-label={
             "ariaLabel" in chip && typeof chip.ariaLabel === "string"
               ? chip.ariaLabel

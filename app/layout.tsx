@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 
@@ -17,7 +17,7 @@ import { getRequestCurrencyContext } from "@/lib/currency/request-currency";
 
 import Providers from "./providers";
 import IntlProvider from "@/components/i18n/IntlProvider";
-import { getPublishedLanguages, getRequestLocale, getRequestPath } from "@/lib/i18n/server";
+import { getRequestLocale, getRequestPath } from "@/lib/i18n/server";
 import { loadMessages, selectClientMessages } from "@/lib/i18n/catalogs";
 import { getLocaleDefinition } from "@/lib/i18n/registry";
 import { getTranslations } from "next-intl/server";
@@ -27,14 +27,11 @@ import { buildLocalizedMetadata } from "@/lib/seo/localized-metadata";
 // their own data caches while the personalized HTML/RSC shell stays dynamic.
 export const dynamic = "force-dynamic";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 const baseMetadata: Metadata = {
@@ -87,7 +84,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#8140DF",
+  themeColor: "#8B2F55",
   width: "device-width",
   initialScale: 1,
 };
@@ -109,16 +106,15 @@ export default async function RootLayout({
 
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() ?? "";
   const isMetaPixelEnabled = /^\d+$/.test(metaPixelId);
-  const [locale, pathname, publishedLanguages] = await Promise.all([getRequestLocale(), getRequestPath(), getPublishedLanguages()]);
+  const [locale, pathname] = await Promise.all([getRequestLocale(), getRequestPath()]);
   const messages = selectClientMessages(await loadMessages(locale), pathname);
-  const languages = publishedLanguages.map(({ code, englishName, nativeName, direction }) => ({ code, englishName, nativeName, direction }));
   const seo = await getTranslations("Seo");
 
   return (
     <html
       lang={locale}
       dir={getLocaleDefinition(locale).direction}
-      className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${manrope.variable} h-full font-sans antialiased`}
     >
       {/* Browser extensions add attributes to <body> before React hydrates. */}
       <body suppressHydrationWarning>
@@ -139,7 +135,7 @@ export default async function RootLayout({
         <Providers initialCurrencyContext={currencyContext}>
           <SiteChrome
             banner={<TopBanner />}
-            navbar={<Navbar categories={categories} languages={languages} />}
+            navbar={<Navbar categories={categories} />}
             footer={<Footer />}
           >
             {children}

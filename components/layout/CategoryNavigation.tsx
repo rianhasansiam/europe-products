@@ -47,14 +47,14 @@ export function DesktopCategoryMenu({
         aria-controls="desktop-category-menu"
         onClick={() => setOpen((value) => !value)}
         className={cn(
-          "relative flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red",
-          active || open ? "text-brand-red" : "text-brand-black hover:text-brand-red",
+          "relative flex items-center min-h-11 gap-1.5 rounded-xl px-2 py-2.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          active || open ? "bg-secondary text-primary" : "text-foreground hover:bg-secondary hover:text-primary",
         )}
       >
         <Grid3X3 className="h-4 w-4" />
         {i18n("Categories")}<ChevronDown className={cn("h-4 w-4 transition-transform", open && "rotate-180")} />
         <span className={cn(
-          "absolute bottom-0 left-1/2 h-0.5 w-[60%] -translate-x-1/2 rounded-full bg-brand-red transition",
+          "absolute bottom-0 left-1/2 h-0.5 w-[60%] -translate-x-1/2 rounded-full bg-primary transition",
           active || open ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0",
         )} />
       </button>
@@ -62,18 +62,18 @@ export function DesktopCategoryMenu({
       {open && (
         <div
           id="desktop-category-menu"
-          className="absolute left-1/2 top-full z-60 mt-3 w-[calc(100%-3rem)] max-w-6xl -translate-x-1/2 rounded-2xl border border-brand-border bg-white p-5 shadow-2xl"
+          className="absolute left-1/2 top-full z-60 mt-3 w-[calc(100%-3rem)] max-w-6xl -translate-x-1/2 rounded-2xl border border-border bg-card p-5 shadow-lg"
         >
-          <div className="mb-4 flex items-center justify-between border-b border-brand-border pb-3">
+          <div className="mb-4 flex items-center justify-between border-b border-border pb-3">
             <div>
-              <p className="font-bold text-brand-black">{i18n("Shop by category")}</p>
-              <p className="text-xs text-brand-text-muted">{i18n("Browse departments and their most popular sections.")}</p>
+              <p className="font-semibold text-foreground">{i18n("Shop by category")}</p>
+              <p className="text-xs text-muted-foreground">{i18n("Browse departments and their most popular sections.")}</p>
             </div>
-            <Link href="/categories" onClick={() => setOpen(false)} className="text-sm font-semibold text-brand-red hover:text-brand-red-hover">
+            <Link href="/categories" onClick={() => setOpen(false)} className="text-sm font-semibold text-primary hover:text-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
               {i18n("View all categories")}</Link>
           </div>
           {categories.length === 0 ? (
-            <p className="py-6 text-center text-sm text-brand-text-muted">{i18n("No categories available.")}</p>
+            <p className="py-6 text-center text-sm text-muted-foreground">{i18n("No categories available.")}</p>
           ) : (
             <div className="grid max-h-[65vh] grid-cols-2 gap-x-8 gap-y-6 overflow-y-auto lg:grid-cols-3 xl:grid-cols-4">
               {categories.map((root) => (
@@ -81,10 +81,10 @@ export function DesktopCategoryMenu({
                   <Link
                     href={categoryHref(root)}
                     onClick={() => setOpen(false)}
-                    className="group flex items-center justify-between gap-2 font-bold text-brand-black hover:text-brand-red"
+                    className="group flex items-center justify-between gap-2 font-semibold text-foreground hover:bg-secondary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                   >
                     <span className="min-w-0 break-words">{root.name}</span>
-                    <span className="shrink-0 rounded-full bg-brand-light-bg px-2 py-0.5 text-[10px] text-brand-text-muted group-hover:text-brand-red">
+                    <span className="shrink-0 rounded-full bg-background px-2 py-0.5 text-[10px] text-muted-foreground group-hover:text-primary">
                       {root.totalProductCount}
                     </span>
                   </Link>
@@ -95,7 +95,7 @@ export function DesktopCategoryMenu({
                           <Link
                             href={categoryHref(child)}
                             onClick={() => setOpen(false)}
-                            className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-brand-red"
+                            className="flex items-center gap-1.5 text-sm text-body hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                           >
                             <ChevronRight className="h-3 w-3 shrink-0 rtl:rotate-180" />
                             <span className="truncate">{child.name}</span>
@@ -124,10 +124,10 @@ export function MobileCategoryMenu({
   const i18n = useInterfaceTranslations("InterfaceLayoutCategoryNavigation");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   return (
-    <div className="mt-2 border-t border-brand-border pt-2">
+    <div className="mt-2 border-t border-border pt-2">
       <div className="mb-1 flex items-center justify-between px-4 py-2">
-        <p className="text-xs font-bold uppercase tracking-wider text-brand-text-muted">{i18n("Categories")}</p>
-        <Link href="/categories" onClick={onNavigate} className="text-xs font-semibold text-brand-red">{i18n("View all")}</Link>
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{i18n("Categories")}</p>
+        <Link href="/categories" onClick={onNavigate} className="rounded-md py-2 text-xs font-semibold text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">{i18n("View all")}</Link>
       </div>
       {categories.map((root) => {
         const isExpanded = expanded.has(root.id);
@@ -137,7 +137,7 @@ export function MobileCategoryMenu({
               <Link
                 href={categoryHref(root)}
                 onClick={onNavigate}
-                className="flex min-w-0 flex-1 items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold text-brand-black hover:bg-brand-white/60 hover:text-brand-red"
+                className="flex min-w-0 flex-1 items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold text-foreground hover:bg-secondary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 <Grid3X3 className="h-4 w-4 shrink-0" />
                 <span className="truncate">{root.name}</span>
@@ -155,23 +155,23 @@ export function MobileCategoryMenu({
                       return next;
                     })
                   }
-                  className="me-2 flex h-10 w-10 items-center justify-center rounded-lg text-brand-text-muted hover:bg-white hover:text-brand-red"
+                  className="me-2 flex h-11 w-11 items-center justify-center rounded-xl text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-secondary hover:text-primary"
                 >
                   <ChevronDown className={cn("h-4 w-4 transition-transform", isExpanded && "rotate-180")} />
                 </button>
               )}
             </div>
             {root.children.length > 0 && isExpanded && (
-              <div className="ms-7 min-w-0 border-s border-brand-border ps-3">
+              <div className="ms-7 min-w-0 border-s border-border ps-3">
                 {root.children.map((child) => (
                   <Link
                     key={child.id}
                     href={categoryHref(child)}
                     onClick={onNavigate}
-                    className="flex min-w-0 items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-white hover:text-brand-red"
+                    className="flex min-w-0 items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-body hover:bg-secondary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                   >
                     <span className="min-w-0 break-words">{child.name}</span>
-                    <span className="shrink-0 text-[10px] text-gray-400">{child.totalProductCount}</span>
+                    <span className="shrink-0 text-[10px] text-muted-foreground">{child.totalProductCount}</span>
                   </Link>
                 ))}
               </div>

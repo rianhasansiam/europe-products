@@ -176,16 +176,16 @@ export default function SettingsTab({ user, onUpdated }: SettingsTabProps) {
     <form
       data-locale-recoverable
       onSubmit={handleSubmit}
-      className="rounded-2xl border border-brand-border bg-brand-white p-4 shadow-sm sm:rounded-3xl sm:p-6"
+      className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:rounded-3xl sm:p-6"
     >
       <header className="mb-5 flex items-center gap-3">
-        <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-light-bg text-brand-black">
+        <span className="grid h-9 w-9 place-items-center rounded-xl bg-background text-foreground">
           <User className="h-4 w-4" />
         </span>
         <div className="min-w-0">
-          <h2 className="text-base font-bold text-gray-900 sm:text-lg">
+          <h2 className="text-base font-bold text-foreground sm:text-lg">
             {i18n("Personal info")}</h2>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-muted-foreground">
             {i18n("Update the details we use for your account and checkout.")}</p>
         </div>
       </header>
@@ -233,7 +233,7 @@ export default function SettingsTab({ user, onUpdated }: SettingsTabProps) {
             onChange={handleChange("image")}
             disabled={submitState.status === "saving"}
           />
-          <p className="mt-1 text-[11px] text-gray-500">
+          <p className="mt-1 text-[11px] text-muted-foreground">
             {i18n("Upload a photo, or leave blank to use your initials.")}</p>
         </div>
       </div>
@@ -258,7 +258,7 @@ export default function SettingsTab({ user, onUpdated }: SettingsTabProps) {
       )}
 
       <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-muted-foreground">
           {dirty
             ? i18n("{count, plural, one {# pending change.} other {# pending changes.}}", { count: dirtyKeys.length })
             : i18n("All changes saved.")}
@@ -268,7 +268,7 @@ export default function SettingsTab({ user, onUpdated }: SettingsTabProps) {
             type="button"
             onClick={handleReset}
             disabled={!dirty || submitState.status === "saving"}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-2xl border border-brand-border bg-brand-white px-4 text-sm font-bold text-brand-black transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-red hover:bg-brand-light-bg disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 sm:w-auto"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card px-4 text-sm font-bold text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-background disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 sm:w-auto"
           >
             {i18n("Reset")}</button>
           <button
@@ -277,7 +277,7 @@ export default function SettingsTab({ user, onUpdated }: SettingsTabProps) {
               !dirty || submitState.status === "saving" || Boolean(blockingError)
             }
             aria-busy={submitState.status === "saving"}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-2xl bg-brand-red px-5 text-sm font-bold text-brand-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl disabled:cursor-not-allowed disabled:bg-gray-300 disabled:hover:translate-y-0 sm:w-auto"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 text-sm font-bold text-primary-foreground shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-xl disabled:cursor-not-allowed disabled:bg-muted disabled:hover:translate-y-0 sm:w-auto"
           >
             {submitState.status === "saving" ? (
               <ButtonLoader label={i18n("Saving...")} />
@@ -315,21 +315,21 @@ function ReadOnlyField({
   const i18n = useInterfaceTranslations("InterfaceProfileComponentsSettingsTab");
   return (
     <div>
-      <div className="relative rounded-xl border border-brand-border bg-brand-light-bg shadow-sm">
-        <span className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-brand-text-muted">
+      <div className="relative rounded-xl border border-border bg-background shadow-sm">
+        <span className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted-foreground">
           {icon}
         </span>
-        <span className="absolute -top-2 start-3 bg-brand-white px-1.5 text-[11px] font-bold uppercase tracking-wide text-brand-black">
+        <span className="absolute -top-2 start-3 bg-card px-1.5 text-[11px] font-bold uppercase tracking-wide text-foreground">
           {i18n(label)}
         </span>
-        <div className="flex h-12 items-center ps-9 pe-9 text-sm font-medium text-gray-700">
+        <div className="flex h-12 items-center ps-9 pe-9 text-sm font-medium text-body">
           <bdi className="truncate" dir="ltr">{value}</bdi>
         </div>
         {valid && (
           <CheckCircle2 className="absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-emerald-500" />
         )}
       </div>
-      {help && <p className="mt-1 text-[11px] text-gray-500">{help}</p>}
+      {help && <p className="mt-1 text-[11px] text-muted-foreground">{help}</p>}
     </div>
   );
 }

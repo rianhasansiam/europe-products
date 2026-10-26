@@ -23,10 +23,10 @@ const ProductTabs = ({
   const specificationEntries = Object.entries(specifications ?? {});
 
   return (
-    <div className="min-w-0 overflow-hidden rounded-2xl border border-brand-border bg-white">
+    <div className="min-w-0 overflow-hidden rounded-2xl border border-border bg-card">
       {description?.trim() && (
         <section aria-labelledby="product-description-heading">
-          <div className="flex items-center gap-2 border-b border-brand-border bg-brand-light-bg px-5 py-4 text-sm font-semibold text-brand-red">
+          <div className="flex items-center gap-2 border-b border-border bg-background px-5 py-4 text-sm font-semibold text-primary">
             <FileText className="h-4 w-4" aria-hidden="true" />
             <h2
               id="product-description-heading"
@@ -36,7 +36,7 @@ const ProductTabs = ({
               {i18n("Description")}</h2>
           </div>
           <div className="p-5 sm:p-6">
-            <p className="whitespace-pre-line leading-relaxed text-gray-600 [overflow-wrap:anywhere]">
+            <p className="whitespace-pre-line leading-relaxed text-body [overflow-wrap:anywhere]">
               {description}
             </p>
           </div>
@@ -46,9 +46,9 @@ const ProductTabs = ({
       {specificationEntries.length > 0 && (
         <section
           aria-labelledby="product-specifications-heading"
-          className={description?.trim() ? "border-t border-brand-border" : undefined}
+          className={description?.trim() ? "border-t border-border" : undefined}
         >
-          <div className="flex items-center gap-2 border-b border-brand-border bg-brand-light-bg px-5 py-4 text-sm font-semibold text-brand-red">
+          <div className="flex items-center gap-2 border-b border-border bg-background px-5 py-4 text-sm font-semibold text-primary">
             <ListChecks className="h-4 w-4" aria-hidden="true" />
             <h2
               id="product-specifications-heading"
@@ -61,16 +61,16 @@ const ProductTabs = ({
             <table className="w-full border-collapse text-start text-sm">
               <caption lang={locale} className="sr-only">
                 {i18n("Technical specifications for this product")}</caption>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-border">
                 {specificationEntries.map(([label, value]) => (
                   <tr key={label}>
                     <th
                       scope="row"
-                      className="w-2/5 py-3 pe-4 align-top font-semibold text-gray-900 [overflow-wrap:anywhere]"
+                      className="w-2/5 py-3 pe-4 align-top font-semibold text-foreground [overflow-wrap:anywhere]"
                     >
                       {label}
                     </th>
-                    <td lang={typeof value === "string" ? undefined : locale} className="py-3 text-gray-600 [overflow-wrap:anywhere]">
+                    <td lang={typeof value === "string" ? undefined : locale} className="py-3 text-body [overflow-wrap:anywhere]">
                       {typeof value === "boolean" ? i18n(displaySpecificationValue(value, locale)) : displaySpecificationValue(value, locale)}
                     </td>
                   </tr>

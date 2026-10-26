@@ -115,28 +115,28 @@ export default async function BrandPage({ params }: Props) {
   ];
 
   return (
-    <main className="min-h-screen bg-brand-light-bg">
+    <main className="min-h-screen bg-background">
       <JsonLd data={schemas} />
       <div className="mx-auto max-w-7xl px-3 py-6 sm:px-4 sm:py-8 lg:px-6">
         <PublicContentNotice available={brand.translationAvailable}/>
-        <nav aria-label={i18n("Breadcrumb")} className="mb-5 text-sm text-gray-500">
-          <Link href="/" className="hover:text-brand-red">
+        <nav aria-label={i18n("Breadcrumb")} className="mb-5 text-sm text-muted-foreground">
+          <Link href="/" className="hover:text-primary">
             {i18n("Home")}</Link>
           <span aria-hidden className="mx-2">
             /
           </span>
-          <Link href="/brands" className="hover:text-brand-red">
+          <Link href="/brands" className="hover:text-primary">
             {i18n("Brands")}</Link>
           <span aria-hidden className="mx-2">
             /
           </span>
-          <span aria-current="page" className="font-medium text-gray-800">
+          <span aria-current="page" className="font-medium text-foreground">
             {brand.name}
           </span>
         </nav>
 
-        <header className="mb-8 rounded-2xl border border-brand-border bg-white p-6 shadow-sm sm:flex sm:items-center sm:gap-6 lg:p-8">
-          <div className="mb-5 flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-gray-100 bg-brand-light-bg sm:mb-0">
+        <header className="mb-8 rounded-2xl border border-border bg-card p-6 shadow-sm sm:flex sm:items-center sm:gap-6 lg:p-8">
+          <div className="mb-5 flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-border bg-background sm:mb-0">
             {brand.logo ? (
               <Image
                 src={brand.logo}
@@ -147,22 +147,22 @@ export default async function BrandPage({ params }: Props) {
                 className="h-full w-full object-contain p-2"
               />
             ) : (
-              <span className="text-4xl font-black text-brand-red" aria-hidden>
+              <span className="text-4xl font-bold text-primary" aria-hidden>
                 {brand.name.charAt(0).toUpperCase()}
               </span>
             )}
           </div>
           <div className="min-w-0">
-            <p className="text-xs font-bold uppercase tracking-widest text-brand-red">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">
               {i18n("Brand collection")}</p>
-            <h1 className="mt-2 text-3xl font-black tracking-tight text-gray-950 sm:text-4xl">
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               {brand.name}
             </h1>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-gray-600 sm:text-base">
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-body sm:text-base">
               {i18n(description)}
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-4 text-sm">
-              <span className="font-semibold text-gray-700">
+              <span className="font-semibold text-body">
                 {brand.productCount}{" "}
                 {brand.productCount === 1 ? i18n("available product") : i18n("available products")}
               </span>
@@ -171,7 +171,7 @@ export default async function BrandPage({ params }: Props) {
                   href={brand.website}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
-                  className="inline-flex items-center gap-1 font-semibold text-brand-red hover:text-brand-red-hover"
+                  className="inline-flex items-center gap-1 font-semibold text-primary hover:text-primary-hover"
                 >
                   {i18n("Official website")}<ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
@@ -181,15 +181,15 @@ export default async function BrandPage({ params }: Props) {
         </header>
 
         {brand.products.length === 0 ? (
-          <div className="rounded-2xl border border-brand-border bg-white p-10 text-center shadow-sm">
-            <PackageSearch className="mx-auto h-10 w-10 text-brand-red/70" />
-            <h2 className="mt-3 text-lg font-bold text-gray-900">
+          <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-sm">
+            <PackageSearch className="mx-auto h-10 w-10 text-primary/70" />
+            <h2 className="mt-3 text-lg font-bold text-foreground">
               {i18n("No available products yet")}</h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-body">
               {i18n("This brand does not have any active products right now.")}</p>
             <Link
               href="/products"
-              className="mt-5 inline-flex rounded-full bg-brand-red px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-red-hover"
+              className="mt-5 inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover"
             >
               {i18n("Browse all products")}</Link>
           </div>
@@ -199,16 +199,16 @@ export default async function BrandPage({ params }: Props) {
               <div>
                 <h2
                   id="brand-products-heading"
-                  className="text-xl font-extrabold text-gray-950"
+                  className="text-xl font-bold text-foreground"
                 >
                   {brand.name} {i18n("products")}</h2>
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-muted-foreground">
                   {i18n("Active products from visible categories.")}</p>
               </div>
               {brand.productCount > brand.products.length && (
                 <Link
                   href={`/products?brandSlug=${encodeURIComponent(brand.slug)}`}
-                  className="text-sm font-semibold text-brand-red hover:text-brand-red-hover"
+                  className="text-sm font-semibold text-primary hover:text-primary-hover"
                 >
                   {i18n("View all")}{brand.productCount}
                 </Link>

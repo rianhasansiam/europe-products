@@ -45,8 +45,8 @@ export default function ProfileSidebar({
               className={cn(
                 "inline-flex shrink-0 snap-start items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold transition-all duration-200 sm:gap-2 sm:text-sm",
                 active
-                  ? "border-brand-red bg-brand-light-bg text-brand-red shadow-sm"
-                  : "border-brand-border bg-brand-white text-foreground hover:border-brand-red hover:text-brand-red",
+                  ? "border-primary bg-background text-primary shadow-sm"
+                  : "border-border bg-card text-foreground hover:border-primary hover:text-primary",
               )}
               aria-pressed={active}
             >
@@ -59,7 +59,7 @@ export default function ProfileSidebar({
       </nav>
 
       {/* Desktop: vertical rail */}
-      <ul className="hidden flex-col gap-1.5 rounded-3xl border border-brand-border bg-brand-white p-3 shadow-sm lg:flex">
+      <ul className="hidden flex-col gap-1.5 rounded-3xl border border-border bg-card p-3 shadow-sm lg:flex">
         {PROFILE_TABS.map((tab) => {
           const Icon = tab.icon;
           const active = tab.id === activeTab;
@@ -72,16 +72,16 @@ export default function ProfileSidebar({
                 className={cn(
                   "group flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-start transition-all duration-200",
                   active
-                    ? "bg-brand-red text-brand-white shadow-md"
-                    : "text-foreground hover:bg-brand-light-bg hover:text-brand-red",
+                    ? "bg-primary text-primary-foreground shadow-md"
+                    : "text-foreground hover:bg-background hover:text-primary",
                 )}
               >
                 <span
                   className={cn(
                     "grid h-9 w-9 shrink-0 place-items-center rounded-xl transition-colors",
                     active
-                      ? "bg-white/20 text-white"
-                      : "bg-brand-light-bg text-brand-black group-hover:bg-brand-border",
+                      ? "bg-primary-foreground/15 text-primary-foreground"
+                      : "bg-background text-foreground group-hover:bg-brand-border",
                   )}
                 >
                   <Icon className="h-4 w-4" />
@@ -96,7 +96,7 @@ export default function ProfileSidebar({
                   <span
                     className={cn(
                       "mt-0.5 block truncate text-[11px]",
-                      active ? "text-white/85" : "text-gray-500",
+                      active ? "text-primary-foreground" : "text-muted-foreground",
                     )}
                   >
                     {i18n(tab.description)}
@@ -133,8 +133,8 @@ function Badge({
       className={cn(
         "inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[10px] font-bold",
         active
-          ? "bg-white/25 text-white"
-          : "bg-brand-light-bg text-brand-black",
+          ? "bg-primary-foreground/15 text-primary-foreground"
+          : "bg-background text-foreground",
       )}
     >
       {value > 99 ? "99+" : value}

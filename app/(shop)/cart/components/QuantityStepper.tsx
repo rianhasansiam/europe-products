@@ -53,15 +53,15 @@ export default function QuantityStepper({
   const draftQuantity = normalizedDraft();
 
   const buttonClasses = cn(
-    "grid place-items-center rounded-lg text-brand-black transition-all duration-200 hover:bg-brand-light-bg hover:text-brand-red active:scale-95 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-transparent",
-    size === "sm" ? "h-7 w-7" : "h-8 w-8",
+    "grid place-items-center rounded-lg text-foreground transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-secondary hover:text-primary disabled:cursor-not-allowed disabled:text-muted-foreground disabled:hover:bg-transparent",
+    size === "sm" ? "h-10 w-10" : "h-11 w-11",
   );
 
   return (
     <div
       ref={containerRef}
       className={cn(
-        "inline-flex items-center gap-1 rounded-xl border border-brand-border bg-brand-light-bg p-1",
+        "inline-flex items-center gap-1 rounded-xl border border-border bg-muted p-1",
         size === "sm" ? "text-xs" : "text-sm",
       )}
     >
@@ -116,7 +116,7 @@ export default function QuantityStepper({
         }}
         onFocus={(event) => event.currentTarget.select()}
         className={cn(
-          "bg-transparent text-center font-bold text-gray-900 outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-red/30",
+          "bg-transparent text-center font-bold text-foreground outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-primary/30",
           size === "sm" ? "w-8 text-xs" : "w-10 text-sm",
         )}
       />

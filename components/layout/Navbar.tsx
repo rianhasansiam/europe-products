@@ -19,7 +19,6 @@ import Link, { usePathname } from "@/lib/i18n/navigation";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import LanguageSelector, { type SelectableLanguage } from "@/components/i18n/LanguageSelector";
 import { localizeHref } from "@/lib/i18n/paths";
 import { getLocaleDefinition } from "@/lib/i18n/registry";
 import { signOut } from "next-auth/react";
@@ -63,11 +62,9 @@ const HOVER_CLOSE_DELAY_MS = 120;
 
 export default function Navbar({
   categories = [],
-  languages = [],
   initialMobileMenuOpen = false,
 }: {
   categories?: PublicCategoryNode[];
-  languages?: SelectableLanguage[];
   /** Explicit initial presentation for SSR previews; visitor navigation starts closed. */
   initialMobileMenuOpen?: boolean;
 }) {
@@ -171,8 +168,8 @@ export default function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-brand-light-bg px-1 py-2 sm:px-4 lg:border-b lg:border-brand-border lg:px-0 lg:py-0">
-      <div className="relative mx-auto flex w-full min-w-0 max-w-7xl items-center justify-between gap-2 rounded-md border border-brand-border bg-brand-white py-2.5 shadow-sm sm:px-4 lg:rounded-none lg:border-none lg:bg-transparent lg:px-6 lg:py-3 lg:shadow-none">
+    <header className="sticky top-0 z-50 border-b border-border bg-card px-1 py-2 sm:px-4 lg:px-0 lg:py-0">
+      <div className="relative mx-auto flex w-full min-w-0 max-w-7xl items-center justify-between gap-1 rounded-xl bg-card py-1 sm:gap-2 sm:px-4 lg:px-6 lg:py-3">
         {/* LEFT: Mobile Menu + Brand */}
         <div className="flex min-w-0 items-center gap-2">
           <button
@@ -184,7 +181,7 @@ export default function Navbar({
             aria-label={mobileMenuOpen ? t("closeMenu") : t("openMenu")}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation-drawer"
-            className="shrink-0 rounded-full p-2 text-brand-black transition-colors duration-200 hover:bg-brand-white/40 hover:text-brand-red xl:hidden"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-foreground transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-secondary hover:text-primary xl:hidden"
           >
             <Menu className="h-6 w-6" />
           </button>
@@ -192,16 +189,16 @@ export default function Navbar({
           <Link
             href="/"
             aria-label={t("homeLabel", { brand: siteConfig.name })}
-            className="group flex min-w-0 shrink-0 items-center rounded-xl px-1 py-1.5 transition-transform duration-300 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red focus-visible:ring-offset-2"
+            className="group flex min-w-0 shrink-0 items-center rounded-xl px-1 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
           >
             <div
               aria-hidden="true"
               className="flex min-w-0 select-none flex-col items-center"
             >
-              <span className="whitespace-nowrap text-xl font-black leading-none tracking-[-0.055em] text-brand-black sm:text-2xl">
-                Sex<span className="text-brand-red">Toy</span>
+              <span className="whitespace-nowrap text-xl font-bold leading-none tracking-[-0.055em] text-foreground sm:text-2xl">
+                Sex<span className="text-primary">Toy</span>
               </span>
-              <span className="mt-1 whitespace-nowrap text-[0.46rem] font-bold uppercase leading-none tracking-[0.15em] text-brand-text-muted transition-colors duration-300 group-hover:text-brand-black max-[374px]:hidden sm:text-[0.5rem] sm:tracking-[0.18em]">
+              <span className="mt-1 whitespace-nowrap text-[0.46rem] font-bold uppercase leading-none tracking-[0.15em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground max-[374px]:hidden sm:text-[0.5rem] sm:tracking-[0.18em]">
                {t("tagline")}
               </span>
             </div>
@@ -209,7 +206,7 @@ export default function Navbar({
         </div>
 
         {/* DESKTOP MENU */}
-        <nav className="hidden items-center gap-2 xl:flex">
+        <nav className="hidden items-center gap-1 xl:flex">
           <DesktopCategoryMenu
             categories={categories}
             active={pathname === "/categories" || pathname.startsWith("/categories/")}
@@ -222,17 +219,17 @@ export default function Navbar({
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red focus-visible:text-brand-red",
+                  "relative flex items-center gap-1.5 rounded-xl px-2 py-2.5 min-h-11 text-sm font-medium transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:text-primary",
                   active
-                    ? "text-brand-red"
-                    : "text-brand-black hover:text-brand-red",
+                    ? "bg-secondary text-primary"
+                    : "text-foreground hover:bg-secondary hover:text-primary",
                 )}
               >
-                <Icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+                <Icon className="h-4 w-4" />
                 {t(item.label)}
                 <span
                   className={cn(
-                    "absolute bottom-0 left-1/2 h-0.5 w-[60%] -translate-x-1/2 rounded-full bg-brand-red transition-all duration-200 ease-out",
+                    "absolute bottom-0 left-1/2 h-0.5 w-[60%] -translate-x-1/2 rounded-full bg-primary transition-colors duration-200 ease-out",
                     active
                       ? "scale-x-100 opacity-100"
                       : "scale-x-0 opacity-0",
@@ -245,19 +242,18 @@ export default function Navbar({
 
         {/* DESKTOP SEARCH */}
         <SearchBar
-          className="mx-4 hidden max-w-lg flex-1 md:block"
+          className="mx-4 hidden max-w-lg flex-1 md:block xl:mx-2 xl:min-w-44"
           placeholder={t("searchProducts")}
           recommendations={recommendedSearches}
         />
 
         {/* RIGHT ICONS */}
         <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
-          <LanguageSelector languages={languages} />
           {!user && (
             <Link
               href="/login"
               aria-label={t("signIn")}
-              className="flex h-10 w-10 items-center justify-center gap-1 p-0 text-sm font-semibold text-brand-black transition-colors duration-200 hover:text-brand-red sm:h-auto sm:w-auto sm:px-2 sm:py-1.5 xl:hidden"
+              className="flex h-11 w-11 items-center justify-center gap-1 p-0 text-sm font-semibold text-foreground transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:text-primary sm:w-auto sm:px-2 xl:hidden"
             >
               <span className="hidden sm:inline">{t("signIn")}</span>
               <User className="h-5 w-5" />
@@ -267,10 +263,10 @@ export default function Navbar({
           {user && (
             <Link
               href="/profile"
-              className="flex h-10 w-10 items-center justify-center rounded-full p-0 transition-colors duration-200 hover:bg-brand-white/40 xl:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-xl p-0 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-secondary xl:hidden"
               aria-label={t("myProfile")}
             >
-              <div className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-full border-2 border-brand-border bg-brand-light-bg">
+              <div className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-full border-2 border-border bg-background">
                 {user.image ? (
                   <Image
                     src={user.image}
@@ -280,7 +276,7 @@ export default function Navbar({
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <User className="h-3.5 w-3.5 text-brand-black" />
+                  <User className="h-3.5 w-3.5 text-foreground" />
                 )}
               </div>
             </Link>
@@ -289,11 +285,11 @@ export default function Navbar({
           <Link
             href="/wishlist"
             aria-label={wishlistCount > 0 ? t("wishlistItems", { count: wishlistCount }) : t("wishlist")}
-            className="group relative flex h-10 w-10 items-center justify-center rounded-full p-0 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-white/40 xl:h-auto xl:w-auto xl:p-2"
+            className="group relative flex h-11 w-11 items-center justify-center rounded-xl p-0 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-secondary"
           >
-            <Heart className="h-5 w-5 text-brand-black transition-transform duration-200 group-hover:scale-110 group-hover:text-brand-red" />
+            <Heart className="h-5 w-5 text-foreground transition-colors duration-200 group-hover:text-primary" />
             {wishlistCount > 0 && (
-              <span className="absolute end-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-red px-1 text-[10px] font-bold leading-none text-brand-white ring-2 ring-brand-white xl:end-0.5 xl:top-0.5">
+              <span className="absolute end-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground ring-2 ring-card xl:end-0.5 xl:top-0.5">
                 {wishlistCount > 99 ? "99+" : wishlistCount}
               </span>
             )}
@@ -302,11 +298,11 @@ export default function Navbar({
           <Link
             href="/cart"
             aria-label={cartCount > 0 ? t("cartItems", { count: cartCount }) : t("cart")}
-            className="group relative flex h-10 w-10 items-center justify-center rounded-full p-0 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-white/40 xl:h-auto xl:w-auto xl:p-2"
+            className="group relative flex h-11 w-11 items-center justify-center rounded-xl p-0 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-secondary"
           >
-            <ShoppingCart className="h-5 w-5 text-brand-black transition-transform duration-200 group-hover:scale-110 group-hover:text-brand-red" />
+            <ShoppingCart className="h-5 w-5 text-foreground transition-colors duration-200 group-hover:text-primary" />
             {cartCount > 0 && (
-              <span className="absolute end-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-red px-1 text-[10px] font-bold leading-none text-brand-white ring-2 ring-brand-white xl:end-0.5 xl:top-0.5">
+              <span className="absolute end-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground ring-2 ring-card xl:end-0.5 xl:top-0.5">
                 {cartCount > 99 ? "99+" : cartCount}
               </span>
             )}
@@ -339,10 +335,10 @@ export default function Navbar({
                           event.preventDefault();
                         }
                       }}
-                      className="group flex items-center gap-2 rounded-full p-1.5 transition-colors duration-200 hover:bg-brand-white/40"
+                      className="group flex items-center gap-2 rounded-full p-1.5 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-secondary"
                       aria-label={t("openProfileMenu")}
                     >
-                      <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border-2 border-brand-border bg-brand-light-bg transition-transform duration-300 group-hover:scale-105">
+                      <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border-2 border-border bg-background">
                         {user.image ? (
                           <Image
                             src={user.image}
@@ -352,10 +348,10 @@ export default function Navbar({
                             className="h-full w-full object-cover"
                           />
                         ) : (
-                          <User className="h-4 w-4 text-brand-black" />
+                          <User className="h-4 w-4 text-foreground" />
                         )}
                       </div>
-                      <ChevronDown className="h-4 w-4 text-brand-black transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                      <ChevronDown className="h-4 w-4 text-foreground transition-transform duration-300 group-data-[state=open]:rotate-180" />
                     </button>
                   </DropdownMenuTrigger>
                 </div>
@@ -366,9 +362,9 @@ export default function Navbar({
                   onMouseEnter={cancelClose}
                   onMouseLeave={scheduleClose}
                 >
-                  <div className="border-b border-brand-border bg-brand-light-bg p-4">
+                  <div className="border-b border-border bg-background p-4">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2 border-brand-border bg-brand-light-bg">
+                      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2 border-border bg-background">
                         {user.image ? (
                           <Image
                             src={user.image}
@@ -378,15 +374,15 @@ export default function Navbar({
                             className="h-full w-full object-cover"
                           />
                         ) : (
-                          <User className="h-6 w-6 text-brand-black" />
+                          <User className="h-6 w-6 text-foreground" />
                         )}
                       </div>
                       <div className="min-w-0">
-                        <p className="truncate font-semibold text-brand-black">
+                        <p className="truncate font-semibold text-foreground">
                           {user.name || t("user")}
                         </p>
                         {user.email && (
-                          <p className="truncate text-xs text-brand-text-muted">
+                          <p className="truncate text-xs text-muted-foreground">
                             {user.email}
                           </p>
                         )}
@@ -417,7 +413,7 @@ export default function Navbar({
                         event.preventDefault();
                         void handleLogout();
                       }}
-                      className="text-red-600 focus:bg-red-50 focus:text-red-700"
+                      className="text-destructive focus:bg-destructive/10 focus:text-destructive"
                     >
                       <LogOut className="h-4 w-4" />
                       {t("signOut")}
@@ -429,14 +425,14 @@ export default function Navbar({
               <div className="hidden items-center gap-2 sm:flex">
                 <Link
                   href="/login"
-                  className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-brand-black transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-white/40 hover:text-brand-red"
+                  className="flex items-center min-h-11 gap-1.5 rounded-xl px-3 py-2 text-sm font-medium text-foreground transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-secondary hover:text-primary"
                 >
                   <LogIn className="h-4 w-4" />
                   {t("signIn")}
                 </Link>
                 <Link
                   href="/register"
-                  className="flex items-center gap-1.5 rounded-lg bg-brand-red px-3 py-2 text-sm font-medium text-brand-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-md"
+                  className="flex items-center min-h-11 gap-1.5 rounded-xl bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 >
                   <UserPlus className="h-4 w-4" />
                   {t("signUp")}
@@ -452,7 +448,7 @@ export default function Navbar({
         <SearchBar
           placeholder={t("searchProducts")}
           recommendations={recommendedSearches}
-          inputClassName="h-11 border-2 border-brand-red/35 bg-brand-white ps-10 text-[16px] shadow-sm focus-visible:border-brand-red"
+          inputClassName="h-11 border-border bg-background ps-10 text-[16px] focus-visible:border-primary"
         />
       </div>
 
@@ -467,14 +463,14 @@ export default function Navbar({
         aria-hidden={!mobileMenuOpen}
         inert={!mobileMenuOpen}
         className={cn(
-          "fixed inset-y-0 start-0 z-70 flex h-dvh w-[85%] max-w-sm transform-gpu flex-col overflow-hidden border-e border-brand-border bg-brand-light-bg shadow-xl [backface-visibility:hidden] [contain:paint] transition-transform duration-[420ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform motion-reduce:transition-none xl:hidden",
+          "fixed inset-y-0 start-0 z-70 flex h-dvh w-[85%] max-w-sm transform-gpu flex-col overflow-hidden border-e border-border bg-background shadow-xl [backface-visibility:hidden] [contain:paint] transition-transform duration-[420ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform motion-reduce:transition-none xl:hidden",
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full rtl:translate-x-full",
         )}
       >
-        <div className="relative bg-brand-black px-4 py-3 text-brand-white">
+        <div className="relative border-b border-border bg-secondary px-4 py-3 text-foreground">
           <h2
             id="mobile-navigation-title"
-              className="pe-10 text-base font-bold text-brand-white"
+              className="pe-10 text-base font-medium text-foreground"
           >
             {t("menu")}
           </h2>
@@ -489,24 +485,23 @@ export default function Navbar({
               setMobileMenuOpen(false);
               mobileMenuButtonRef.current?.focus({ preventScroll: true });
             }}
-            className="absolute end-3 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-brand-white/90 transition-colors duration-150 hover:bg-brand-white/15 focus:outline-none focus:ring-2 focus:ring-brand-white/40"
+            className="absolute end-3 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-xl text-foreground transition-colors duration-150 hover:bg-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Mobile Search */}
-        <div className="border-b border-brand-border bg-brand-white/40 px-4 py-3">
+        <div className="border-b border-border bg-card px-4 py-3">
           <SearchBar
             placeholder={t("search")}
             recommendations={recommendedSearches}
-            inputClassName="rounded-xl border-brand-border bg-brand-white"
+            inputClassName="rounded-xl border-border bg-card"
             onNavigate={() => setMobileMenuOpen(false)}
           />
         </div>
 
         <nav className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-          <LanguageSelector languages={languages} mobile />
           <MobileCategoryMenu
             categories={categories}
             onNavigate={() => setMobileMenuOpen(false)}
@@ -520,10 +515,10 @@ export default function Navbar({
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red",
+                  "flex items-center gap-3 rounded-xl px-4 py-3 text-base font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
                   active
-                    ? "bg-brand-red text-brand-white shadow-md"
-                    : "text-brand-black hover:translate-x-1 rtl:hover:-translate-x-1 hover:bg-brand-white/60 hover:text-brand-red",
+                    ? "bg-secondary text-primary"
+                    : "text-foreground hover:bg-secondary hover:text-primary",
                 )}
               >
                 <Icon className="h-5 w-5" />
@@ -532,13 +527,13 @@ export default function Navbar({
             );
           })}
 
-          <div className="mt-2 border-t border-brand-border pt-2">
+          <div className="mt-2 border-t border-border pt-2">
             {user ? (
               <>
                 <Link
                   href="/profile"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold text-brand-black transition-all duration-200 hover:translate-x-1 rtl:hover:-translate-x-1 hover:bg-brand-white/60 hover:text-brand-red"
+                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-base font-medium text-foreground transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-secondary hover:text-primary"
                 >
                   <User className="h-5 w-5" />
                   {t("myProfile")}
@@ -548,7 +543,7 @@ export default function Navbar({
                   onClick={() => {
                     void handleLogout();
                   }}
-                  className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold text-red-600 transition-all duration-200 hover:translate-x-1 rtl:hover:-translate-x-1 hover:bg-red-50"
+                  className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-base font-medium text-destructive transition-colors duration-200 hover:bg-destructive/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 >
                   <LogOut className="h-5 w-5" />
                   {t("signOut")}
@@ -559,7 +554,7 @@ export default function Navbar({
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold text-brand-black transition-all duration-200 hover:translate-x-1 rtl:hover:-translate-x-1 hover:bg-brand-white/60 hover:text-brand-red"
+                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-base font-medium text-foreground transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-secondary hover:text-primary"
                 >
                   <LogIn className="h-5 w-5" />
                   {t("signIn")}
@@ -567,7 +562,7 @@ export default function Navbar({
                 <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 rounded-xl bg-brand-red px-4 py-3 text-base font-semibold text-brand-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover"
+                  className="flex items-center gap-3 rounded-xl bg-primary px-4 py-3 text-base font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 >
                   <UserPlus className="h-5 w-5" />
                   {t("signUp")}

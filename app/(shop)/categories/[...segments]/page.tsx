@@ -143,7 +143,7 @@ export default async function CategoryPage({ params }: Props) {
   ];
 
   return (
-    <main className="min-h-screen bg-brand-light-bg">
+    <main className="min-h-screen bg-background">
       <JsonLd
         data={[
           collectionPageJsonLd({
@@ -158,7 +158,7 @@ export default async function CategoryPage({ params }: Props) {
 
       <div className="mx-auto max-w-7xl px-3 py-6 sm:px-4 sm:py-8 lg:px-6">
         <PublicContentNotice available={category.translationAvailable}/>
-        <nav aria-label={i18n("Breadcrumb")} className="mb-5 text-sm text-gray-500">
+        <nav aria-label={i18n("Breadcrumb")} className="mb-5 text-sm text-muted-foreground">
           <ol className="flex min-w-0 flex-wrap items-center gap-1.5">
             {crumbs.map((crumb, index) => {
               const current = index === crumbs.length - 1;
@@ -171,14 +171,14 @@ export default async function CategoryPage({ params }: Props) {
                   {current ? (
                     <span
                       aria-current="page"
-                      className="min-w-0 font-medium text-gray-800 [overflow-wrap:anywhere]"
+                      className="min-w-0 font-medium text-foreground [overflow-wrap:anywhere]"
                     >
                       {crumb.name}
                     </span>
                   ) : (
                     <Link
                       href={crumb.path}
-                      className="min-w-0 [overflow-wrap:anywhere] hover:text-brand-red"
+                      className="min-w-0 [overflow-wrap:anywhere] hover:text-primary"
                     >
                       {crumb.name}
                     </Link>
@@ -189,21 +189,21 @@ export default async function CategoryPage({ params }: Props) {
           </ol>
         </nav>
 
-        {/* <header className="mb-7 overflow-hidden rounded-2xl border border-brand-border bg-white shadow-sm">
+        {/* <header className="mb-7 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="flex min-h-44 flex-col justify-center gap-5 p-6 sm:flex-row sm:items-center sm:justify-between lg:p-8">
             <div className="max-w-3xl">
-              <p className="text-xs font-bold uppercase tracking-widest text-brand-red">
+              <p className="text-xs font-bold uppercase tracking-widest text-primary">
                 Category collection
               </p>
-              <h1 className="mt-2 text-3xl font-black tracking-tight text-gray-950 sm:text-4xl">
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 {category.name}
               </h1>
               {category.description && (
-                <p className="mt-3 text-sm leading-6 text-gray-600 sm:text-base">
+                <p className="mt-3 text-sm leading-6 text-body sm:text-base">
                   {category.description}
                 </p>
               )}
-              <p className="mt-3 text-sm font-semibold text-gray-700">
+              <p className="mt-3 text-sm font-semibold text-body">
                 {category.totalProductCount}{" "}
                 {category.totalProductCount === 1 ? "product" : "products"}
                 {category.childCount > 0
@@ -212,7 +212,7 @@ export default async function CategoryPage({ params }: Props) {
               </p>
             </div>
             {category.image ? (
-              <div className="relative h-32 w-full shrink-0 overflow-hidden rounded-xl bg-brand-light-bg sm:w-56">
+              <div className="relative h-32 w-full shrink-0 overflow-hidden rounded-xl bg-background sm:w-56">
                 <Image
                   src={category.image}
                   alt={`${category.name} category`}
@@ -223,8 +223,8 @@ export default async function CategoryPage({ params }: Props) {
                 />
               </div>
             ) : (
-              <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-brand-red/10">
-                <Boxes className="h-10 w-10 text-brand-red" />
+              <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
+                <Boxes className="h-10 w-10 text-primary" />
               </div>
             )}
           </div>
@@ -235,13 +235,13 @@ export default async function CategoryPage({ params }: Props) {
             <div className="mb-4 flex items-start justify-between gap-3">
               <h2
                 id="subcategory-heading"
-                className="min-w-0 flex-1 text-xl font-extrabold text-gray-950 [overflow-wrap:anywhere]"
+                className="min-w-0 flex-1 text-xl font-bold text-foreground [overflow-wrap:anywhere]"
               >
                 {i18n("Explore")}{category.name}
               </h2>
               <Link
                 href={`/products?categoryPath=${encodeURIComponent(category.path)}`}
-                className="shrink-0 text-end text-sm font-semibold text-brand-red hover:text-brand-red-hover"
+                className="shrink-0 text-end text-sm font-semibold text-primary hover:text-primary-hover"
               >
                 {i18n("Filter all products")}</Link>
             </div>
@@ -250,9 +250,9 @@ export default async function CategoryPage({ params }: Props) {
                 <Link
                   key={child.id}
                   href={`/categories/${child.path}`}
-                  className="group flex w-24 shrink-0 snap-start flex-col items-center text-center transition hover:-translate-y-0.5 sm:w-auto sm:min-w-0 sm:flex-row sm:gap-3 sm:rounded-xl sm:border sm:border-brand-border sm:bg-white sm:p-4 sm:text-start sm:shadow-sm sm:hover:border-brand-red/30 sm:hover:shadow-md"
+                  className="group flex w-24 shrink-0 snap-start flex-col items-center text-center transition hover:-translate-y-0.5 sm:w-auto sm:min-w-0 sm:flex-row sm:gap-3 sm:rounded-xl sm:border sm:border-border sm:bg-card sm:p-4 sm:text-start sm:shadow-sm sm:hover:border-primary/30 sm:hover:shadow-md"
                 >
-                  <span className="relative flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-brand-border bg-brand-light-bg shadow-sm transition-colors group-hover:border-brand-red/40 sm:size-16 sm:shadow-none">
+                  <span className="relative flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-border bg-background shadow-sm transition-colors group-hover:border-primary/40 sm:size-16 sm:shadow-none">
                     {child.image ? (
                       <Image
                         src={child.image}
@@ -262,20 +262,20 @@ export default async function CategoryPage({ params }: Props) {
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : (
-                      <Boxes className="h-8 w-8 text-brand-red/60 sm:h-7 sm:w-7" />
+                      <Boxes className="h-8 w-8 text-primary/60 sm:h-7 sm:w-7" />
                     )}
                   </span>
 
                   <div className="mt-2 w-full min-w-0 sm:mt-0 sm:flex-1">
-                    <h3 className="line-clamp-2 min-h-8 text-xs font-bold leading-4 text-gray-900 group-hover:text-brand-red sm:line-clamp-1 sm:min-h-0 sm:text-base">
+                    <h3 className="line-clamp-2 min-h-8 text-xs font-bold leading-4 text-foreground group-hover:text-primary sm:line-clamp-1 sm:min-h-0 sm:text-base">
                       {child.name}
                     </h3>
-                    <p className="mt-2 text-[11px] text-gray-500 sm:mt-1 sm:text-xs">
+                    <p className="mt-2 text-[11px] text-muted-foreground sm:mt-1 sm:text-xs">
                       {child.totalProductCount}{" "}
                       {child.totalProductCount === 1 ? i18n("product") : i18n("products")}
                     </p>
                   </div>
-                  <ArrowRight className="hidden h-4 w-4 shrink-0 text-brand-red transition group-hover:translate-x-1 sm:block rtl:rotate-180" />
+                  <ArrowRight className="hidden h-4 w-4 shrink-0 text-primary transition group-hover:translate-x-1 sm:block rtl:rotate-180" />
                 </Link>
               ))}
             </div>
@@ -283,13 +283,13 @@ export default async function CategoryPage({ params }: Props) {
         )}
 
         {category.products.length === 0 ? (
-          <div className="rounded-2xl border border-brand-border bg-white p-10 text-center shadow-sm">
-            <h2 className="text-lg font-bold text-gray-900">{i18n("No products yet")}</h2>
-            <p className="mt-2 text-sm text-gray-600">
+          <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-sm">
+            <h2 className="text-lg font-bold text-foreground">{i18n("No products yet")}</h2>
+            <p className="mt-2 text-sm text-body">
               {i18n("There are no visible products in this category or its subcategories right now.")}</p>
             <Link
               href="/products"
-              className="mt-5 inline-flex rounded-full bg-brand-red px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-red-hover"
+              className="mt-5 inline-flex rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover"
             >
               {i18n("Browse all products")}</Link>
           </div>
@@ -299,16 +299,16 @@ export default async function CategoryPage({ params }: Props) {
               <div className="min-w-0 flex-1">
                 <h2
                   id="category-products-heading"
-                  className="text-xl font-extrabold text-gray-950 [overflow-wrap:anywhere]"
+                  className="text-xl font-bold text-foreground [overflow-wrap:anywhere]"
                 >
                   {i18n("Products in")}{category.name}
                 </h2>
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-muted-foreground">
                   {i18n("Includes active descendant categories.")}</p>
               </div>
               <Link
                 href={`/products?categoryPath=${encodeURIComponent(category.path)}`}
-                className="shrink-0 text-sm font-semibold text-brand-red"
+                className="shrink-0 text-sm font-semibold text-primary"
               >
                 {i18n("View with filters")}</Link>
             </div>

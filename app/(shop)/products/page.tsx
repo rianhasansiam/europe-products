@@ -91,7 +91,7 @@ export default async function ProductsPage({ searchParams }: Props) {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-brand-light-bg">
+        <div className="min-h-screen bg-background">
           <div className="mx-auto max-w-7xl px-3 py-6 sm:px-4 lg:px-6">
             <ProductGridSkeleton wide />
           </div>

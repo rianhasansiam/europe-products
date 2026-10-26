@@ -34,17 +34,17 @@ const ICON_MAP = {
 } as const;
 
 const ICON_STYLE = {
-  danger: "text-rose-500 bg-rose-100",
-  warning: "text-amber-500 bg-amber-100",
-  success: "text-emerald-500 bg-emerald-100",
-  info: "text-brand-red bg-brand-red/10",
+  danger: "text-destructive bg-destructive/10",
+  warning: "text-warning bg-warning-surface",
+  success: "text-success bg-success-surface",
+  info: "text-info bg-info-surface",
 } as const;
 
 const CONFIRM_BTN = {
-  danger: "bg-rose-600 hover:bg-rose-700 text-white",
-  warning: "bg-amber-500 hover:bg-amber-600 text-white",
-  success: "bg-emerald-600 hover:bg-emerald-700 text-white",
-  info: "bg-brand-red hover:bg-brand-red-hover text-brand-white",
+  danger: "bg-red-700 hover:bg-red-800 text-white",
+  warning: "bg-amber-800 hover:bg-amber-900 text-white",
+  success: "bg-emerald-700 hover:bg-emerald-800 text-white",
+  info: "bg-primary hover:bg-primary-hover text-primary-foreground",
 } as const;
 
 function Dialog({
@@ -83,7 +83,7 @@ function Dialog({
 
       {/* Panel */}
       <div
-        className="relative z-10 max-h-[calc(100dvh-1.5rem)] w-full max-w-md animate-in overflow-y-auto rounded-3xl border border-gray-100 bg-white p-4 shadow-2xl zoom-in-95 slide-in-from-bottom-4 duration-200 motion-reduce:animate-none sm:max-h-[calc(100dvh-2rem)] sm:p-6"
+        className="relative z-10 max-h-[calc(100dvh-1.5rem)] w-full max-w-md animate-in overflow-y-auto rounded-3xl border border-border bg-card p-4 shadow-2xl zoom-in-95 slide-in-from-bottom-4 duration-200 motion-reduce:animate-none sm:max-h-[calc(100dvh-2rem)] sm:p-6"
       >
         {/* Icon */}
         <div
@@ -98,14 +98,14 @@ function Dialog({
         {/* Text */}
         <h2
           id="confirm-title"
-          className="text-center text-lg font-bold text-gray-900 [overflow-wrap:anywhere]"
+          className="text-center text-lg font-bold text-foreground [overflow-wrap:anywhere]"
         >
           {i18n(dialog.title)}
         </h2>
         {dialog.description && (
           <p
             id="confirm-desc"
-            className="mt-2 text-center text-sm leading-relaxed text-gray-500 [overflow-wrap:anywhere]"
+            className="mt-2 text-center text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]"
           >
             {i18n(dialog.description)}
           </p>
@@ -116,7 +116,7 @@ function Dialog({
           <button
             type="button"
             onClick={() => onClose(false)}
-            className="min-h-11 rounded-xl border border-gray-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+            className="min-h-11 rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-semibold text-body transition-colors hover:bg-secondary"
           >
             {dialog.cancelLabel ?? i18n("Cancel")}
           </button>

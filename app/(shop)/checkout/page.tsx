@@ -633,7 +633,7 @@ function CheckoutPageInner() {
   }
 
   return (
-    <main className="min-h-screen bg-brand-light-bg">
+    <main className="min-h-screen bg-background">
       <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <CheckoutHeader
           isAuthenticated={isAuthenticated}
@@ -650,7 +650,7 @@ function CheckoutPageInner() {
         />
 
         {previewError && (
-          <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-destructive/25 bg-destructive/10 p-3 text-sm text-destructive">
             <span>{i18n(previewError)}</span>
             <button
               type="button"
@@ -662,14 +662,14 @@ function CheckoutPageInner() {
         )}
 
         {isEmpty ? (
-          <div className="mt-8 rounded-3xl border border-brand-border bg-brand-white p-10 text-center shadow-sm">
-            <p className="text-lg font-semibold text-gray-900">
+          <div className="mt-8 rounded-2xl border border-border bg-card p-10 text-center shadow-sm">
+            <p className="text-lg font-semibold text-foreground">
               {i18n("Nothing to check out yet")}</p>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-body">
               {i18n("Add a few products to your cart, then come back to complete the order.")}</p>
             <Link
               href="/products"
-              className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-brand-red px-5 py-2.5 text-sm font-bold text-brand-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-hover hover:shadow-xl"
+              className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-md transition-colors duration-200 hover:bg-primary-hover"
             >
               {i18n("Browse products")}</Link>
           </div>

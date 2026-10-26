@@ -34,10 +34,10 @@ export default function MobileFilterDrawer({
     <Sheet open={open} onOpenChange={(nextOpen) => !nextOpen && onClose()}>
       <SheetContent
         side="left"
-        className="w-[88%] max-w-sm bg-brand-light-bg p-0 lg:hidden"
+        className="w-[88%] max-w-sm bg-background p-0 lg:hidden"
       >
-        <SheetHeader className="bg-brand-black px-4 py-3 text-brand-white">
-          <SheetTitle className="text-base font-bold text-brand-white">
+        <SheetHeader className="border-b border-border bg-secondary px-4 py-4 text-foreground">
+          <SheetTitle className="text-base font-semibold text-foreground">
             {i18n("Product filters")}</SheetTitle>
         </SheetHeader>
 

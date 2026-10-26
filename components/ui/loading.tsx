@@ -37,7 +37,7 @@ export function LoadingSpinner({
     >
       <Loader2
         aria-hidden="true"
-        className={cn("animate-spin", SPINNER_SIZE[size])}
+        className={cn("motion-safe:animate-spin", SPINNER_SIZE[size])}
       />
       {!decorative && <span className="sr-only">{i18n(label)}</span>}
     </span>
@@ -64,7 +64,7 @@ export function Skeleton({ className }: { className?: string }) {
   return (
     <div
       aria-hidden="true"
-      className={cn("animate-pulse rounded-lg bg-brand-border/80", className)}
+      className={cn("motion-safe:animate-pulse rounded-lg bg-border/65", className)}
     />
   );
 }
@@ -106,13 +106,13 @@ export function ProductCardSkeleton({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex h-full flex-col overflow-hidden rounded-xl border border-brand-border bg-brand-white shadow-sm",
+        "flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm",
         className,
       )}
       aria-hidden="true"
     >
       <Skeleton className="aspect-4/3 w-full rounded-none" />
-      <div className="flex flex-1 flex-col space-y-2 p-2.5">
+      <div className="flex flex-1 flex-col space-y-3 p-3 sm:p-3.5">
         <Skeleton className="h-3 w-2/3" />
         <Skeleton className="h-4 w-full" />
         <div className="mt-auto flex items-center gap-2">
@@ -240,8 +240,8 @@ export function PageLoader({
       role="status"
     >
       <div className="w-full max-w-sm rounded-3xl border border-brand-border bg-brand-white p-8 text-center shadow-sm">
-        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-black text-brand-white">
-          <span className="text-lg font-black leading-none">
+        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary text-primary">
+          <span className="text-lg font-bold leading-none">
             P<span className="text-brand-red">H</span>
           </span>
         </div>
@@ -517,13 +517,13 @@ export function AuthPageSkeleton() {
   return (
     <main className="relative min-h-screen bg-brand-light-bg" aria-busy="true">
       <section className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 py-8 sm:px-6 lg:grid-cols-12 lg:gap-8 lg:py-12">
-        <div className="hidden rounded-3xl border border-brand-border bg-brand-black p-8 lg:col-span-5 lg:block">
-          <Skeleton className="h-6 w-36 bg-white/20" />
-          <Skeleton className="mt-8 h-14 w-full bg-white/20" />
-          <Skeleton className="mt-4 h-4 w-4/5 bg-white/20" />
+        <div className="hidden rounded-3xl border border-brand-border bg-secondary p-8 lg:col-span-5 lg:block">
+          <Skeleton className="h-6 w-36 bg-border" />
+          <Skeleton className="mt-8 h-14 w-full bg-border" />
+          <Skeleton className="mt-4 h-4 w-4/5 bg-border" />
           <div className="mt-10 grid grid-cols-3 gap-3">
             {Array.from({ length: 3 }).map((_, index) => (
-              <Skeleton key={index} className="h-20 bg-white/20" />
+              <Skeleton key={index} className="h-20 bg-border" />
             ))}
           </div>
         </div>

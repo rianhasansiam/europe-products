@@ -4,7 +4,7 @@ type PolicyListProps = {
   items: React.ReactNode[];
 };
 
-/** Bulleted list with violet→pink gradient markers matching the storefront style. */
+/** Bulleted list using the shared storefront typography and rose markers. */
 export default function PolicyList({ items }: PolicyListProps) {
   return (
     <ul className="space-y-2 ps-1">
@@ -12,9 +12,9 @@ export default function PolicyList({ items }: PolicyListProps) {
         <li key={i} className="flex gap-2.5">
           <span
             aria-hidden
-            className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-red"
+            className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
           />
-          <span className="text-sm leading-relaxed text-gray-700 sm:text-base">{item}</span>
+          <span className="text-base leading-7 text-body">{item}</span>
         </li>
       ))}
     </ul>

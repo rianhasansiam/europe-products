@@ -8,7 +8,7 @@ import { auth } from "@/lib/auth/auth";
 import { toAppSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/prisma";
 import { noIndexMetadata } from "@/lib/seo/metadata";
-import { getPublishedLanguages, getRequestLocale } from "@/lib/i18n/server";
+import { getRequestLocale } from "@/lib/i18n/server";
 import { localizeHref } from "@/lib/i18n/paths";
 import LocaleSection from "@/components/i18n/LocaleSection";
 
@@ -36,6 +36,5 @@ export default async function AdminLayout({
     redirect(localizeHref("/", locale));
   }
 
-  const languages = (await getPublishedLanguages()).map(({ code, englishName, nativeName, direction }) => ({ code, englishName, nativeName, direction }));
-  return <LocaleSection pathname="/admin"><AdminShell languages={languages}>{children}</AdminShell></LocaleSection>;
+  return <LocaleSection pathname="/admin"><AdminShell>{children}</AdminShell></LocaleSection>;
 }
