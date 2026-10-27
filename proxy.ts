@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { getCatalogRedirectByPath } from "@/lib/services/catalog-redirect.service";
 import { DEFAULT_LOCALE, LOCALE_COOKIE, LOCALE_HEADER, PATH_HEADER, URL_HEADER } from "@/lib/i18n/registry";
-import { isLocaleExcludedPath, replaceLocaleHref, splitLocalePath } from "@/lib/i18n/paths";
+import { isLocaleExcludedPath, localizeHref, splitLocalePath } from "@/lib/i18n/paths";
 
 const MAX_CATALOG_PATH_LENGTH = 8_192;
 const CATALOG_PATH_PATTERN =
@@ -27,30 +27,27 @@ export async function proxy(request: NextRequest) {
   const { locale: explicit, pathname } = splitLocalePath(incomingPath);
   // A locale must never turn an API, upload, callback or static asset into a page.
   if (isLocaleExcludedPath(pathname)) return NextResponse.next();
-  const locale = DEFAULT_LOCALE;
-  const canonicalPath = replaceLocaleHref(pathname, locale);
-  if (!explicit || explicit !== locale || incomingPath !== canonicalPath) {
-    const destination = new URL(request.url);
-    destination.pathname = canonicalPath;
-    const response = NextResponse.redirect(destination, explicit && explicit === locale ? 308 : 307);
-    // Retire language preferences while keeping existing English URLs stable.
-    response.headers.set("Cache-Control", "private, no-store");
-    response.headers.set("Vary", "Cookie");
+
+  const clearLanguagePreference = (response: NextResponse) => {
     if (request.cookies.has(LOCALE_COOKIE)) response.cookies.delete(LOCALE_COOKIE);
     return response;
-  }
+  };
+  const redirectTo = (path: string) => {
+    const destination = new URL(request.url);
+    destination.pathname = path;
+    return clearLanguagePreference(NextResponse.redirect(destination, 308));
+  };
+
+  // Old bookmarks use the same pages without a language prefix.
+  if (explicit) return redirectTo(pathname);
 
   const renderPage = () => {
     const requestHeaders = new Headers(request.headers);
     // Overwrite untrusted input with the site's fixed language.
-    requestHeaders.set(LOCALE_HEADER, locale);
+    requestHeaders.set(LOCALE_HEADER, DEFAULT_LOCALE);
     requestHeaders.set(PATH_HEADER, pathname);
-    requestHeaders.set(URL_HEADER, incomingPath + request.nextUrl.search);
-    const destination = new URL(request.url);
-    destination.pathname = pathname;
-    const response = NextResponse.rewrite(destination, { request: { headers: requestHeaders } });
-    if (request.cookies.has(LOCALE_COOKIE)) response.cookies.delete(LOCALE_COOKIE);
-    return response;
+    requestHeaders.set(URL_HEADER, pathname + request.nextUrl.search);
+    return clearLanguagePreference(NextResponse.next({ request: { headers: requestHeaders } }));
   };
   const normalizedPathname = pathname.toLowerCase();
 
@@ -70,9 +67,7 @@ export async function proxy(request: NextRequest) {
       entityType,
     );
     if (redirect) {
-      const destination = new URL(request.url);
-      destination.pathname = replaceLocaleHref(redirect.destinationPath, locale);
-      return NextResponse.redirect(destination, 308);
+      return redirectTo(localizeHref(redirect.destinationPath));
     }
   } catch (error) {
     // Redirect history is an enhancement around otherwise functional pages.
@@ -83,9 +78,7 @@ export async function proxy(request: NextRequest) {
 
   if (pathname === normalizedPathname) return renderPage();
 
-  const destination = new URL(request.url);
-  destination.pathname = replaceLocaleHref(normalizedPathname, locale);
-  return NextResponse.redirect(destination, 308);
+  return redirectTo(normalizedPathname);
 }
 
 export const config = {

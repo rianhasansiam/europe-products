@@ -78,12 +78,12 @@ function documentMarkup(styles:string[]=[],fontClass=""){
 
 beforeEach(()=>{context.pathname="/ar/products";context.authenticated=false;});
 describe("unpublished RTL navigation layout",()=>{
-  it("renders Arabic navigation/accessibility labels and localized links with the real components",()=>{
+  it("renders Arabic navigation/accessibility labels and unprefixed links with the real components",()=>{
     const html=renderToStaticMarkup(withArabic(navbar()));
-    expect(html).toContain('href="/ar/products"');
-    expect(html).toContain('href="/ar/categories/pumps"');
-    expect(html).toContain('href="/ar/login"');
-    expect(html).toContain('href="/ar/cart"');
+    expect(html).toContain('href="/products"');
+    expect(html).toContain('href="/categories/pumps"');
+    expect(html).toContain('href="/login"');
+    expect(html).toContain('href="/cart"');
     expect(html).toContain('aria-label="فتح القائمة"');
     expect(html).toContain(`aria-label="السلة، ${new Intl.NumberFormat("ar").format(3)} منتجات"`);
     expect(html).not.toContain('aria-label="اختيار اللغة: Arabic"');
@@ -126,16 +126,16 @@ describe("unpublished RTL navigation layout",()=>{
     expect(html).toContain("Unpublished RTL layout fixture");
     expect(html).toContain('content="noindex, nofollow"');
   });
-  it("retains Arabic account labels and localized profile links for authenticated navigation",()=>{
+  it("retains Arabic account labels and unprefixed profile links for authenticated navigation",()=>{
     context.authenticated=true;
     const html=renderToStaticMarkup(withArabic(navbar(true)));
-    expect(html).toContain('href="/ar/profile"');
+    expect(html).toContain('href="/profile"');
     expect(html).toContain('aria-label="فتح قائمة الحساب"');
     expect(html).toContain("تسجيل الخروج");
   });
   it.skipIf(process.env.BUILD_RTL_FIXTURE!=="1")("writes a reviewable fixture using the running final build's styles",async()=>{
     const base="http://127.0.0.1:3111";
-    const response=await fetch(`${base}/en/products`,{redirect:"error",signal:AbortSignal.timeout(20_000)});
+    const response=await fetch(`${base}/products`,{redirect:"error",signal:AbortSignal.timeout(20_000)});
     expect(response.ok).toBe(true);
     const html=await response.text();
     const styles=[...html.matchAll(/<link\b[^>]*>/g)].flatMap(([link])=>{

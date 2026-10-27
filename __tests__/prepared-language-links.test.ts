@@ -25,14 +25,14 @@ beforeEach(() => {
   ];
 });
 
-describe("crawlable prepared language navigation", () => {
-  it("renders real reciprocal locale anchors in initial server HTML", async () => {
+describe("legacy prepared language navigation", () => {
+  it("renders unprefixed anchors in initial server HTML", async () => {
     const element = await PreparedLanguageLinks({});
     const html = renderToStaticMarkup(createElement(NextIntlClientProvider, { locale: "en", messages: english, timeZone: "Asia/Dhaka", children: element } satisfies ComponentProps<typeof NextIntlClientProvider>));
-    expect(html).toContain('href="/en/contact"');
-    expect(html).toContain('href="/bn/contact"');
+    expect((html.match(/href="\/contact"/g) ?? []).length).toBe(2);
+    expect(html).not.toMatch(/href="\/(?:en|bn)\/contact"/);
     expect(html).toMatch(/hrefLang="bn"/i);
-    expect(html).toMatch(/href="\/en\/contact"[^>]*aria-current="page"/);
+    expect(html).toMatch(/href="\/contact" hrefLang="en"[^>]*aria-current="page"/i);
     expect(html).toContain(english.Language.choose);
     expect(html).toContain("বাংলা");
     expect(html).not.toContain("privateCatalogMarker");
@@ -44,8 +44,8 @@ describe("crawlable prepared language navigation", () => {
   it("keeps rendered labels and selection synchronized with the active Bengali catalog", async () => {
     const html = renderToStaticMarkup(createElement(NextIntlClientProvider, { locale: "bn", messages: bengali, timeZone: "Asia/Dhaka", children: await PreparedLanguageLinks({}) } satisfies ComponentProps<typeof NextIntlClientProvider>));
     expect(html).toContain(bengali.Language.choose);
-    expect(html).toMatch(/href="\/bn\/contact"[^>]*aria-current="page"/);
-    expect(html).not.toMatch(/href="\/en\/contact"[^>]*aria-current="page"/);
+    expect(html).toMatch(/href="\/contact" hrefLang="bn"[^>]*aria-current="page"/i);
+    expect(html).not.toMatch(/href="\/contact" hrefLang="en"[^>]*aria-current="page"/i);
   });
   it("excludes unprepared/unpublished variants and source-content pages", async () => {
     mocks.rows.push(

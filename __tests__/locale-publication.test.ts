@@ -34,7 +34,7 @@ describe("English-only publication", () => {
       "x-bangbuy-url": `/${locale}/products?q=a%2Bb&page=2`,
     }));
     await expect(getRequestLocale()).rejects.toMatchObject({
-      digest: expect.stringContaining("/en/products?q=a%2Bb&page=2"),
+      digest: expect.stringContaining("/products?q=a%2Bb&page=2"),
     });
     expect(mocks.overrides).not.toHaveBeenCalled();
     expect(mocks.messages).not.toHaveBeenCalled();
@@ -42,6 +42,6 @@ describe("English-only publication", () => {
 
   it("retains the request path when an old locale has no original URL header", async () => {
     mocks.headers.mockResolvedValue(new Headers({ "x-bangbuy-locale": "bn", "x-bangbuy-path": "/checkout" }));
-    await expect(getRequestLocale()).rejects.toMatchObject({ digest: expect.stringContaining("/en/checkout") });
+    await expect(getRequestLocale()).rejects.toMatchObject({ digest: expect.stringContaining("/checkout") });
   });
 });

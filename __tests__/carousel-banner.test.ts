@@ -47,9 +47,9 @@ describe("homepage merchant hero", () => {
     expect(markup.match(/A merchant badge/g)).toHaveLength(1);
     expect(markup.match(/The merchant&#x27;s own headline/g)).toHaveLength(1);
     expect(anchors(markup)).toHaveLength(2);
-    expect(anchors(markup)[0]).toContain('href="/en/products?campaign=merchant"');
+    expect(anchors(markup)[0]).toContain('href="/products?campaign=merchant"');
     expect(anchors(markup)[0]).toContain("Shop Now");
-    expect(anchors(markup)[1]).toContain('href="/en/products"');
+    expect(anchors(markup)[1]).toContain('href="/products"');
     expect(anchors(markup)[1]).toContain("View Offers");
   });
 
@@ -104,14 +104,14 @@ describe("homepage merchant hero", () => {
   it("retains the original primary /products destination for a null link", () => {
     const links = anchors(renderSlide({ link: null }));
     expect(links).toHaveLength(2);
-    expect(links.every((link) => link.includes('href="/en/products"'))).toBe(true);
+    expect(links.every((link) => link.includes('href="/products"'))).toBe(true);
     expect(links[0]).toContain("Shop Now");
   });
 
   it.each(["", "   "])("omits an explicitly empty primary link (%j) while retaining View Offers", (link) => {
     const links = anchors(renderSlide({ link }));
     expect(links).toHaveLength(1);
-    expect(links[0]).toContain('href="/en/products"');
+    expect(links[0]).toContain('href="/products"');
     expect(links[0]).toContain("View Offers");
     expect(links[0]).not.toContain("Shop Now");
   });

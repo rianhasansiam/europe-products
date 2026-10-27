@@ -26,9 +26,7 @@ function uploadRemotePattern():
 }
 
 const nextConfig: NextConfig = {
-  // Retain the request origin for internal locale rewrites. NextURL normalizes
-  // 127.0.0.1 to localhost, which otherwise becomes an external self-request
-  // when Next is bound to the loopback IP and causes locale redirect loops.
+  // Keep original paths consistent between direct visits and client navigation.
   skipProxyUrlNormalize: true,
   turbopack: {
     root: process.cwd(),

@@ -15,7 +15,7 @@ export const getRequestLocale = cache(async (): Promise<string> => {
   const requestHeaders = await headers();
   const requested = normalizeLocale(requestHeaders.get(LOCALE_HEADER));
   if (requested && requested !== DEFAULT_LOCALE) {
-    // Keep old language URLs pointing to their English equivalent.
+    // Keep old language URLs pointing to their equivalent without a prefix.
     redirect(replaceLocaleHref(requestHeaders.get(URL_HEADER) ?? requestHeaders.get(PATH_HEADER) ?? "/", DEFAULT_LOCALE));
   }
   return DEFAULT_LOCALE;

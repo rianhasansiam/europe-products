@@ -1,6 +1,6 @@
 # Multilingual architecture and local implementation record
 
-The website is now English-only. Storefront and admin language controls have been removed, `/api/language` and the admin translation API return `410 Gone`, and the translation management page is unavailable. Existing language URLs redirect to their English equivalents, and saved language preferences are ignored. Catalogs, translation tooling, and database records are retained; the implementation record below describes the former multilingual workflow.
+The website is now English-only. Storefront and admin language controls have been removed, `/api/language` and the admin translation API return `410 Gone`, and the translation management page is unavailable. Canonical page URLs use `/` and `/products` without language prefixes. Existing language URLs permanently redirect to those paths, and saved language preferences are ignored. Catalogs, translation tooling, and database records are retained; the implementation record below describes the former multilingual workflow.
 
 This implementation uses the official LibreTranslate Python package in a dedicated native virtual environment as the only automatic translation engine. No container runtime or container-based dependency is required. Work and verification are local. The production VPS, production database, SSH tunnel, uploads, payment providers and production services were not accessed or changed.
 

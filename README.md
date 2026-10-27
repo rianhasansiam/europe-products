@@ -93,3 +93,4 @@ backups, not a public Git repository.
 
 
 npx prisma studio --port 5555
+runuser -u sextoy -- git -C /var/www/europe-products pull origin main

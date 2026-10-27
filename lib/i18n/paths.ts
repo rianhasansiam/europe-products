@@ -17,26 +17,19 @@ export function stripLocalePrefix(pathname: string): string {
   return splitLocalePath(pathname).pathname;
 }
 
-/** Equivalent route, retaining the exact query string and hash. */
-export function replaceLocaleHref(href: string, locale: string): string {
+/** Legacy callers may pass a locale; page links now always use the root routes. */
+export const replaceLocaleHref: (href: string, locale?: string) => string = (href) => {
   if (!href.startsWith("/") || href.startsWith("//")) return href;
   const separator = href.search(/[?#]/);
   const pathname = separator < 0 ? href : href.slice(0, separator);
   const suffix = separator < 0 ? "" : href.slice(separator);
   if (isLocaleExcludedPath(pathname)) return href;
-  const original = stripLocalePrefix(pathname);
-  if (isLocaleExcludedPath(original)) return original + suffix;
-  const canonical = normalizeLocale(locale) ?? DEFAULT_LOCALE;
-  return `/${canonical}${original === "/" ? "" : original}${suffix}`;
-}
+  // Removing a prefix must not turn an internal path into an external URL.
+  return stripLocalePrefix(pathname).replace(/^[/\\]+/, "/") + suffix;
+};
 
-/** Preserve an explicit language URL; localize only unprefixed internal links. */
-export function localizeHref(href: string, locale: string): string {
-  if (!href.startsWith("/") || href.startsWith("//")) return href;
-  const pathname = href.split(/[?#]/, 1)[0];
-  if (splitLocalePath(pathname).locale) return href;
-  return replaceLocaleHref(href, locale);
-}
+/** Internal navigation also removes legacy language prefixes. */
+export const localizeHref = replaceLocaleHref;
 
 /** Preference is considered only for legacy, unprefixed URLs. */
 export function resolveNavigationLocale(explicit: unknown, saved: unknown, published: readonly string[]): string {

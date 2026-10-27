@@ -26,7 +26,7 @@ describe("permanent canonical domain", () => {
     expect(payment.returnUrl).toBe(`${CANONICAL_ORIGIN}/orders/payment-return`);
   });
 
-  it("propagates the default origin into localized SEO, robots and organization data", async () => {
+  it("propagates the default origin into prefix-free SEO, robots and organization data", async () => {
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv("SITE_URL", "");
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "");
@@ -38,8 +38,8 @@ describe("permanent canonical domain", () => {
       import("@/app/robots"),
     ]);
     const metadata = buildMetadata({ title: "Contact", path: "/contact", locale: "en" });
-    expect(metadata.alternates?.canonical).toBe(`${CANONICAL_ORIGIN}/en/contact`);
-    expect(metadata.openGraph).toMatchObject({ url: `${CANONICAL_ORIGIN}/en/contact` });
+    expect(metadata.alternates?.canonical).toBe(`${CANONICAL_ORIGIN}/contact`);
+    expect(metadata.openGraph).toMatchObject({ url: `${CANONICAL_ORIGIN}/contact` });
     expect(robots()).toMatchObject({ host: CANONICAL_ORIGIN, sitemap: `${CANONICAL_ORIGIN}/sitemap.xml` });
     expect(organizationJsonLd()).toMatchObject({ url: CANONICAL_ORIGIN, logo: `${CANONICAL_ORIGIN}/logo/wordmark.svg` });
   });

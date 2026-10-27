@@ -1,8 +1,9 @@
 import { absoluteUrl, siteConfig, socialProfiles } from "./site";
 import { localizeHref } from "@/lib/i18n/paths";
+import { DEFAULT_LOCALE } from "@/lib/i18n/registry";
 
 function contentUrl(path: string, locale?: string) {
-  return absoluteUrl(locale ? localizeHref(path, locale) : path);
+  return absoluteUrl(localizeHref(path, locale ?? DEFAULT_LOCALE));
 }
 
 /**
