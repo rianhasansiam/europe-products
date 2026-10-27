@@ -69,4 +69,23 @@ describe("Airwallex Hosted Payment Page checkout", () => {
     expect(redirectOptions).not.toHaveProperty("allowedCardNetworks");
     expect(redirectOptions).not.toHaveProperty("methods");
   });
+
+  it("passes the server-owned cancellation URL through to the hosted page", async () => {
+    const cancelUrl = "https://shop.example.test/orders/payment-return?orderId=order_123&flow=cancelled";
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({
+      success: true,
+      data: {
+        intentId: "int_example_123", clientSecret: "client-secret", currency: "USD", environment: "prod",
+        successUrl: "https://shop.example.test/orders/payment-return?orderId=order_123",
+        cancelUrl,
+      },
+    }), { status: 200, headers: { "Content-Type": "application/json" } })));
+
+    await startAirwallexHostedCheckout("order_123");
+
+    expect(airwallexSdk.redirectToCheckout).toHaveBeenCalledWith(expect.objectContaining({
+      mode: "payment", intent_id: "int_example_123", currency: "USD", cancelUrl,
+    }));
+  });
+
 });

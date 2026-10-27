@@ -56,6 +56,7 @@ export async function startAirwallexHostedCheckout(
       client_secret: config.clientSecret,
       currency: config.currency,
       successUrl: config.successUrl,
+      ...(config.cancelUrl ? { cancelUrl: config.cancelUrl } : {}),
       ...(config.countryCode ? { country_code: config.countryCode } : {}),
     });
     if (typeof redirectError === "string" && redirectError.trim()) {

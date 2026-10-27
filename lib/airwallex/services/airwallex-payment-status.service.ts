@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { PaymentTransactionStatus } from "@/app/generated/prisma/client";
+import type { PaymentTransactionStatus, Prisma } from "@/app/generated/prisma/client";
 
 import { prisma } from "@/lib/db/prisma";
 import {
@@ -182,28 +182,23 @@ const FALLBACK_ELIGIBLE_STATUSES = new Set<PaymentTransactionStatus>([
  * SUCCEEDED), apply it to the database via the existing verification
  * pipeline so the order status is updated immediately.
  *
- * This is a **fallback** for situations where the webhook didn't arrive
- * (e.g. the Vercel deployment URL isn't configured in Airwallex yet, or
- * the webhook was delayed / lost). The polling status endpoint triggers
+ * This is a fallback for delayed or temporarily unavailable webhook delivery. The polling status endpoint triggers
  * this automatically so the user isn't stuck on "Confirming your payment".
  *
- * Returns the updated public status, or the original if the API call fails
- * (the fallback must never break the polling endpoint).
+ * The caller rereads the owner-scoped database state after this attempt.
+ * Provider or verification failures keep the persisted status authoritative.
  */
 async function fallbackAirwallexStatusCheck(
   paymentIntentId: string,
   currentAttemptStatus: PaymentTransactionStatus,
-): Promise<PublicAirwallexPaymentStatus> {
+): Promise<void> {
   try {
     const intent = await retrieveAirwallexPaymentIntent(paymentIntentId);
     const mappedStatus = mapAirwallexPaymentStatus(intent.status);
 
-    // Only apply if the provider moved to a different (typically terminal)
-    // state that our DB hasn't caught up with.
-    if (
-      mappedStatus !== currentAttemptStatus &&
-      isLegalAirwallexTransition(currentAttemptStatus, mappedStatus)
-    ) {
+    // The authoritative pipeline owns money validation and legal transitions.
+    // A provider response alone must never become the customer-visible verdict.
+    if (mappedStatus !== currentAttemptStatus) {
       const result = await applyAuthoritativeAirwallexPayment({
         authoritative: toAirwallexAuthoritativePayment(intent),
         source: "RECONCILIATION",
@@ -215,126 +210,80 @@ async function fallbackAirwallexStatusCheck(
         fromStatus: currentAttemptStatus,
         toStatus: result.status,
       });
-
-      return toPublicAirwallexStatus(result.status);
     }
-
-    // Provider status unchanged — return the mapped version.
-    return toPublicAirwallexStatus(mappedStatus);
   } catch (error) {
-    // Fallback must never break the polling endpoint. Log and return the
-    // current DB status so the frontend keeps polling normally.
+    // Fallback must never replace the database verdict with an unverified
+    // provider state. The caller rereads persisted state even after failure.
     console.error("[airwallex.status] fallback check failed", {
       paymentIntentId,
       errorType: error instanceof Error ? error.name : "UnknownError",
     });
-    return toPublicAirwallexStatus(currentAttemptStatus);
   }
 }
+
+const ownerPaymentStatusSelect = {
+  id: true,
+  paymentStatus: true,
+  updatedAt: true,
+  _count: {
+    select: {
+      payments: { where: { provider: AIRWALLEX_PROVIDER, requiresReview: true } },
+    },
+  },
+  payments: {
+    where: { provider: AIRWALLEX_PROVIDER },
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    take: 1,
+    select: {
+      status: true,
+      transactionId: true,
+      requiresReview: true,
+      failureMessage: true,
+      updatedAt: true,
+    },
+  },
+} satisfies Prisma.OrderSelect;
 
 export async function getOwnerScopedAirwallexPaymentStatus(
   customer: PaymentOrderCustomer,
   orderId: string,
 ) {
-  const order = await prisma.order.findFirst({
-    where: { id: orderId, ...paymentCustomerOrderWhere(customer), paymentMethod: "AIRWALLEX" },
-    select: {
-      id: true,
-      paymentStatus: true,
-      updatedAt: true,
-      _count: {
-        select: {
-          payments: {
-            where: {
-              provider: AIRWALLEX_PROVIDER,
-              requiresReview: true,
-            },
-          },
-        },
-      },
-      payments: {
-        where: { provider: AIRWALLEX_PROVIDER },
-        orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-        take: 1,
-        select: {
-          status: true,
-          transactionId: true,
-          requiresReview: true,
-          failureMessage: true,
-          updatedAt: true,
-        },
-      },
-    },
-  });
+  const query = {
+    where: { id: orderId, ...paymentCustomerOrderWhere(customer), paymentMethod: AIRWALLEX_PROVIDER },
+    select: ownerPaymentStatusSelect,
+  } satisfies Prisma.OrderFindFirstArgs;
+  let order = await prisma.order.findFirst(query);
   if (!order) return null;
-  const attempt = order.payments[0];
-  const hasReview = order._count.payments > 0;
+  let attempt = order.payments[0];
 
-  // ── Fast path: DB already has a terminal / review status ──────────
-  if (order.paymentStatus === "PAID") {
-    return buildStatusResponse(order, "SUCCEEDED", hasReview, attempt);
-  }
-
-  let derivedStatus: PublicAirwallexPaymentStatus = hasReview
-    ? attempt?.status === "PENDING_REVIEW"
-      ? "PENDING_REVIEW"
-      : "REQUIRES_REVIEW"
-    : attempt
-      ? toPublicAirwallexStatus(attempt.status)
-      : "CREATED";
-
-  // ── Fallback: DB is non-terminal but Airwallex may have advanced ──
-  // When the webhook is missing or delayed, poll the Airwallex API directly
-  // and synchronise the DB so the frontend can proceed.
+  // Reviews on any sibling payment also hold this order. Never fetch provider
+  // state to bypass a stored operations hold or an already confirmed payment.
   if (
-    !hasReview &&
+    order.paymentStatus !== "PAID" &&
+    order._count.payments === 0 &&
+    !attempt?.requiresReview &&
     attempt?.transactionId &&
     FALLBACK_ELIGIBLE_STATUSES.has(attempt.status)
   ) {
-    derivedStatus = await fallbackAirwallexStatusCheck(
-      attempt.transactionId,
-      attempt.status,
-    );
+    await fallbackAirwallexStatusCheck(attempt.transactionId, attempt.status);
 
-    // If we just synced a terminal status, re-read the order to get the
-    // updated paymentStatus and timestamps.
-    if (["SUCCEEDED", "FAILED", "CANCELLED", "REFUNDED"].includes(derivedStatus)) {
-      const refreshed = await prisma.order.findFirst({
-        where: { id: orderId, ...paymentCustomerOrderWhere(customer) },
-        select: {
-          paymentStatus: true,
-          updatedAt: true,
-          payments: {
-            where: { provider: AIRWALLEX_PROVIDER },
-            orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-            take: 1,
-            select: {
-              status: true,
-              requiresReview: true,
-              failureMessage: true,
-              updatedAt: true,
-            },
-          },
-        },
-      });
-      if (refreshed) {
-        const refreshedAttempt = refreshed.payments[0];
-        const refreshedOrder = {
-          id: order.id,
-          paymentStatus: refreshed.paymentStatus,
-          updatedAt: refreshed.updatedAt,
-        };
-        return buildStatusResponse(
-          refreshedOrder,
-          derivedStatus,
-          hasReview,
-          refreshedAttempt ?? attempt,
-        );
-      }
-    }
+    // Verification may add a review hold or race with a webhook/new attempt.
+    // Read every public status field together from the freshly persisted state.
+    const refreshed = await prisma.order.findFirst(query);
+    if (!refreshed) return null;
+    order = refreshed;
+    attempt = order.payments[0];
   }
 
-  return buildStatusResponse(order, derivedStatus, hasReview, attempt);
+  const hasReview = order._count.payments > 0 || Boolean(attempt?.requiresReview) ||
+    attempt?.status === "REQUIRES_REVIEW" || attempt?.status === "PENDING_REVIEW";
+  const status: PublicAirwallexPaymentStatus = hasReview
+    ? attempt?.status === "PENDING_REVIEW" ? "PENDING_REVIEW" : "REQUIRES_REVIEW"
+    : order.paymentStatus === "PAID"
+      ? "SUCCEEDED"
+      : attempt ? toPublicAirwallexStatus(attempt.status) : "CREATED";
+
+  return buildStatusResponse(order, status, hasReview, attempt);
 }
 
 function buildStatusResponse(
