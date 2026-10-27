@@ -1,7 +1,8 @@
 "use client";
 
 import { useInterfaceTranslations } from "@/components/i18n/translate";
-
+import { useSyncExternalStore } from "react";
+import { hasPotentialBannerContrastIssue } from "@/features/admin-banners/contrast";
 
 import {
   CAROUSEL_BG_TYPES,
@@ -46,6 +47,19 @@ function normalizeHexInputValue(value: string): string {
 function isRenderableHex(value: string): boolean {
   const trimmed = value.trim();
   return HEX_COLOR_VALUE.test(trimmed) || HEX_COLOR_BODY.test(trimmed);
+}
+
+function subscribeToThemeColors(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "style"] });
+  return () => observer.disconnect();
+}
+
+function currentThemeColors(): string {
+  const theme = getComputedStyle(document.documentElement);
+  return ["--foreground", "--body-text", "--primary"]
+    .map((property) => theme.getPropertyValue(property).trim())
+    .join("|");
 }
 
 function BannerColorField({
@@ -127,6 +141,9 @@ export function CarouselFormFields({
   setForm: React.Dispatch<React.SetStateAction<CarouselFormState>>;
 }) {
   const i18n = useInterfaceTranslations("AdminAdminBannersComponentsBannerFormFields");
+  const themeColors = useSyncExternalStore(subscribeToThemeColors, currentThemeColors, () => "");
+  const [foreground = "", body = "", primary = ""] = themeColors.split("|");
+  const hasContrastWarning = Boolean(themeColors) && hasPotentialBannerContrastIssue(form, { foreground, body, primary });
   const update = <K extends keyof CarouselFormState>(
     key: K,
     value: CarouselFormState[K],
@@ -217,6 +234,11 @@ export function CarouselFormFields({
             onChange={(value) => update("bgTo", value)}
           />
         </div>
+      )}
+      {hasContrastWarning && (
+        <p role="status" className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          {i18n("Some selected background colors may reduce text contrast. Preview the full banner, especially on mobile.")}
+        </p>
       )}
       <Field label={i18n("Link")}>
         <input

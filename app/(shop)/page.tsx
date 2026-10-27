@@ -56,11 +56,11 @@ export default async function Home() {
 
   return (
     <main>
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
         <PublicContentNotice available={!categories.some(category=>!category.translationAvailable||category.products.some(product=>(product as {translationAvailable?:boolean}).translationAvailable===false))&&!carouselBanners.some(banner=>!banner.translationAvailable)}/>
-        <CaroselBanner slides={slides} />
       </div>
-      <div className="mx-auto max-w-7xl px-3 pb-8 sm:px-4 lg:px-6">
+      <CaroselBanner slides={slides} />
+      <div className="mx-auto max-w-7xl px-3 pt-4 pb-8 sm:px-4 lg:px-6">
         <CategoryScroller categories={categoryTree} />
       </div>
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 pb-10">

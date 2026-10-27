@@ -1,0 +1,176 @@
+.hero {
+  --hero-media-height: clamp(17.5rem, 74vw, 26rem);
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  overflow: clip;
+  background: var(--hero-background, var(--secondary));
+}
+
+.media {
+  position: absolute;
+  inset: auto 0 0;
+  height: var(--hero-media-height);
+  pointer-events: none;
+}
+
+.image {
+  object-fit: cover;
+  object-position: right 68%;
+}
+
+/* The saved gradient supplies every color; only its coverage changes by size. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--hero-background, var(--secondary));
+  mask-image: linear-gradient(to bottom, #000 0%, #000 40%, #000c 58%, #0002 80%, #0000 100%);
+}
+
+.content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 80rem;
+  min-height: 34rem;
+  margin-inline: auto;
+  padding: 2.75rem 1.25rem calc(var(--hero-media-height) * 0.92);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 32.5rem;
+  min-width: 0;
+  text-align: start;
+  overflow-wrap: anywhere;
+}
+
+.badge {
+  max-width: 100%;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.heading {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(2rem, 6vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.12;
+}
+
+.highlight { color: var(--primary); }
+
+.description {
+  max-width: 28rem;
+  margin: 0;
+  color: var(--body-text);
+  font-size: 1rem;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.actions {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 3.125rem;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.primary { background: var(--primary); color: var(--primary-foreground); }
+.secondary {
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+  background: var(--card);
+  color: var(--primary);
+}
+
+.button:focus-visible, .slideControl:focus-visible, .pauseControl:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.controls, .pagination { display: flex; flex-wrap: wrap; align-items: center; }
+.controls { gap: 0.5rem; max-width: 100%; }
+.slideControl, .pauseControl {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border-radius: 0.75rem;
+  color: var(--primary);
+  cursor: pointer;
+}
+.slideControl { display: grid; place-items: center; }
+.slideControl span { width: 0.5rem; height: 0.5rem; border: 1px solid var(--primary); border-radius: 50%; }
+.slideControl[aria-current="true"] span { background: var(--primary); }
+.pauseControl { padding-inline: 0.75rem; font-size: 0.75rem; font-weight: 600; }
+
+.hero[data-has-image="false"] .content { min-height: 28rem; padding-bottom: 2.75rem; }
+.hero[data-has-image="false"] .overlay { display: none; }
+
+@media (hover: hover) {
+  .primary:hover { background: var(--primary-hover); }
+  .secondary:hover, .slideControl:hover, .pauseControl:hover { background: var(--background); }
+}
+
+@media (min-width: 30rem) {
+  .actions { display: flex; flex-wrap: wrap; width: auto; }
+}
+
+@media (min-width: 48rem) {
+  .media {
+    inset: 0 0 0 auto;
+    width: 100%;
+    max-width: 100rem;
+    height: auto;
+    /* Preserve the still-life framing on very wide screens; its quiet edge
+       dissolves into the same full-width configured background. */
+    mask-image: linear-gradient(to right, #0000, #000 25%);
+  }
+  .image { object-position: right 68%; }
+  .overlay {
+    mask-image: linear-gradient(to right, #000 0%, #000f 28%, #000e 40%, #0006 62%, #0002 100%);
+  }
+  .content, .hero[data-has-image="false"] .content {
+    min-height: clamp(32.5rem, 44vw, 40rem);
+    padding: 4rem 1.5rem;
+  }
+  .copy { width: 52%; gap: 1.5rem; }
+  .heading { font-size: clamp(3rem, 4.5vw, 4rem); }
+  .description { font-size: 1.125rem; }
+}
+
+@media (min-width: 80rem) {
+  .content, .hero[data-has-image="false"] .content { padding-inline: 2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button { transition: none; }
+}
