@@ -81,7 +81,7 @@ export function buildVerifiedPurchaseSnapshot(
     ) return reject("ineligible_order", "ineligible");
     if (order.payments.some((payment) => payment.requiresReview)) return reject("payment_review", "ineligible");
     // Read-only historical evidence retains its original currency. New charge
-    // creation is separately restricted to reviewed USD pricing and Airwallex.
+    // creation is separately restricted to USD pricing and Airwallex.
     const baseCurrency = parseHistoricalCurrencyCode(order.baseCurrency);
     if (!baseCurrency || order.currency !== baseCurrency) return reject("unsupported_currency");
 

@@ -1087,7 +1087,7 @@
     "taxRate": "Tax rate (%)",
     "customerSCartShowsThisPercentageOfSubtotal": "Customer's cart shows this percentage of subtotal.",
     "baseCurrency": "Base currency",
-    "lockedToBdtCustomerDisplayCurrenciesAreConverted": "USD pricing requires an explicit review before checkout opens.",
+    "lockedToBdtCustomerDisplayCurrenciesAreConverted": "Product prices and checkout use USD.",
     "deliveryInsideDhaka": "Delivery inside Dhaka",
     "deliveryOutsideDhaka": "Delivery outside Dhaka",
     "freeShippingAbove": "Free shipping above",

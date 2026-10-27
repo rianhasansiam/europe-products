@@ -13,7 +13,8 @@ export type CreatePricingContextInput = {
 
 /** Client input, cookies, and location never choose a transaction currency. */
 export function createPricingContext(input: CreatePricingContextInput = {}): CurrencyContext {
-  return { ...DEFAULT_CURRENCY_CONTEXT, ...(input.pricingReady === undefined ? {} : { pricingReady: input.pricingReady }) };
+  void input;
+  return { ...DEFAULT_CURRENCY_CONTEXT };
 }
 
 export function normalizePrice({ amount }: { amount: DecimalInput; context?: CurrencyContext }): number {

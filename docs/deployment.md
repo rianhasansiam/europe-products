@@ -42,17 +42,17 @@ Use [.env.example](../.env.example) as the supported inventory. At minimum:
 - New, app-scoped `DATABASE_URL` and independently generated `AUTH_SECRET`
 - `SITE_URL`, `NEXT_PUBLIC_SITE_URL`, `AUTH_URL`: `https://sextoybd.net`
 - `UPLOAD_STORAGE=filesystem`, dedicated `UPLOAD_DIR` and new `UPLOAD_PUBLIC_URL`
-- `AIRWALLEX_ENABLED=false` until scoped credentials, dashboard URLs and USD
-  pricing have been verified
+- `AIRWALLEX_ENABLED=false` until scoped credentials and dashboard URLs are
+  configured and sandbox payment checks pass
 
 Do not ship development callback overrides. Optional credentials may remain blank.
 Bundled translations do not require deploying a translation engine.
 
 Fresh installations have no product or administrator seed. Register the owner's
-real account before an authorized administrator promotion. Publish actual USD
-prices and review shipping/discount rules before setting
-`pricingCurrencyVerified=true`; see [USD activation](usd-pricing-migration.md).
-Historical amounts must remain unchanged.
+real account before an authorized administrator promotion. Catalog prices and
+shipping/discount amounts are used directly in USD without a manual price-review
+approval; see [USD pricing](usd-pricing-migration.md). Historical amounts and
+their saved currencies remain unchanged.
 
 ## Service and proxy
 

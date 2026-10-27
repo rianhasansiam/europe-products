@@ -1,6 +1,5 @@
 "use client";
 import { useLocale } from "next-intl";
-import { useCurrency } from "@/components/currency/CurrencyProvider";
 import { BASE_CURRENCY } from "@/lib/currency/config";
 import { formatMoney } from "@/lib/currency/format-money";
 
@@ -71,8 +70,7 @@ export default function ProductsTable({
   onDelete: (product: AdminProduct) => void;
 }) {
   const locale = useLocale();
-  const pricing = useCurrency();
-  const formatPrice = (value: number, locale: string) => pricing.pricingReady === false ? `Review required: ${value.toLocaleString(locale)}` : formatMoney(value, BASE_CURRENCY, { locale });
+  const formatPrice = (value: number, locale: string) => formatMoney(value, BASE_CURRENCY, { locale });
   const i18n = useInterfaceTranslations("AdminAdminProductsComponentsProductsTable");
   if (isLoading && totalCount === 0) {
     return <TableSkeleton rows={6} columns={7} ariaLabel="Loading products" />;

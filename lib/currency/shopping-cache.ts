@@ -7,7 +7,7 @@ export function configureUsdShoppingCache(ready: boolean): void {
   if (typeof window !== "undefined") window.__sexToyUsdPricingReady = ready;
 }
 
-/** Fail closed until the provider has installed an explicitly reviewed state. */
+/** Wait for the USD provider before reading or persisting browser price snapshots. */
 export function canUseUsdShoppingCache(): boolean {
   return typeof window !== "undefined" && window.__sexToyUsdPricingReady === true;
 }

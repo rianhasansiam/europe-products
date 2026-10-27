@@ -1087,7 +1087,7 @@
     "taxRate": "করের হার (%)",
     "customerSCartShowsThisPercentageOfSubtotal": "গ্রাহকের কার্টে উপমোটের এই শতাংশ দেখানো হয়।",
     "baseCurrency": "মূল মুদ্রা",
-    "lockedToBdtCustomerDisplayCurrenciesAreConverted": "চেকআউট চালু করার আগে USD মূল্য নির্ধারণ পর্যালোচনা করতে হবে।",
+    "lockedToBdtCustomerDisplayCurrenciesAreConverted": "পণ্যের দাম ও চেকআউটে USD ব্যবহার করা হয়।",
     "deliveryInsideDhaka": "ঢাকার ভেতরে ডেলিভারি",
     "deliveryOutsideDhaka": "ঢাকার বাইরে ডেলিভারি",
     "freeShippingAbove": "এর বেশি হলে বিনা খরচে ডেলিভারি",

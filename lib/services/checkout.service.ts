@@ -2,7 +2,6 @@ import "server-only";
 
 import { randomUUID } from "node:crypto";
 import { requireAirwallexConfig } from "@/lib/airwallex/config/airwallex.config";
-import { assertUsdPricingReady } from "@/lib/currency/pricing-readiness";
 
 import { Prisma } from "@/app/generated/prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
@@ -679,7 +678,6 @@ export async function previewCheckout(
   const lines = await priceLines(resolved);
 
   const storeSettings = await getStoreSettings();
-  assertUsdPricingReady(storeSettings);
   const settings = settingsToSnapshot(storeSettings);
   const subtotal = sumDecimals(lines.map((line) => line.lineTotal));
   const promo = await applyPromoCode(
@@ -828,7 +826,6 @@ async function placeOrderInternal(
   }
 
   const storeSettings = await getStoreSettings();
-  assertUsdPricingReady(storeSettings);
   const settings = settingsToSnapshot(storeSettings);
 
   // Account-backed orders always use the account email, never a client
@@ -893,7 +890,6 @@ async function placeOrderInternal(
           };
         }
       }
-      assertUsdPricingReady(await tx.storeSettings.findFirst());
       const { items: resolved, fromCart } = await resolveItems(userId, input.items);
       await lockCheckoutCatalogRows(tx, resolved);
       const lines = await priceLines(resolved, tx);

@@ -5,6 +5,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { unstable_cache } from "next/cache";
 
 import { prisma } from "@/lib/db/prisma";
+import { BASE_CURRENCY } from "@/lib/currency/config";
 import { toNumber } from "@/lib/money";
 import { ServiceError } from "@/lib/services/service-error";
 import type {
@@ -45,7 +46,6 @@ const settingsSelect = {
   expressShippingFee: true,
   freeShippingThreshold: true,
   currency: true,
-  pricingCurrencyVerified: true,
   createdAt: true,
   updatedAt: true,
 } satisfies Prisma.StoreSettingsSelect;
@@ -74,7 +74,6 @@ export type StoreSettingsRow = {
   expressShippingFee: number;
   freeShippingThreshold: number;
   currency: string;
-  pricingCurrencyVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -105,7 +104,6 @@ function serializeSettings(row: {
   expressShippingFee: Prisma.Decimal;
   freeShippingThreshold: Prisma.Decimal;
   currency: string;
-  pricingCurrencyVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
 }): StoreSettingsRow {
@@ -115,8 +113,7 @@ function serializeSettings(row: {
     standardShippingFee: toNumber(row.standardShippingFee),
     expressShippingFee: toNumber(row.expressShippingFee),
     freeShippingThreshold: toNumber(row.freeShippingThreshold),
-    currency: row.currency,
-    pricingCurrencyVerified: row.pricingCurrencyVerified,
+    currency: BASE_CURRENCY,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };
@@ -189,7 +186,7 @@ export async function getStoreSettings(): Promise<StoreSettingsRow> {
  */
 const getCachedStoreSettings = unstable_cache(
   () => getStoreSettings(),
-  ["store-settings"],
+  ["store-settings-usd-no-review"],
   { revalidate: 600, tags: ["store-settings"] },
 );
 
@@ -211,12 +208,7 @@ export async function updateStoreSettings(input: UpdateStoreSettingsInput) {
   if (input.freeShippingThreshold !== undefined) {
     data.freeShippingThreshold = input.freeShippingThreshold;
   }
-  // The pricing migration is an explicit operational review, never a settings-label change.
-  if (input.currency !== undefined && current.currency !== input.currency) {
-    throw new SettingsError(409, "Review and migrate existing prices before changing the pricing currency.");
-  }
-
-
+  if (input.currency !== undefined) data.currency = BASE_CURRENCY;
   return prisma.storeSettings.update({
     where: { id: current.id },
     data,

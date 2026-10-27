@@ -12,7 +12,6 @@ export type StoreSettings = {
   expressShippingFee: number;
   freeShippingThreshold: number;
   currency: string;
-  pricingCurrencyVerified?: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -127,8 +126,7 @@ function parseSettings(entry: unknown): StoreSettings {
     standardShippingFee: Number(item.standardShippingFee ?? 0),
     expressShippingFee: Number(item.expressShippingFee ?? 0),
     freeShippingThreshold: Number(item.freeShippingThreshold ?? 0),
-    currency: asString(item.currency) || BASE_CURRENCY,
-    pricingCurrencyVerified: item.pricingCurrencyVerified === true,
+    currency: BASE_CURRENCY,
     createdAt: asString(item.createdAt),
     updatedAt: asString(item.updatedAt),
   };

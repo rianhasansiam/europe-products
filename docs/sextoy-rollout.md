@@ -8,6 +8,10 @@ The permanent canonical domain changed to `https://sextoybd.net` on 25 October
 2026. The original `https://sextoybd.com` validation below is historical evidence;
 it does not establish DNS, TLS or provider readiness for the new domain.
 
+On 27 October 2026, the manual price-review requirement was removed. Current
+catalog amounts are displayed and used directly in USD without conversion or
+an approval flag. The validation results below record the earlier release.
+
 ## Implemented
 
 - SexToy branding, new wordmark/icons, canonical metadata (originally validated
@@ -43,7 +47,7 @@ Existing retained secret values were preserved; secret files remain Git-ignored.
 | Local development overrides | `AUTH_URL=http://localhost:3000`, sandbox `AIRWALLEX_RETURN_URL=http://localhost:3000/orders/payment-return` in `.env.development.local` |
 | Removed from local configuration | `SSLCOMMERZ_STORE_ID`, `SSLCOMMERZ_STORE_PASSWORD`, `SSLCOMMERZ_IS_LIVE`, `PAYMENT_RECONCILIATION_SECRET`, `EXCHANGE_RATE_API_KEY`, `EXCHANGE_RATE_REFRESH_HOURS`, `CRON_SECRET`, `GEO_COUNTRY_HEADER` |
 | No longer supported | `DEV_COUNTRY`, `CURRENCY_DEBUG_SECRET` and retired-provider/FX configuration |
-| Currency | No environment override; fixed USD configuration plus a database pricing-review gate |
+| Currency | No environment override; fixed USD configuration with no manual price-review requirement |
 
 Required local Airwallex variables are present and pass configuration parsing;
 credential authentication against Airwallex was not tested. The existing local
@@ -76,14 +80,12 @@ were resolved before the final suite.
 
 ## Before accepting orders
 
-1. Follow [USD pricing migration](usd-pricing-migration.md). Apply both additive
-   migrations and obtain an approved repricing/conversion decision. Review current
-   products, variants, shipping and flat promo amounts before setting
-   `StoreSettings.currency='USD'` and `pricingCurrencyVerified=true`.
-   Checkout intentionally stays closed until this review is complete.
-2. Reopen only after cache invalidation/fresh build and deployment verification.
-   Preserve historical orders/payments/ledger amounts; no automatic FX rate or
-   numeric conversion was selected.
+1. Apply pending migrations and use [USD pricing](usd-pricing-migration.md).
+   Current product, variant, shipping and flat promo amounts are used directly
+   in USD. No manual review or verification-flag update is required.
+2. Verify deployment and invalidate affected caches after pricing changes outside
+   the admin interface. Preserve historical order/payment/ledger amounts and
+   currencies; the application performs no automatic numeric conversion.
 3. Provision DNS, TLS, canonical/www redirects, hosting/deployment URLs and the
    new upload-domain mapping. Existing host accounts/paths require a separate
    migration if they are to be renamed.

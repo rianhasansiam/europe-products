@@ -42,7 +42,7 @@ export const updateStoreSettingsSchema = z
       .min(0)
       .max(10_000_000)
       .optional(),
-    // New prices use USD; legacy conversion requires an explicit migration.
+    // Catalog and checkout always use USD.
     currency: z.literal(BASE_CURRENCY).optional(),
   })
   .refine((data) => Object.keys(data).length > 0, {

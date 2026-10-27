@@ -71,7 +71,7 @@ describe("prefix-free English metadata", () => {
       url: absoluteUrl("/products/pump"), offers: { url: absoluteUrl("/products/pump") },
     });
   });
-  it("omits offers until stored prices have been explicitly reviewed as USD", () => {
+  it("omits offers only when the caller has no available price", () => {
     const input = { name: "Product", description: "Details", path: "/products/product", price: 1200, inStock: true };
     expect(productJsonLd({ ...input, pricingReady: false })).not.toHaveProperty("offers");
     expect(productJsonLd({ ...input, pricingReady: true }).offers).toMatchObject({ priceCurrency: "USD", price: "1200.00" });

@@ -97,7 +97,7 @@ export default function StorePricingForm({
 
             <Field
               label={i18n("Base currency")}
-              hint={i18n("USD pricing requires an explicit review before checkout opens.")}
+              hint={i18n("Product prices and checkout use USD.")}
               required
             >
               <input

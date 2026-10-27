@@ -129,7 +129,7 @@ export type ProductJsonLdInput = {
   locale?: string;
   /** Effective selling price (already resolved to sale price when valid). */
   price: number;
-  /** False until persisted catalog/settings prices have been reviewed as USD. */
+  /** Omit offers when a caller has no available price. */
   pricingReady?: boolean;
   currency?: string;
   /** Whether at least one variant is purchasable. */

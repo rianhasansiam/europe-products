@@ -36,9 +36,9 @@ production seed or default administrator account. New installations are empty;
 register the owner's real account before granting administrator access through
 an authorized database operation.
 
-USD pricing must be reviewed before checkout opens. Follow
-[USD pricing activation](docs/usd-pricing-migration.md) and
-[Airwallex setup](docs/airwallex.md). Never relabel historical non-USD amounts.
+Catalog prices are used directly in USD; no price-review approval is required.
+See [USD pricing](docs/usd-pricing-migration.md) and
+[Airwallex setup](docs/airwallex.md). Historical orders retain their saved currencies.
 
 ## Optional services
 

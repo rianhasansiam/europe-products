@@ -16,7 +16,7 @@ type CurrencyAmountProps = Omit<
   amountUSD: number | string;
 };
 
-/** Formats an explicitly reviewed USD catalog amount. */
+/** Formats a USD catalog amount. */
 export function CurrencyAmount({ amountUSD, ...props }: CurrencyAmountProps) {
   const context = useCurrency();
   const locale = useLocale();

@@ -1,18 +1,11 @@
 import "server-only";
 
-import { getStoreSettingsCached } from "@/lib/services/settings.service";
-import { isUsdPricingReady } from "./pricing-readiness";
 import { createPricingContext } from "./pricing.service";
 import type { CurrencyContext } from "./config";
 
-/** Fixed USD presentation; the database review gate prevents relabeling legacy prices. */
+/** Current catalog prices use USD without a separate approval step. */
 export async function getRequestCurrencyContext(): Promise<CurrencyContext> {
-  try {
-    const settings = await getStoreSettingsCached();
-    return createPricingContext({ pricingReady: isUsdPricingReady(settings) });
-  } catch {
-    return createPricingContext({ pricingReady: false });
-  }
+  return createPricingContext();
 }
 
 /** No request headers, cookies, IP address, or location influence currency. */

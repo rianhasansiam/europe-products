@@ -31,7 +31,7 @@ export type CurrencyContext = {
   exchangeRateTimestamp: null;
   countryCode: null;
   source: "fixed";
-  /** False until existing catalog and rule amounts have been explicitly reviewed as USD. */
+  /** Shared availability state for existing catalog and shopping-cache consumers. */
   pricingReady?: boolean;
 };
 export type PricingContext = CurrencyContext;
@@ -42,4 +42,5 @@ export const DEFAULT_CURRENCY_CONTEXT = Object.freeze({
   exchangeRateTimestamp: null,
   countryCode: null,
   source: "fixed",
+  pricingReady: true,
 } as const satisfies CurrencyContext);

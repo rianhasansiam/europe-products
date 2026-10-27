@@ -1094,7 +1094,7 @@
     "Subtotal at which delivery is free. Use 0 to disable.": "subtotalAtWhichDeliveryIsFreeUse0",
     "Saving...": "saving",
     "Save settings": "saveSettings",
-    "USD pricing requires an explicit review before checkout opens.": "lockedToBdtCustomerDisplayCurrenciesAreConverted"
+    "Product prices and checkout use USD.": "lockedToBdtCustomerDisplayCurrenciesAreConverted"
   },
   "AdminAdminSettingsLoading": {
     "Loading settings": "loadingSettings"
