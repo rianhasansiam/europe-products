@@ -19,10 +19,10 @@ type TopProductsProps = {
 export default function TopProducts({ products, loading }: TopProductsProps) {
   const locale = useLocale();
   const i18n = useInterfaceTranslations("AdminAdminComponentsTopProducts");
-  const maxRevenue =
+  const maxSales =
     products.length === 0
       ? 1
-      : products.reduce((max, p) => (p.revenue > max ? p.revenue : max), 1);
+      : products.reduce((max, p) => (p.sales > max ? p.sales : max), 1);
 
   return (
     <section className="rounded-2xl border border-brand-border bg-white p-4 shadow-sm sm:p-5">
@@ -72,7 +72,7 @@ export default function TopProducts({ products, loading }: TopProductsProps) {
           {products.map((product, idx) => {
             const pct = Math.max(
               4,
-              Math.round((product.revenue / maxRevenue) * 100),
+              Math.round((product.sales / maxSales) * 100),
             );
             const outOfStock = product.stock === 0;
             const lowStock = product.stock > 0 && product.stock < 10;
@@ -94,7 +94,7 @@ export default function TopProducts({ products, loading }: TopProductsProps) {
                   </div>
                   <div className="text-end">
                     <p className="text-sm font-bold text-gray-900">
-                      {BASE_CURRENCY} {Math.round(product.revenue).toLocaleString(locale)}
+                      {BASE_CURRENCY} {Math.round(product.sales).toLocaleString(locale)}
                     </p>
                     <p
                       className={cn(

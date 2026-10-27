@@ -25,7 +25,6 @@ type CartItem = {
   slug: string;
   productId: string;
   name: string;
-  brand: string;
   image: string;
   price: number;
   originalPrice?: number;
@@ -125,9 +124,6 @@ export default function CartItemCard({
         <div className="flex min-w-0 flex-1 flex-col">
           <div className="flex flex-col gap-1.5 min-[380px]:flex-row min-[380px]:items-start min-[380px]:justify-between min-[380px]:gap-2">
             <div className="min-w-0">
-              <p className="truncate text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                {item.brand}
-              </p>
               <Link
                 href={`/products/${item.slug}`}
                 className="mt-0.5 line-clamp-2 text-sm font-semibold text-foreground [overflow-wrap:anywhere] hover:text-primary sm:text-base"

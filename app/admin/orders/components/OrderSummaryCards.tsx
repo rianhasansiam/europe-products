@@ -43,12 +43,12 @@ function SummaryCard({
 
 export default function OrderSummaryCards({
   totalOrders,
-  revenue,
+  sales,
   pending,
   unpaid,
 }: {
   totalOrders: number;
-  revenue: number;
+  sales: number;
   pending: number;
   unpaid: number;
 }) {
@@ -62,8 +62,8 @@ export default function OrderSummaryCards({
         accent="violet"
       />
       <SummaryCard
-        label={i18n("Revenue (excl. cancelled)")}
-        value={formatCurrency(revenue, locale)}
+        label={i18n("Sales (excl. cancelled)")}
+        value={formatCurrency(sales, locale)}
         accent="emerald"
       />
       <SummaryCard

@@ -39,18 +39,17 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Reveal admin-only fields (buyingPrice) only to signed-in admins.
-    const includeBuyingPrice = await isAdminRequest();
+    const isAdmin = await isAdminRequest();
     // Anonymous/public callers can only list visible products. Admin callers
     // keep the full status filter behavior used by the product dashboard.
-    const query = includeBuyingPrice
+    const query = isAdmin
       ? parsed.data
       : { ...parsed.data, status: "ACTIVE" as const };
     const { items, meta } = await listProducts(query, {
-      publicOnly: !includeBuyingPrice,
+      publicOnly: !isAdmin,
     });
     const serialized=items.map((item: ProductWithCategory) =>
-        serializeProduct(item, { includeBuyingPrice }),
+        serializeProduct(item),
       );
     return ok(params.locale ? await localizeProductSnapshots(serialized,await apiLocale(request)) : serialized,meta);
   } catch (error) {
@@ -110,7 +109,7 @@ export async function POST(request: NextRequest) {
       sitemap: true,
       categoryTree: true,
     });
-    return created(serializeProduct(product, { includeBuyingPrice: true }));
+    return created(serializeProduct(product));
   } catch (error) {
     if (error instanceof ProductError) {
       return jsonError(error.status, error.message, error.details);

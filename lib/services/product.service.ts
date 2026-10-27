@@ -61,30 +61,6 @@ const productInclude = {
       status: true,
     },
   },
-  brand: {
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      logo: true,
-      website: true,
-      seoTitle: true,
-      metaDescription: true,
-      ogImage: true,
-      status: true,
-    },
-  },
-  manufacturer: {
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      logo: true,
-      website: true,
-      country: true,
-      status: true,
-    },
-  },
   images: { orderBy: { position: "asc" } },
   variants: { orderBy: { createdAt: "asc" } },
   reviews: { select: { rating: true } },
@@ -94,11 +70,6 @@ type ProductRow = Prisma.ProductGetPayload<{ include: typeof productInclude }>;
 
 export type ProductWithCategory = ProductRow & {
   categoryBreadcrumb: CategoryBreadcrumb[];
-};
-
-export type SerializeOptions = {
-  /** Admin-only business source cost. */
-  includeBuyingPrice?: boolean;
 };
 
 export type ListProductsOptions = {
@@ -133,10 +104,7 @@ function jsonObject(
     : null;
 }
 
-export function serializeProduct(
-  product: ProductWithCategory,
-  options: SerializeOptions = {},
-) {
+export function serializeProduct(product: ProductWithCategory) {
   const salePrice = product.salePrice.toNumber();
   const rawDiscount = product.discountPrice?.toNumber() ?? null;
   const discountPrice =
@@ -175,9 +143,6 @@ export function serializeProduct(
     price: salePrice,
     salePrice,
     discountPrice,
-    ...(options.includeBuyingPrice
-      ? { buyingPrice: product.buyingPrice.toNumber() }
-      : {}),
     stock: totalStock,
     inStock: totalStock > 0,
     image: imageUrls[0] ?? null,
@@ -207,10 +172,6 @@ export function serializeProduct(
       status: product.category.status,
     },
     categoryBreadcrumb: product.categoryBreadcrumb,
-    brandId: product.brandId,
-    brand: product.brand,
-    manufacturerId: product.manufacturerId,
-    manufacturer: product.manufacturer,
     variants: product.variants.map((variant) => {
       const attributes = cleanVariantAttributes(variant.attributes);
       return {
@@ -349,12 +310,6 @@ function buildWhere(
         { series: { contains: query.search, mode: "insensitive" } },
         { category: { name: { contains: query.search, mode: "insensitive" } } },
         { category: { path: { contains: query.search, mode: "insensitive" } } },
-        { brand: { name: { contains: query.search, mode: "insensitive" } } },
-        {
-          manufacturer: {
-            name: { contains: query.search, mode: "insensitive" },
-          },
-        },
         {
           variants: {
             some: {
@@ -377,41 +332,6 @@ function buildWhere(
   if (categoryIds) and.push({ categoryId: { in: categoryIds } });
   if (publicOnly) and.push({ status: "ACTIVE" });
   else if (query.status) and.push({ status: query.status });
-  if (query.brandId) {
-    and.push(
-      publicOnly
-        ? { brand: { id: query.brandId, status: "ACTIVE" } }
-        : { brandId: query.brandId },
-    );
-  }
-  if (query.brandSlug) {
-    and.push({
-      brand: {
-        slug: query.brandSlug,
-        ...(publicOnly ? { status: "ACTIVE" as const } : {}),
-      },
-    });
-  }
-  if (query.manufacturerId) {
-    and.push(
-      publicOnly
-        ? {
-            manufacturer: {
-              id: query.manufacturerId,
-              status: "ACTIVE",
-            },
-          }
-        : { manufacturerId: query.manufacturerId },
-    );
-  }
-  if (query.manufacturerSlug) {
-    and.push({
-      manufacturer: {
-        slug: query.manufacturerSlug,
-        ...(publicOnly ? { status: "ACTIVE" as const } : {}),
-      },
-    });
-  }
   if (query.stock === "in-stock") {
     and.push({ variants: { some: { isActive: true, stock: { gt: 0 } } } });
   } else if (query.stock === "out-of-stock") {
@@ -466,15 +386,6 @@ async function rankedProductPage(
           AND (category.name ILIKE ${pattern} OR category.path ILIKE ${pattern})
       )
       OR EXISTS (
-        SELECT 1 FROM "Brand" brand
-        WHERE brand.id = p."brandId" AND brand.name ILIKE ${pattern}
-      )
-      OR EXISTS (
-        SELECT 1 FROM "Manufacturer" manufacturer
-        WHERE manufacturer.id = p."manufacturerId"
-          AND manufacturer.name ILIKE ${pattern}
-      )
-      OR EXISTS (
         SELECT 1 FROM "ProductVariant" variant
         WHERE variant."productId" = p.id
           AND (variant.sku ILIKE ${pattern} OR variant."modelNumber" ILIKE ${pattern})
@@ -490,41 +401,6 @@ async function rankedProductPage(
     conditions.push(Prisma.sql`p.status = 'ACTIVE'::"ProductStatus"`);
   } else if (query.status) {
     conditions.push(Prisma.sql`p.status = ${query.status}::"ProductStatus"`);
-  }
-  if (query.brandId) {
-    conditions.push(Prisma.sql`p."brandId" = ${query.brandId}`);
-    if (publicOnly) {
-      conditions.push(Prisma.sql`EXISTS (
-        SELECT 1 FROM "Brand" brand
-        WHERE brand.id = p."brandId" AND brand.status = 'ACTIVE'::"BrandStatus"
-      )`);
-    }
-  }
-  if (query.brandSlug) {
-    conditions.push(Prisma.sql`EXISTS (
-      SELECT 1 FROM "Brand" brand
-      WHERE brand.id = p."brandId"
-        AND brand.slug = ${query.brandSlug}
-        ${publicOnly ? Prisma.sql`AND brand.status = 'ACTIVE'::"BrandStatus"` : Prisma.empty}
-    )`);
-  }
-  if (query.manufacturerId) {
-    conditions.push(Prisma.sql`p."manufacturerId" = ${query.manufacturerId}`);
-    if (publicOnly) {
-      conditions.push(Prisma.sql`EXISTS (
-        SELECT 1 FROM "Manufacturer" manufacturer
-        WHERE manufacturer.id = p."manufacturerId"
-          AND manufacturer.status = 'ACTIVE'::"ManufacturerStatus"
-      )`);
-    }
-  }
-  if (query.manufacturerSlug) {
-    conditions.push(Prisma.sql`EXISTS (
-      SELECT 1 FROM "Manufacturer" manufacturer
-      WHERE manufacturer.id = p."manufacturerId"
-        AND manufacturer.slug = ${query.manufacturerSlug}
-        ${publicOnly ? Prisma.sql`AND manufacturer.status = 'ACTIVE'::"ManufacturerStatus"` : Prisma.empty}
-    )`);
   }
   if (query.stock === "in-stock") {
     conditions.push(Prisma.sql`EXISTS (
@@ -793,48 +669,16 @@ function validatedVariantData(
 
 async function assertReferences(
   client: Prisma.TransactionClient,
-  input: {
-    categoryId?: string;
-    brandId?: string | null;
-    manufacturerId?: string | null;
-  },
+  input: { categoryId?: string },
 ) {
-  const [category, brand, manufacturer] = await Promise.all([
-    input.categoryId
-      ? client.category.findUnique({
-          where: { id: input.categoryId },
-          select: { id: true },
-        })
-      : null,
-    input.brandId
-      ? client.brand.findUnique({
-          where: { id: input.brandId },
-          select: { id: true, status: true },
-        })
-      : null,
-    input.manufacturerId
-      ? client.manufacturer.findUnique({
-          where: { id: input.manufacturerId },
-          select: { id: true, status: true },
-        })
-      : null,
-  ]);
-  if (input.categoryId && !category) {
+  if (!input.categoryId) return;
+  const category = await client.category.findUnique({
+    where: { id: input.categoryId },
+    select: { id: true },
+  });
+  if (!category) {
     throw new ProductError(400, "Selected category does not exist.", {
       fieldErrors: { categoryId: ["Select a valid category."] },
-    });
-  }
-  if (input.brandId && (!brand || brand.status !== "ACTIVE")) {
-    throw new ProductError(400, "Selected brand is not active.", {
-      fieldErrors: { brandId: ["Select an active brand."] },
-    });
-  }
-  if (
-    input.manufacturerId &&
-    (!manufacturer || manufacturer.status !== "ACTIVE")
-  ) {
-    throw new ProductError(400, "Selected manufacturer is not active.", {
-      fieldErrors: { manufacturerId: ["Select an active manufacturer."] },
     });
   }
 }
@@ -886,9 +730,8 @@ export async function createProduct(input: CreateProductInput) {
             descriptionBlocks: nullableJson(input.descriptionBlocks ?? null),
             status: input.status,
             categoryId: input.categoryId,
-            brandId: input.brandId ?? null,
-            manufacturerId: input.manufacturerId ?? null,
-            buyingPrice: input.buyingPrice,
+            // Retained database column for historical records; source costs are no longer collected.
+            buyingPrice: 0,
             salePrice: input.salePrice,
             discountPrice: input.discountPrice ?? null,
             variants: { create: variants },
@@ -970,8 +813,6 @@ export async function updateProduct(id: string, input: UpdateProductInput) {
 
     await assertReferences(tx, {
       categoryId: input.categoryId,
-      brandId: input.brandId,
-      manufacturerId: input.manufacturerId,
     });
 
     const data: Prisma.ProductUpdateInput = {};
@@ -1003,17 +844,6 @@ export async function updateProduct(id: string, input: UpdateProductInput) {
     if (input.categoryId !== undefined) {
       data.category = { connect: { id: input.categoryId } };
     }
-    if (input.brandId !== undefined) {
-      data.brand = input.brandId
-        ? { connect: { id: input.brandId } }
-        : { disconnect: true };
-    }
-    if (input.manufacturerId !== undefined) {
-      data.manufacturer = input.manufacturerId
-        ? { connect: { id: input.manufacturerId } }
-        : { disconnect: true };
-    }
-    if (input.buyingPrice !== undefined) data.buyingPrice = input.buyingPrice;
     if (input.salePrice !== undefined) data.salePrice = input.salePrice;
     if (input.discountPrice !== undefined)
       data.discountPrice = input.discountPrice;

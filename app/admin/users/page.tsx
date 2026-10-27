@@ -96,14 +96,14 @@ export default function AdminCustomersPage() {
     let admins = 0;
     let guests = 0;
     let withOrders = 0;
-    let lifetimeRevenue = 0;
+    let lifetimeSales = 0;
     for (const user of users) {
       if (user.role === "ADMIN") admins += 1;
       if (user.customerType === "GUEST") guests += 1;
       if (user.ordersCount > 0) withOrders += 1;
-      lifetimeRevenue += user.totalSpend;
+      lifetimeSales += user.totalSpend;
     }
-    return { admins, guests, withOrders, lifetimeRevenue };
+    return { admins, guests, withOrders, lifetimeSales };
   }, [users]);
 
   const handleToggleRole = async (user: AdminCustomerRow) => {
@@ -148,7 +148,7 @@ export default function AdminCustomersPage() {
         admins={totals.admins}
         guests={totals.guests}
         withOrders={totals.withOrders}
-        lifetimeRevenue={totals.lifetimeRevenue}
+        lifetimeSales={totals.lifetimeSales}
       />
 
       <p className="text-xs text-gray-500">{i18n("Financial summaries include USD orders only.")}</p>

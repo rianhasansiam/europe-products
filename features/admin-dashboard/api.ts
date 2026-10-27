@@ -20,8 +20,7 @@ export type DashboardStat = {
 };
 
 export type DashboardStats = {
-  revenue: DashboardStat;
-  profit: DashboardStat;
+  sales: DashboardStat;
   orders: DashboardStat;
   customers: DashboardStat;
   cancellations: DashboardStat;
@@ -30,14 +29,14 @@ export type DashboardStats = {
 export type DashboardSalesPoint = {
   date: string;
   label: string;
-  revenue: number;
+  sales: number;
   orders: number;
 };
 
 export type DashboardSalesSeries = {
   days: number;
   points: DashboardSalesPoint[];
-  totalRevenue: number;
+  totalSales: number;
   totalOrders: number;
 };
 
@@ -63,7 +62,7 @@ export type DashboardTopProduct = {
   name: string;
   category: string;
   unitsSold: number;
-  revenue: number;
+  sales: number;
   stock: number;
   status: "ACTIVE" | "INACTIVE";
 };
@@ -78,8 +77,6 @@ export type DashboardActivityKind =
   | "review"
   | "testimonial"
   | "settings"
-  | "capital"
-  | "cost"
   | "courier";
 
 export type DashboardActivity = {

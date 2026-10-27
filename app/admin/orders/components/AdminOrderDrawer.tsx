@@ -169,7 +169,7 @@ export default function AdminOrderDrawer({
           <div>
             <h2 className="text-lg font-bold">{i18n("Place order for customer")}</h2>
             <p className="mt-0.5 text-xs text-brand-white/70">
-              {i18n("Create an order for a registered customer or a walk-in guest with the same checkout, stock, revenue, and profit rules.")}</p>
+              {i18n("Create an order for a registered customer or a walk-in guest using the same checkout and stock rules.")}</p>
           </div>
           <button
             type="button"
@@ -192,7 +192,7 @@ export default function AdminOrderDrawer({
                 </span>
               )}
               <p className="mt-1 text-sm text-emerald-800">
-                {placedOrder.orderNumber} {i18n("for")}{" "}{placedOrder.customerName} {i18n("is now included in sales, revenue, and profit.")}</p>
+                {placedOrder.orderNumber} {i18n("for")}{" "}{placedOrder.customerName} {i18n("is now included in sales.")}</p>
               <p className="mt-3 text-xl font-bold text-emerald-950">
                 {formatCurrency(placedOrder.totalAmount, locale)}
               </p>

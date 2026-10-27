@@ -123,9 +123,6 @@ export default function ProductsTable({
                   </td>
                   <td className="max-w-64 px-4 py-3">
                     <p className="line-clamp-2 text-xs font-semibold text-gray-800">{categoryLabel(product)}</p>
-                    <p className="mt-1 text-xs text-gray-500">
-                      {[product.brand?.name, product.manufacturer?.name].filter(Boolean).join(" · ") || "No brand or manufacturer"}
-                    </p>
                   </td>
                   <td className="px-4 py-3">
                     <p className="font-bold text-gray-950">{product.stock} {i18n("units")}</p>
@@ -134,7 +131,6 @@ export default function ProductsTable({
                   <td className="px-4 py-3">
                     <p className="font-bold text-gray-950">{formatPrice(product.discountPrice ?? product.salePrice, locale)}</p>
                     {product.discountPrice !== null && <p className="text-xs text-gray-400 line-through">{formatPrice(product.salePrice, locale)}</p>}
-                    <p className="mt-1 text-[11px] text-gray-500">{i18n("Cost")}{" "}{formatPrice(product.buyingPrice, locale)}</p>
                   </td>
                   <td className="px-4 py-3">
                     <span className="inline-flex items-center gap-1 font-semibold text-gray-800"><Star className="h-3.5 w-3.5 fill-brand-gold text-brand-gold" /> {product.rating.toFixed(1)}</span>

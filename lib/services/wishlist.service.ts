@@ -46,8 +46,6 @@ const wishlistInclude = {
       category: {
         select: { name: true, path: true },
       },
-      brand: { select: { name: true } },
-      manufacturer: { select: { name: true } },
       reviews: { select: { rating: true } },
     },
   },
@@ -62,7 +60,6 @@ export type WishlistUiItem = {
   productCode: string;
   slug: string;
   name: string;
-  brand: string;
   image: string;
   price: number;
   originalPrice?: number;
@@ -109,8 +106,6 @@ function toWishlistUiItem(row: WishlistWithProduct): WishlistUiItem {
     productCode: row.product.productCode,
     slug: row.product.slug,
     name: row.product.name,
-    brand:
-      row.product.brand?.name ?? row.product.manufacturer?.name ?? "Unbranded",
     image: row.product.images[0]?.url ?? FALLBACK_PRODUCT_IMAGE,
     price: currentPrice,
     originalPrice: hasValidDiscount ? listPrice : undefined,

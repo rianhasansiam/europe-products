@@ -14,7 +14,7 @@ import { getPublishedEntityLocales } from "@/lib/translations/service";
 /**
  * Dynamic sitemap for SexToy.
  *
- * Lists the static public pages plus every ACTIVE category, brand, and
+ * Lists the static public pages plus every ACTIVE category and
  * product. Inactive/soft-deleted rows and private routes are excluded.
  * A catalog read failure is allowed to fail regeneration so Next retains
  * the last complete ISR result instead of caching a partial sitemap.
@@ -31,7 +31,6 @@ const STATIC_ROUTES: {
   { path: "/", changeFrequency: "daily", priority: 1 },
   { path: "/products", changeFrequency: "daily", priority: 0.9 },
   { path: "/categories", changeFrequency: "weekly", priority: 0.8 },
-  { path: "/brands", changeFrequency: "weekly", priority: 0.75 },
   { path: "/about", changeFrequency: "monthly", priority: 0.5 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.5 },
   { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3 },
@@ -51,12 +50,6 @@ type CategorySitemapRow = {
   parentId: string | null;
   path: string;
   status: "ACTIVE" | "INACTIVE";
-  updatedAt: Date;
-};
-
-type BrandSitemapRow = {
-  id: string;
-  slug: string;
   updatedAt: Date;
 };
 
@@ -147,24 +140,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }));
 
   try {
-    const [products, brands]: [ProductSitemapRow[], BrandSitemapRow[]] =
-      await Promise.all([
-        prisma.product.findMany({
-          where: { status: "ACTIVE" },
-          select: { id: true, slug: true, updatedAt: true, categoryId: true },
-          orderBy: { updatedAt: "desc" },
-        }),
-        prisma.brand.findMany({
-          where: { status: "ACTIVE" },
-          select: { id: true, slug: true, updatedAt: true },
-          orderBy: { updatedAt: "desc" },
-        }),
-      ]);
-
-    const [productLocales, brandLocales] = await Promise.all([
-      getPublishedEntityLocales("product", products.map((product) => product.id), ["name", "description", "descriptionBlocks", "seoTitle", "metaDescription"]),
-      getPublishedEntityLocales("brand", brands.map((brand) => brand.id), ["description", "seoTitle", "metaDescription"]),
-    ]);
+    const products: ProductSitemapRow[] = await prisma.product.findMany({
+      where: { status: "ACTIVE" },
+      select: { id: true, slug: true, updatedAt: true, categoryId: true },
+      orderBy: { updatedAt: "desc" },
+    });
+    const productLocales = await getPublishedEntityLocales(
+      "product", products.map((product) => product.id),
+      ["name", "description", "descriptionBlocks", "seoTitle", "metaDescription"],
+    );
     const productEntries: MetadataRoute.Sitemap = products
       .filter((product) => activeCategoryIds.has(product.categoryId))
       .flatMap((product) => entriesFor(`/products/${product.slug}`, productLocales.get(product.id) ?? [], {
@@ -172,21 +156,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           changeFrequency: "weekly",
           priority: 0.8,
         }));
-    const brandEntries: MetadataRoute.Sitemap = brands.flatMap((brand) =>
-      entriesFor(`/brands/${brand.slug}`, brandLocales.get(brand.id) ?? [], {
-        lastModified: brand.updatedAt,
-        changeFrequency: "weekly",
-        priority: 0.7,
-      }));
-
     return [
       ...staticEntries,
       ...categoryEntries,
-      ...brandEntries,
       ...productEntries,
     ];
   } catch (error) {
-    console.error("sitemap: failed to load products or brands", error);
+    console.error("sitemap: failed to load products", error);
     throw error;
   }
 }

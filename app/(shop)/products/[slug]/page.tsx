@@ -245,8 +245,6 @@ function ProductCrawlerFacts({
   description,
   category,
   categoryHref,
-  brand,
-  manufacturer,
   productUrl,
   imageUrls,
   regularPrice,
@@ -259,8 +257,6 @@ function ProductCrawlerFacts({
   description: string;
   category: string;
   categoryHref: string;
-  brand: string | null;
-  manufacturer: string | null;
   productUrl: string;
   imageUrls: string[];
   regularPrice: number;
@@ -274,8 +270,6 @@ function ProductCrawlerFacts({
     <section className="sr-only" aria-label={i18n("{value0} product summary", { value0: name })}>
       <h2>{name}</h2>
       <p>{i18n(description)}</p>
-      {brand && <p>{i18n("Brand:")}{brand}</p>}
-      {manufacturer && <p>{i18n("Manufacturer:")}{manufacturer}</p>}
       <p>
         {i18n("Category:")}<Link href={categoryHref}>{category}</Link>
       </p>
@@ -347,8 +341,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       name: product.name,
       productCode: product.productCode,
     });
-  const brandName = product.brand?.name ?? null;
-  const manufacturerName = product.manufacturer?.name ?? null;
   const readyLocales = await getPublishedEntityLocales("product", [product.id], ["name", "description", "descriptionBlocks", "seoTitle", "metaDescription"]);
   const localizedMetadata = await buildLocalizedMetadata({
     title, description, path: `/products/${product.slug}`,
@@ -362,8 +354,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     keywords: [
       product.name,
       product.category.name,
-      brandName,
-      manufacturerName,
       product.modelNumber,
       product.series,
       siteConfig.name,
@@ -394,7 +384,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     category: product.category.name,
     other: {
-      ...(brandName ? { "product:brand": brandName } : {}),
       "og:type": "product",
       "product:category": product.category.name,
       "product:retailer_item_id": product.productCode,
@@ -549,8 +538,6 @@ export default async function ProductDetailsPage({ params }: Props) {
   ];
   const specifications = productSpecifications(product);
   const { rating, reviewCount } = productReviewMetrics(product);
-  const brandName = product.brand?.name ?? null;
-  const manufacturerName = product.manufacturer?.name ?? null;
 
   await dependOnCatalogTags(
     productDetailCacheTags({
@@ -558,8 +545,6 @@ export default async function ProductDetailsPage({ params }: Props) {
       category: product.category,
       categoryBreadcrumb,
       relatedProducts: others,
-      brand: product.brand,
-      manufacturerId: product.manufacturer?.id,
     }),
   );
 
@@ -582,9 +567,7 @@ export default async function ProductDetailsPage({ params }: Props) {
         inStock,
         category: categoryLabel,
         sku: primarySku,
-        brand: brandName,
         gtin: product.gtin,
-        manufacturer: manufacturerName,
         itemCondition: product.itemCondition,
         rating:
           reviewCount > 0 ? { average: rating, count: reviewCount } : undefined,
@@ -602,9 +585,7 @@ export default async function ProductDetailsPage({ params }: Props) {
           price: currentPrice,
           pricingReady,
           category: categoryLabel,
-          brand: brandName,
           gtin: product.gtin,
-          manufacturer: manufacturerName,
           itemCondition: product.itemCondition,
           rating:
             reviewCount > 0
@@ -664,8 +645,6 @@ export default async function ProductDetailsPage({ params }: Props) {
           description={shortDescription}
           category={categoryLabel}
           categoryHref={`/categories/${categoryPath}`}
-          brand={brandName}
-          manufacturer={manufacturerName}
           productUrl={productUrl}
           imageUrls={seoImageUrls}
           regularPrice={regularPrice}
@@ -726,8 +705,6 @@ export default async function ProductDetailsPage({ params }: Props) {
                 gtin={product.gtin}
                 condition={productConditionLabel(product.itemCondition)}
                 series={product.series}
-                brand={product.brand}
-                manufacturer={product.manufacturer}
                 rating={rating}
                 reviewCount={reviewCount}
               />
@@ -739,7 +716,6 @@ export default async function ProductDetailsPage({ params }: Props) {
                 productSlug={product.slug}
                 productName={product.name}
                 image={primaryDisplayImage}
-                brand={brandName}
                 category={categoryLabel}
                 rating={rating}
                 reviewCount={reviewCount}

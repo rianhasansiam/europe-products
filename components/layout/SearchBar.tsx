@@ -450,7 +450,6 @@ export default function SearchBar({
                             <div className="mt-0.5 flex min-w-0 items-baseline justify-between gap-2">
                               <p className="min-w-0 truncate text-[11px] text-muted-foreground sm:text-xs">
                                 {[
-                                  product.brand,
                                   product.modelNumber,
                                   product.category,
                                 ]

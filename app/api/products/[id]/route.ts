@@ -27,12 +27,12 @@ export async function GET(_request: NextRequest, context: RouteContext) {
   const { id } = await context.params;
 
   try {
-    const includeBuyingPrice = await isAdminRequest();
-    const product = includeBuyingPrice
+    const isAdmin = await isAdminRequest();
+    const product = isAdmin
       ? await getProductById(id)
       : await getActiveProductById(id);
     if (!product) return jsonError(404, "Product not found.");
-    const serialized=serializeProduct(product, { includeBuyingPrice });
+    const serialized=serializeProduct(product);
     return ok(_request.nextUrl.searchParams.has("locale")?(await localizeProductSnapshots([serialized],await apiLocale(_request)))[0]:serialized);
   } catch (error) {
     console.error("[products/[id].GET] failed", error);
@@ -113,7 +113,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
           parsed.data.categoryId !== undefined,
       },
     );
-    return ok(serializeProduct(product, { includeBuyingPrice: true }));
+    return ok(serializeProduct(product));
   } catch (error) {
     if (error instanceof ProductError) {
       return jsonError(error.status, error.message, error.details);

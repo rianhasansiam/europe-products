@@ -10,7 +10,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   ShoppingBag,
-  TrendingUp,
   Undo2,
   Users,
   type LucideIcon,
@@ -69,20 +68,11 @@ function formatCount(value: number, locale = "en"): string {
 
 const CARDS: readonly CardConfig[] = [
   {
-    id: "revenue",
-    label: "Revenue (all time)",
+    id: "sales",
+    label: "Sales (all time)",
     hint: "growth this month",
     accent: "violet",
     icon: "",
-    format: formatUsd,
-    positiveTrend: "up",
-  },
-  {
-    id: "profit",
-    label: "Profit (all time)",
-    hint: "revenue − cost",
-    accent: "emerald",
-    icon: TrendingUp,
     format: formatUsd,
     positiveTrend: "up",
   },
@@ -110,7 +100,7 @@ const CARDS: readonly CardConfig[] = [
     hint: "growth this month",
     accent: "amber",
     icon: Undo2,
-    format: formatUsd,
+    format: formatCount,
     positiveTrend: "down",
   },
 ];
@@ -122,7 +112,7 @@ type StatCardsProps = {
 
 export default function StatCards({ stats, loading }: StatCardsProps) {
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
       {CARDS.map((card) => {
         const stat = stats?.[card.id] ?? null;
         return (

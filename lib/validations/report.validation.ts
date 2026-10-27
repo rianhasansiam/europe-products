@@ -5,19 +5,11 @@ import { z } from "zod";
  *
  * The admin "Reports" page asks the API for a packaged dataset for a
  * given report type and date window. The server does all aggregation
- * (revenue, top products, stock summaries, etc.) and the client renders
+ * (sales totals and order breakdowns) and the client renders
  * the preview / PDF from that payload.
  */
 
-export const REPORT_TYPES = [
-  "sales",
-  "orders",
-  "products",
-  "profit",
-  "inventory",
-  "customers",
-  "categories",
-] as const;
+export const REPORT_TYPES = ["sales"] as const;
 
 export type ReportType = (typeof REPORT_TYPES)[number];
 

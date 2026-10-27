@@ -18,7 +18,7 @@ import { getCategoryBreadcrumbsByIds } from "@/lib/services/category.service";
  *
  * One bundled payload keeps the page to a single round-trip and the
  * SQL surface predictable. Cancelled orders are excluded from any
- * "revenue" or "orders" headline so the numbers reflect actual store
+ * "sales" or "orders" headline so the numbers reflect actual store
  * performance — they're surfaced separately under "cancellations".
  *
  * Money fields are rounded to 2 dp at the service edge so the JSON
@@ -75,8 +75,7 @@ export type DashboardStat = {
 };
 
 export type DashboardStats = {
-  revenue: DashboardStat;
-  profit: DashboardStat;
+  sales: DashboardStat;
   orders: DashboardStat;
   customers: DashboardStat;
   cancellations: DashboardStat;
@@ -87,7 +86,7 @@ export type DashboardSalesPoint = {
   date: string;
   // Short day label (Mon/Tue/...) so the chart doesn't have to format dates.
   label: string;
-  revenue: number;
+  sales: number;
   orders: number;
 };
 
@@ -109,7 +108,7 @@ export type DashboardTopProduct = {
   name: string;
   category: string;
   unitsSold: number;
-  revenue: number;
+  sales: number;
   stock: number;
   status: "ACTIVE" | "INACTIVE";
 };
@@ -133,7 +132,7 @@ export type DashboardOverview = {
   sales: {
     days: number;
     points: DashboardSalesPoint[];
-    totalRevenue: number;
+    totalSales: number;
     totalOrders: number;
   };
   recentOrders: DashboardRecentOrder[];
@@ -164,66 +163,21 @@ async function loadStats(now: Date): Promise<DashboardStats> {
     status: "CANCELLED",
   });
 
-  const [
-    revenueAll,
-    revenueBefore,
-    ordersAll,
-    ordersBefore,
-    cancelledAll,
-    cancelledBefore,
-    customersTotal,
-    customersBefore,
-    costItemsAll,
-    costItemsBefore,
-  ] = await Promise.all([
+  const [salesAll, salesBefore, cancelledAll, cancelledBefore, customersTotal, customersBefore] = await Promise.all([
     prisma.order.aggregate({
       where: liveOrderWhere(),
-      _sum: { subtotal: true },
-      _count: { _all: true },
-    }),
-    prisma.order.aggregate({
-      where: liveOrderWhere({ lt: thisMonthStart }),
-      _sum: { subtotal: true },
-      _count: { _all: true },
-    }),
-    prisma.order.count({
-      where: liveOrderWhere(),
-    }),
-    prisma.order.count({
-      where: liveOrderWhere({ lt: thisMonthStart }),
-    }),
-    prisma.order.aggregate({
-      where: cancelledWhere(),
       _sum: { totalAmount: true },
       _count: { _all: true },
     }),
     prisma.order.aggregate({
-      where: cancelledWhere({ lt: thisMonthStart }),
+      where: liveOrderWhere({ lt: thisMonthStart }),
       _sum: { totalAmount: true },
       _count: { _all: true },
     }),
+    prisma.order.count({ where: cancelledWhere() }),
+    prisma.order.count({ where: cancelledWhere({ lt: thisMonthStart }) }),
     prisma.user.count(),
-    prisma.user.count({
-      where: { createdAt: { lt: thisMonthStart } },
-    }),
-    // Cost of goods sold = sum(buyingPrice * quantity) over live order
-    // items. Prisma can't aggregate a product of two columns, so we
-    // pull the snapshots and fold them in JS. buyingPrice is nullable
-    // for legacy rows; those contribute 0 cost.
-    prisma.orderItem.findMany({
-      where: {
-        buyingPrice: { not: null },
-        order: liveOrderWhere(),
-      },
-      select: { quantity: true, buyingPrice: true },
-    }),
-    prisma.orderItem.findMany({
-      where: {
-        buyingPrice: { not: null },
-        order: liveOrderWhere({ lt: thisMonthStart }),
-      },
-      select: { quantity: true, buyingPrice: true },
-    }),
+    prisma.user.count({ where: { createdAt: { lt: thisMonthStart } } }),
   ]);
 
   const buildStat = (current: number, previous: number): DashboardStat => {
@@ -233,40 +187,19 @@ async function loadStats(now: Date): Promise<DashboardStats> {
     return { current, previous, delta, trend };
   };
 
-  // Revenue is the product subtotal only. `totalAmount` also contains
-  // delivery, tax, and discounts, none of which belongs in the dashboard's
-  // product-revenue figure.
-  const revenue = buildStat(
-    money(toNumber(revenueAll._sum.subtotal)),
-    money(toNumber(revenueBefore._sum.subtotal)),
+  // Use the saved order total, matching the sales report. Cancelled
+  // orders are counted separately and never contribute to total sales.
+  const sales = buildStat(
+    money(toNumber(salesAll._sum.totalAmount)),
+    money(toNumber(salesBefore._sum.totalAmount)),
   );
-
-  const orders = buildStat(ordersAll, ordersBefore);
-
-  // Profit = revenue - cost of goods sold for the same window.
-  const sumCost = (
-    rows: { quantity: number; buyingPrice: Prisma.Decimal | null }[],
-  ): number =>
-    rows.reduce(
-      (total, row) => total + toNumber(row.buyingPrice) * row.quantity,
-      0,
-    );
-
-  const profit = buildStat(
-    money(money(toNumber(revenueAll._sum.subtotal)) - sumCost(costItemsAll)),
-    money(money(toNumber(revenueBefore._sum.subtotal)) - sumCost(costItemsBefore)),
-  );
-
+  const orders = buildStat(salesAll._count._all, salesBefore._count._all);
   const customers = buildStat(customersTotal, customersBefore);
-
-  const cancellations = buildStat(
-    money(toNumber(cancelledAll._sum.totalAmount)),
-    money(toNumber(cancelledBefore._sum.totalAmount)),
-  );
+  const cancellations = buildStat(cancelledAll, cancelledBefore);
   // For cancellations, "down" is good; the stat object stays signed
   // and the UI can decide which colour to use.
 
-  return { revenue, profit, orders, customers, cancellations };
+  return { sales, orders, customers, cancellations };
 }
 
 /* -------------------------------------------------------------------------- */
@@ -291,11 +224,11 @@ async function loadSalesSeries(now: Date) {
     where: {
       createdAt: { gte: start },
       currency: BASE_CURRENCY,
-    status: { not: "CANCELLED" },
+      status: { not: "CANCELLED" },
     },
     select: {
       createdAt: true,
-      subtotal: true,
+      totalAmount: true,
     },
   });
 
@@ -307,7 +240,7 @@ async function loadSalesSeries(now: Date) {
     buckets.set(key, {
       date: key,
       label: DAY_LABELS[cursor.getUTCDay()] ?? key,
-      revenue: 0,
+      sales: 0,
       orders: 0,
     });
   }
@@ -316,20 +249,20 @@ async function loadSalesSeries(now: Date) {
     const key = row.createdAt.toISOString().slice(0, 10);
     const bucket = buckets.get(key);
     if (!bucket) continue;
-    bucket.revenue = money(bucket.revenue + toNumber(row.subtotal));
+    bucket.sales = money(bucket.sales + toNumber(row.totalAmount));
     bucket.orders += 1;
   }
 
   const points = Array.from(buckets.values());
-  const totalRevenue = money(
-    points.reduce((sum, point) => sum + point.revenue, 0),
+  const totalSales = money(
+    points.reduce((sum, point) => sum + point.sales, 0),
   );
   const totalOrders = points.reduce((sum, point) => sum + point.orders, 0);
 
   return {
     days: SALES_SERIES_DAYS,
     points,
-    totalRevenue,
+    totalSales,
     totalOrders,
   };
 }
@@ -382,14 +315,14 @@ async function loadTopProducts(now: Date): Promise<DashboardTopProduct[]> {
   since.setUTCDate(since.getUTCDate() - TOP_PRODUCTS_WINDOW_DAYS);
 
   // Pull line items in the window; each carries its own price snapshot
-  // (unitPrice/totalPrice) so revenue survives product deletion.
+  // (unitPrice/totalPrice) so sales survives product deletion.
   const items = await prisma.orderItem.findMany({
     where: {
       productId: { not: null },
       order: {
         createdAt: { gte: since },
         currency: BASE_CURRENCY,
-    status: { not: "CANCELLED" },
+        status: { not: "CANCELLED" },
       },
     },
     select: { productId: true, quantity: true, totalPrice: true },
@@ -397,12 +330,12 @@ async function loadTopProducts(now: Date): Promise<DashboardTopProduct[]> {
 
   if (items.length === 0) return [];
 
-  const stats = new Map<string, { units: number; revenue: number }>();
+  const stats = new Map<string, { units: number; sales: number }>();
   for (const item of items) {
     if (item.productId == null) continue;
-    const bucket = stats.get(item.productId) ?? { units: 0, revenue: 0 };
+    const bucket = stats.get(item.productId) ?? { units: 0, sales: 0 };
     bucket.units += item.quantity;
-    bucket.revenue = round2(bucket.revenue + toNumber(item.totalPrice));
+    bucket.sales = round2(bucket.sales + toNumber(item.totalPrice));
     stats.set(item.productId, bucket);
   }
 
@@ -437,14 +370,14 @@ async function loadTopProducts(now: Date): Promise<DashboardTopProduct[]> {
               .join(" / ") || product.category.name
           : "—",
         unitsSold: bucket.units,
-        revenue: money(bucket.revenue),
+        sales: money(bucket.sales),
         stock:
           product?.variants.reduce((sum, variant) => sum + variant.stock, 0) ??
           0,
         status: product?.status ?? "INACTIVE",
       } satisfies DashboardTopProduct;
     })
-    .sort((a, b) => b.revenue - a.revenue)
+    .sort((a, b) => b.unitsSold - a.unitsSold || b.sales - a.sales)
     .slice(0, TOP_PRODUCTS_LIMIT);
 }
 

@@ -39,7 +39,7 @@ export const GET = adminRoute({
  * Admin-only order placement for either an existing customer account or a
  * guest customer. It uses the same checkout service as customer checkout, so
  * product prices, delivery, tax, promotions, stock, buying-cost snapshots,
- * revenue, and profit all remain consistent across the system.
+ * sales totals all remain consistent across the system.
  */
 export const POST = adminJsonRoute({
   scope: "admin.orders.POST",

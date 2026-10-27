@@ -1,110 +1,147 @@
-import { Decimal, PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
+import { Decimal } from "@prisma/client/runtime/client";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const db = vi.hoisted(() => ({
   order: { findMany: vi.fn(), aggregate: vi.fn(), groupBy: vi.fn(), count: vi.fn() },
-  orderItem: { findMany: vi.fn() }, user: { count: vi.fn() }, product: { findMany: vi.fn() },
-  adminCapital: { findMany: vi.fn(), findFirst: vi.fn(), create: vi.fn() },
-  adminOtherCost: { findMany: vi.fn(), count: vi.fn(), create: vi.fn(), update: vi.fn(), delete: vi.fn() },
-  adminCapitalCostActivity: { create: vi.fn(), findMany: vi.fn() },
-  adminProductCost: { findMany: vi.fn() }, settings: vi.fn(),
+  orderItem: { findMany: vi.fn() },
+  user: { count: vi.fn() },
+  product: { findMany: vi.fn() },
 }));
 vi.mock("@/lib/db/prisma", () => ({ prisma: db }));
-vi.mock("@/lib/services/settings.service", () => ({ getStoreSettings: db.settings }));
 vi.mock("@/lib/services/activity-feed.service", () => ({ getRecentActivityFeed: async () => [] }));
 vi.mock("@/lib/services/category.service", () => ({ getCategoryBreadcrumbsByIds: async () => new Map() }));
 
 import { buildReport } from "@/lib/services/report.service";
 import { getDashboardOverview } from "@/lib/services/dashboard.service";
-import { addCapital, createOtherCost, deleteOtherCost, getCapitalCostOverview, getProductCost, listOtherCosts, listRecentActivity, updateOtherCost } from "@/lib/services/capital-cost.service";
 import { reportQuerySchema } from "@/lib/validations/report.validation";
+import { REPORT_TYPES } from "@/features/admin-reports/api";
 
-const date = new Date();
-const orders = [
-  { id: "usd", orderNumber: "USD", currency: "USD", totalAmount: new Decimal(50), subtotal: new Decimal(50), deliveryCharge: new Decimal(0), discountAmount: new Decimal(0), status: "DELIVERED", paymentStatus: "PAID", paymentMethod: "AIRWALLEX", customerName: "Customer", customerEmail: null, createdAt: date, user: null, _count: { items: 1 } },
-  { id: "legacy", orderNumber: "LEGACY", currency: "BDT", totalAmount: new Decimal(5000), subtotal: new Decimal(5000), deliveryCharge: new Decimal(0), discountAmount: new Decimal(0), status: "DELIVERED", paymentStatus: "PAID", paymentMethod: "CASH_ON_DELIVERY", customerName: "Historical", customerEmail: null, createdAt: date, user: null, _count: { items: 1 } },
-];
-type Query = { where?: { currency?: string; status?: unknown; order?: { currency?: string }; AND?: unknown[] }; select?: { currency?: boolean; amount?: boolean; quantity?: boolean; totalPrice?: boolean }; _sum?: Record<string, boolean> };
-function matchingOrders(query: Query) {
-  return orders.filter((order) => (!query.where?.currency || order.currency === query.where.currency) && query.where?.status !== "CANCELLED");
+const now = new Date();
+const yesterday = new Date(now);
+yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+function order(id: string, currency: string, amount: number, status: string, createdAt = now) {
+  return {
+    id, orderNumber: id.toUpperCase(), currency, totalAmount: new Decimal(amount),
+    // Intentionally different: sales use the saved checkout total.
+    subtotal: new Decimal(amount - 5), status, paymentStatus: "PAID",
+    paymentMethod: "AIRWALLEX", customerName: "Customer", customerEmail: null,
+    createdAt, user: null, _count: { items: 1 },
+  };
 }
-const cost = (currency: string, amount: number) => ({ id: currency, currency, amount: new Decimal(amount), reason: "Supplies", description: null, costDate: date, createdAt: date, updatedAt: date });
+const orders = [
+  order("usd", "USD", 50, "DELIVERED"),
+  order("older-usd", "USD", 30, "CONFIRMED", yesterday),
+  order("legacy", "BDT", 5000, "DELIVERED"),
+  order("cancelled", "USD", 70, "CANCELLED"),
+];
+type Query = {
+  where?: { currency?: string; status?: string | { not: string }; createdAt?: { gte?: Date; lte?: Date; lt?: Date } };
+  select?: Record<string, unknown>;
+  _sum?: Record<string, boolean>;
+  by?: string[];
+  take?: number;
+};
+function matchingOrders(query: Query) {
+  return orders.filter((row) => {
+    const where = query.where;
+    if (where?.currency && row.currency !== where.currency) return false;
+    if (typeof where?.status === "string" && row.status !== where.status) return false;
+    if (typeof where?.status === "object" && row.status === where.status.not) return false;
+    const range = where?.createdAt;
+    return (!range?.gte || row.createdAt >= range.gte)
+      && (!range?.lte || row.createdAt <= range.lte)
+      && (!range?.lt || row.createdAt < range.lt);
+  });
+}
 
 beforeEach(() => {
   vi.clearAllMocks();
-  db.settings.mockResolvedValue({ currency: "USD", pricingCurrencyVerified: true });
-  db.order.findMany.mockImplementation(async (query: Query) => matchingOrders(query));
+  db.order.findMany.mockImplementation(async (query: Query) => {
+    const rows = matchingOrders(query).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    return query.take ? rows.slice(0, query.take) : rows;
+  });
   db.order.aggregate.mockImplementation(async (query: Query) => {
     const rows = matchingOrders(query);
-    return { _count: { _all: rows.length }, _sum: Object.fromEntries(Object.keys(query._sum ?? {}).map((key) => [key, rows.reduce((total, row) => total.plus((row as unknown as Record<string, Decimal>)[key] ?? 0), new Decimal(0))])) };
+    return {
+      _count: { _all: rows.length },
+      _sum: Object.fromEntries(Object.keys(query._sum ?? {}).map((key) => [key,
+        rows.reduce((total, row) => total.plus((row as unknown as Record<string, Decimal>)[key] ?? 0), new Decimal(0)),
+      ])),
+    };
   });
-  db.order.groupBy.mockResolvedValue([]);
-  db.order.count.mockResolvedValue(1);
+  db.order.groupBy.mockImplementation(async (query: Query) => {
+    const key = query.by?.[0] as "status" | "paymentStatus";
+    const groups = new Map<string, { count: number; amount: Decimal }>();
+    for (const row of matchingOrders(query)) {
+      const group = groups.get(row[key]) ?? { count: 0, amount: new Decimal(0) };
+      group.count += 1;
+      group.amount = group.amount.plus(row.totalAmount);
+      groups.set(row[key], group);
+    }
+    return [...groups].map(([value, group]) => ({ [key]: value, _count: { _all: group.count }, _sum: { totalAmount: group.amount } }));
+  });
+  db.order.count.mockImplementation(async (query: Query) => matchingOrders(query).length);
   db.orderItem.findMany.mockResolvedValue([]);
   db.user.count.mockResolvedValue(2);
   db.product.findMany.mockResolvedValue([]);
-  db.adminCapital.findMany.mockImplementation(async (query: Query) => query.where?.currency === "USD" ? [{ amount: new Decimal(100) }] : [{ amount: new Decimal(100) }, { amount: new Decimal(10000) }]);
-  db.adminCapital.findFirst.mockResolvedValue({ id: "capital", currency: "USD", amount: new Decimal(100), note: null, createdAt: date, updatedAt: date });
-  db.adminCapital.create.mockImplementation(async ({ data }) => ({ id: "new", createdAt: date, updatedAt: date, ...data, amount: new Decimal(data.amount) }));
-  db.adminOtherCost.findMany.mockImplementation(async (query: Query) => query.select?.amount && query.where?.AND ? [{ amount: new Decimal(5) }] : [cost("USD", 5), cost("BDT", 500)]);
-  db.adminOtherCost.count.mockResolvedValue(2);
-  db.adminOtherCost.create.mockImplementation(async ({ data }) => ({ id: "new", createdAt: date, updatedAt: date, ...data, amount: new Decimal(data.amount) }));
-  db.adminCapitalCostActivity.create.mockResolvedValue({});
-  db.adminCapitalCostActivity.findMany.mockResolvedValue([{ id: "old", currency: "BDT", type: "COST_CREATED", amount: new Decimal(500), description: "Historical cost", note: null, entityId: null, actorName: null, actorEmail: null, createdAt: date }]);
-  db.adminProductCost.findMany.mockResolvedValue([]);
 });
 
-describe("financial currency segregation", () => {
-  it("excludes BDT orders from sales totals and profit item queries", async () => {
-    const sales = await buildReport(reportQuerySchema.parse({ type: "sales", allTime: "true" }));
-    expect(sales.meta.currency).toBe("USD");
-    expect(sales.sales?.summary.totalRevenue).toBe(50);
-    for (const [query] of db.order.aggregate.mock.calls) expect(query.where.currency).toBe("USD");
-    await buildReport(reportQuerySchema.parse({ type: "profit", allTime: "true" }));
-    expect(db.orderItem.findMany).toHaveBeenCalledWith(expect.objectContaining({ where: expect.objectContaining({ order: expect.objectContaining({ currency: "USD" }) }) }));
+describe("sales reporting", () => {
+  it("offers only sales and rejects removed report types", () => {
+    expect(REPORT_TYPES).toEqual(["sales"]);
+    for (const type of ["profit", "orders", "products", "inventory", "customers", "categories"]) {
+      expect(reportQuerySchema.safeParse({ type }).success).toBe(false);
+    }
   });
 
-  it("keeps dashboard sums USD and recent historical order amounts in BDT", async () => {
+  it("excludes historical currencies and cancellations from sales", async () => {
+    const result = await buildReport(reportQuerySchema.parse({ type: "sales", allTime: "true" }));
+    expect(result.meta.currency).toBe("USD");
+    expect(result.sales.summary).toEqual({ totalSales: 80, totalOrders: 2, cancelledOrders: 1, ordersInWindow: 3 });
+    expect(result.sales.byStatus.find((row) => row.status === "CANCELLED")).toMatchObject({ orders: 1, sales: 0 });
+    expect(result.sales.byPaymentStatus).toEqual([{ paymentStatus: "PAID", orders: 2, sales: 80 }]);
+    expect(result.sales.recentOrders.some((row) => row.id === "legacy")).toBe(false);
+    expect(db.orderItem.findMany).not.toHaveBeenCalled();
+    for (const [query] of db.order.aggregate.mock.calls) expect(query.where.currency).toBe("USD");
+  });
+
+  it("keeps full-window daily totals when recent-order details are limited", async () => {
+    const result = await buildReport(reportQuerySchema.parse({ type: "sales", allTime: "true", limit: 1 }));
+    expect(result.sales.recentOrders).toHaveLength(1);
+    expect(result.sales.dailySeries.reduce((sum, row) => sum + row.sales, 0)).toBe(80);
+    expect(result.sales.dailySeries.reduce((sum, row) => sum + row.orders, 0)).toBe(2);
+    expect(result.sales.dailySeries).toHaveLength(2);
+    expect(db.order.findMany).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({ status: { not: "CANCELLED" } }),
+      select: { createdAt: true, totalAmount: true },
+    }));
+  });
+
+  it("uses inclusive calendar dates and keeps empty days in the selected window", async () => {
+    const start = new Date(yesterday);
+    start.setUTCDate(start.getUTCDate() - 1);
+    const result = await buildReport(reportQuerySchema.parse({
+      type: "sales", from: start.toISOString().slice(0, 10), to: now.toISOString().slice(0, 10),
+    }));
+    expect(result.sales.dailySeries).toHaveLength(3);
+    expect(result.sales.dailySeries[0]).toMatchObject({ sales: 0, orders: 0 });
+    expect(result.meta.to).toMatch(/T23:59:59\.999Z$/);
+  });
+
+  it("keeps dashboard sales consistent while preserving historical order currencies", async () => {
     const result = await getDashboardOverview();
-    expect(result.stats.revenue.current).toBe(50);
-    expect(result.sales.totalRevenue).toBe(50);
-    expect(result.recentOrders.find((order) => order.id === "legacy")).toMatchObject({ currency: "BDT", totalAmount: 5000 });
+    expect(result.stats.sales.current).toBe(80);
+    expect(result.stats.orders.current).toBe(2);
+    expect(result.stats.cancellations.current).toBe(1);
+    expect(result.stats).not.toHaveProperty("profit");
+    expect(result.stats).not.toHaveProperty("revenue");
+    expect(result.sales.totalSales).toBe(80);
+    expect(result.sales.totalOrders).toBe(2);
+    expect(result.recentOrders.find((row) => row.id === "legacy")).toMatchObject({ currency: "BDT", totalAmount: 5000 });
     for (const [query] of db.order.aggregate.mock.calls) expect(query.where.currency).toBe("USD");
-    for (const [query] of db.orderItem.findMany.mock.calls) expect(query.where.order.currency).toBe("USD");
-  });
-
-  it("persists new capital, cost and activity entries explicitly in USD", async () => {
-    expect(await addCapital({ amount: 25, note: null })).toMatchObject({ currency: "USD", amount: 25 });
-    expect(await createOtherCost({ amount: 5, reason: "Supplies", description: null, costDate: date })).toMatchObject({ currency: "USD", amount: 5 });
-    expect(db.adminCapital.create).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ currency: "USD" }) }));
-    expect(db.adminOtherCost.create).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ currency: "USD" }) }));
-    for (const [query] of db.adminCapitalCostActivity.create.mock.calls) expect(query.data.currency).toBe("USD");
-  });
-
-  it("retains historical cost and activity currencies while totaling USD only", async () => {
-    const list = await listOtherCosts({ page: 1, pageSize: 20 });
-    expect(list.items.find((item) => item.id === "BDT")).toMatchObject({ amount: 500, currency: "BDT" });
-    expect(list.filteredTotalAmount).toBe(5);
-    expect((await listRecentActivity())[0]).toMatchObject({ amount: 500, currency: "BDT" });
-    const overview = await getCapitalCostOverview();
-    expect(overview.summary).toMatchObject({ totalCapital: 100, otherCosts: 5, remainingBalance: 95 });
-    expect(db.adminCapital.findMany).toHaveBeenCalledWith(expect.objectContaining({ where: { currency: "USD" } }));
-  });
-
-  it("blocks catalog product cost reporting until USD prices are reviewed", async () => {
-    db.settings.mockResolvedValue({ currency: "BDT", pricingCurrencyVerified: false });
-    await expect(getProductCost()).rejects.toMatchObject({ status: 503 });
-    expect(db.adminProductCost.findMany).not.toHaveBeenCalled();
-  });
-
-  it("refuses mutations of historical BDT other-cost records", async () => {
-    const notFound = new PrismaClientKnownRequestError("Historical record is outside USD scope", { code: "P2025", clientVersion: "test" });
-    db.adminOtherCost.update.mockRejectedValue(notFound);
-    db.adminOtherCost.delete.mockRejectedValue(notFound);
-    await expect(updateOtherCost("BDT", { amount: 1 })).rejects.toMatchObject({ status: 404 });
-    await expect(deleteOtherCost("BDT")).rejects.toMatchObject({ status: 404 });
-    expect(db.adminOtherCost.update).toHaveBeenCalledWith(expect.objectContaining({ where: { id: "BDT", currency: "USD" } }));
-    expect(db.adminOtherCost.delete).toHaveBeenCalledWith(expect.objectContaining({ where: { id: "BDT", currency: "USD" } }));
-    expect(db.adminCapitalCostActivity.create).not.toHaveBeenCalled();
+    for (const [query] of db.orderItem.findMany.mock.calls) {
+      expect(query.where.order.currency).toBe("USD");
+      expect(query.select).not.toHaveProperty("buyingPrice");
+    }
   });
 });

@@ -139,7 +139,7 @@ export default function AdminDashboardPage() {
         </div>
       )}
 
-      <p className="text-xs text-gray-500">{i18n("Financial summaries include USD orders only.")}</p>
+      <p className="text-xs text-gray-500">{i18n("Sales totals include USD orders only.")}</p>
 
       <StatCards stats={overview?.stats ?? null} loading={loading && !overview} />
 

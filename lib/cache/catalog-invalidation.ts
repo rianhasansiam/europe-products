@@ -14,9 +14,6 @@ export type ProductInvalidationSnapshot = {
   slug: string;
   categoryId: string;
   categoryPath: string;
-  brandId: string | null;
-  brandSlug: string | null;
-  manufacturerId: string | null;
 };
 
 type InvalidationEntries = {
@@ -84,9 +81,6 @@ export async function loadProductInvalidationSnapshots(
         slug: true,
         categoryId: true,
         category: { select: { path: true } },
-        brandId: true,
-        brand: { select: { slug: true } },
-        manufacturerId: true,
       },
     });
 
@@ -95,9 +89,6 @@ export async function loadProductInvalidationSnapshots(
       slug: product.slug,
       categoryId: product.categoryId,
       categoryPath: product.category.path,
-      brandId: product.brandId,
-      brandSlug: product.brand?.slug ?? null,
-      manufacturerId: product.manufacturerId,
     }));
   } catch (error) {
     console.error("[catalog-cache] Failed to load product dependencies", {
@@ -113,18 +104,12 @@ export function productInvalidationSnapshot(product: {
   slug: string;
   categoryId: string;
   category: { path: string };
-  brandId: string | null;
-  brand: { slug: string } | null;
-  manufacturerId: string | null;
 }): ProductInvalidationSnapshot {
   return {
     id: product.id,
     slug: product.slug,
     categoryId: product.categoryId,
     categoryPath: product.category.path,
-    brandId: product.brandId,
-    brandSlug: product.brand?.slug ?? null,
-    manufacturerId: product.manufacturerId,
   };
 }
 
@@ -140,7 +125,6 @@ export function invalidateProductSnapshots(
   schedulePublicTranslationStaleness("product",snapshots.map(snapshot=>snapshot.id));
   const tags = new Set<string>([
     ...CATALOG_LISTING_TAGS,
-    catalogCacheTags.brandDirectory,
     catalogCacheTags.homepage,
   ]);
   const paths = new Set<string>(["/", "/products"]);
@@ -164,15 +148,6 @@ export function invalidateProductSnapshots(
     for (const categoryPath of categoryAncestorPaths(snapshot.categoryPath)) {
       tags.add(catalogCacheTags.categoryPath(categoryPath));
       paths.add(`/categories/${categoryPath}`);
-    }
-
-    if (snapshot.brandId) tags.add(catalogCacheTags.brand(snapshot.brandId));
-    if (snapshot.brandSlug) {
-      tags.add(catalogCacheTags.brandSlug(snapshot.brandSlug));
-      paths.add(`/brands/${snapshot.brandSlug}`);
-    }
-    if (snapshot.manufacturerId) {
-      tags.add(catalogCacheTags.manufacturer(snapshot.manufacturerId));
     }
   }
 
@@ -225,7 +200,6 @@ export function invalidateCategoryMutation(input: {
     ...CATALOG_LISTING_TAGS,
     catalogCacheTags.categoryTree,
     catalogCacheTags.redirects,
-    catalogCacheTags.brandDirectory,
     catalogCacheTags.homepage,
     catalogCacheTags.sitemap,
   ]);
@@ -256,73 +230,4 @@ export function invalidateCategoryMutation(input: {
       error,
     );
   }
-}
-
-export async function invalidateBrandMutation(input: {
-  id: string;
-  slugs: readonly string[];
-  reason: string;
-}): Promise<void> {
-  schedulePublicTranslationStaleness("brand",[input.id]);
-  let productIds: string[] = [];
-  try {
-    productIds = (
-      await prisma.product.findMany({
-        where: { brandId: input.id },
-        select: { id: true },
-      })
-    ).map((product) => product.id);
-  } catch (error) {
-    console.error("[catalog-cache] Failed to load brand dependencies", {
-      brandId: input.id,
-      error,
-    });
-  }
-
-  const tags = new Set<string>([
-    ...CATALOG_LISTING_TAGS,
-    catalogCacheTags.brand(input.id),
-    catalogCacheTags.brandDirectory,
-    catalogCacheTags.redirects,
-    catalogCacheTags.sitemap,
-  ]);
-  const paths = new Set<string>(["/brands", "/products", "/sitemap.xml"]);
-  for (const slug of input.slugs.filter(Boolean)) {
-    tags.add(catalogCacheTags.brandSlug(slug));
-    paths.add(`/brands/${slug}`);
-  }
-  invalidateCatalogEntries({ tags, paths, reason: input.reason });
-  await invalidateProductsById(productIds, {
-    reason: `${input.reason}: associated products`,
-  });
-}
-
-export async function invalidateManufacturerMutation(input: {
-  id: string;
-  reason: string;
-}): Promise<void> {
-  schedulePublicTranslationStaleness("manufacturer",[input.id]);
-  let productIds: string[] = [];
-  try {
-    productIds = (
-      await prisma.product.findMany({
-        where: { manufacturerId: input.id },
-        select: { id: true },
-      })
-    ).map((product) => product.id);
-  } catch (error) {
-    console.error("[catalog-cache] Failed to load manufacturer dependencies", {
-      manufacturerId: input.id,
-      error,
-    });
-  }
-
-  invalidateCatalogEntries({
-    tags: [...CATALOG_LISTING_TAGS, catalogCacheTags.manufacturer(input.id)],
-    paths: ["/products"],
-    reason: input.reason,
-  });
-  await invalidateProductsById(productIds, {
-    reason: `${input.reason}: associated products`,
-  });
 }

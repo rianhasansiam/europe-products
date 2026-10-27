@@ -36,10 +36,6 @@ export type Product = {
   categoryPath: string;
   categoryImage: string | null;
   categoryBreadcrumb: CategoryBreadcrumbItem[];
-  brand?: string;
-  brandSlug?: string;
-  manufacturer?: string;
-  manufacturerSlug?: string;
   stock: number;
   inStock: boolean;
   variantCount: number;
@@ -88,10 +84,6 @@ export type ProductListQuery = {
   search?: string;
   categoryPath?: string;
   categoryId?: string;
-  brandSlug?: string;
-  brandId?: string;
-  manufacturerSlug?: string;
-  manufacturerId?: string;
   minPrice?: number;
   maxPrice?: number;
   stock?: "in-stock" | "out-of-stock";
@@ -118,18 +110,8 @@ export type CatalogCategoryFacet = {
   children: CatalogCategoryFacet[];
 };
 
-export type CatalogEntityFacet = {
-  id: string;
-  name: string;
-  slug: string;
-  logo: string | null;
-  productCount: number;
-};
-
 export type CatalogFacets = {
   categories: CatalogCategoryFacet[];
-  brands: CatalogEntityFacet[];
-  manufacturers: CatalogEntityFacet[];
   priceBounds: { min: number; max: number };
   availability: { inStock: number; outOfStock: number };
 };
@@ -229,17 +211,6 @@ function readSpecifications(
   return Object.keys(output).length > 0 ? output : null;
 }
 
-function readEntity(value: unknown): { name?: string; slug?: string } {
-  const direct = readString(value);
-  if (direct) return { name: direct };
-  const row = asRecord(value);
-  if (!row) return {};
-  return {
-    name: readString(row.name) ?? undefined,
-    slug: readString(row.slug) ?? undefined,
-  };
-}
-
 export function mapApiProduct(item: unknown): Product {
   const row = asRecord(item);
   if (!row) throw new Error("Products API returned an invalid product row.");
@@ -264,8 +235,6 @@ export function mapApiProduct(item: unknown): Product {
   const variantCount = Array.isArray(row.variants)
     ? row.variants.length
     : readNumber(row.variantCount) ?? 1;
-  const brand = readEntity(row.brand);
-  const manufacturer = readEntity(row.manufacturer);
 
   return {
     id: readString(row.id) ?? "",
@@ -288,10 +257,6 @@ export function mapApiProduct(item: unknown): Product {
     categoryPath,
     categoryImage,
     categoryBreadcrumb,
-    brand: brand.name,
-    brandSlug: brand.slug,
-    manufacturer: manufacturer.name,
-    manufacturerSlug: manufacturer.slug,
     stock,
     inStock: stock > 0 && status === "ACTIVE",
     variantCount,
@@ -343,10 +308,6 @@ export async function fetchProductsFromApi(
   addQueryValue(params, "search", query.search?.trim());
   addQueryValue(params, "categoryPath", query.categoryPath);
   addQueryValue(params, "categoryId", query.categoryId);
-  addQueryValue(params, "brandSlug", query.brandSlug);
-  addQueryValue(params, "brandId", query.brandId);
-  addQueryValue(params, "manufacturerSlug", query.manufacturerSlug);
-  addQueryValue(params, "manufacturerId", query.manufacturerId);
   addQueryValue(params, "minPrice", query.minPrice);
   addQueryValue(params, "maxPrice", query.maxPrice);
   addQueryValue(params, "stock", query.stock);
@@ -403,39 +364,11 @@ export async function fetchCatalogFacets(
     };
   };
 
-  const parseEntity = (value: unknown): CatalogEntityFacet | null => {
-    const entity = asRecord(value);
-    if (!entity) return null;
-    const id = readString(entity.id);
-    const name = readString(entity.name);
-    const slug = readString(entity.slug);
-    if (!id || !name || !slug) return null;
-    return {
-      id,
-      name,
-      slug,
-      logo: readString(entity.logo),
-      productCount: readNumber(entity.productCount) ?? 0,
-    };
-  };
-
   const priceBounds = asRecord(row.priceBounds);
   const availability = asRecord(row.availability);
   return {
     categories: Array.isArray(row.categories)
       ? row.categories.map(parseCategory)
-      : [],
-    brands: Array.isArray(row.brands)
-      ? row.brands.flatMap((item) => {
-          const entity = parseEntity(item);
-          return entity ? [entity] : [];
-        })
-      : [],
-    manufacturers: Array.isArray(row.manufacturers)
-      ? row.manufacturers.flatMap((item) => {
-          const entity = parseEntity(item);
-          return entity ? [entity] : [];
-        })
       : [],
     priceBounds: {
       min: readNumber(priceBounds?.min) ?? 0,

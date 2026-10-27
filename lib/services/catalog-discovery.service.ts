@@ -27,14 +27,6 @@ export type CatalogCategoryFacet = {
   children: CatalogCategoryFacet[];
 };
 
-export type CatalogEntityFacet = {
-  id: string;
-  name: string;
-  slug: string;
-  logo: string | null;
-  productCount: number;
-};
-
 function getEffectivelyActiveCategoryIds(categories: CategoryRow[]): Set<string> {
   const byId = new Map(categories.map((category) => [category.id, category]));
   const memo = new Map<string, boolean>();
@@ -163,38 +155,19 @@ export async function getCatalogFacets() {
   const visibleCategoryIds = getEffectivelyActiveCategoryIds(categories);
   const visibleIds = [...visibleCategoryIds];
 
-  const [products, brands, manufacturers] = await Promise.all([
-    visibleIds.length === 0
-      ? Promise.resolve([])
-      : prisma.product.findMany({
-          where: { status: "ACTIVE", categoryId: { in: visibleIds } },
-          select: {
-            categoryId: true,
-            brandId: true,
-            manufacturerId: true,
-            salePrice: true,
-            discountPrice: true,
-            variants: {
-              where: { isActive: true },
-              select: { stock: true },
-            },
-          },
-        }),
-    prisma.brand.findMany({
-      where: { status: "ACTIVE" },
-      orderBy: { name: "asc" },
-      select: { id: true, name: true, slug: true, logo: true },
-    }),
-    prisma.manufacturer.findMany({
-      where: { status: "ACTIVE" },
-      orderBy: { name: "asc" },
-      select: { id: true, name: true, slug: true, logo: true },
-    }),
-  ]);
+  const products = visibleIds.length === 0
+    ? []
+    : await prisma.product.findMany({
+        where: { status: "ACTIVE", categoryId: { in: visibleIds } },
+        select: {
+          categoryId: true,
+          salePrice: true,
+          discountPrice: true,
+          variants: { where: { isActive: true }, select: { stock: true } },
+        },
+      });
 
   const directCounts = new Map<string, number>();
-  const brandCounts = new Map<string, number>();
-  const manufacturerCounts = new Map<string, number>();
   let inStock = 0;
   let outOfStock = 0;
   let minPrice = Number.POSITIVE_INFINITY;
@@ -202,15 +175,6 @@ export async function getCatalogFacets() {
 
   for (const product of products) {
     directCounts.set(product.categoryId, (directCounts.get(product.categoryId) ?? 0) + 1);
-    if (product.brandId) {
-      brandCounts.set(product.brandId, (brandCounts.get(product.brandId) ?? 0) + 1);
-    }
-    if (product.manufacturerId) {
-      manufacturerCounts.set(
-        product.manufacturerId,
-        (manufacturerCounts.get(product.manufacturerId) ?? 0) + 1,
-      );
-    }
 
     const salePrice = product.salePrice.toNumber();
     const discountPrice = product.discountPrice?.toNumber() ?? null;
@@ -227,14 +191,6 @@ export async function getCatalogFacets() {
 
   return {
     categories: buildCategoryFacetTree(visibleCategories, directCounts),
-    brands: brands.map((brand): CatalogEntityFacet => ({
-      ...brand,
-      productCount: brandCounts.get(brand.id) ?? 0,
-    })),
-    manufacturers: manufacturers.map((manufacturer): CatalogEntityFacet => ({
-      ...manufacturer,
-      productCount: manufacturerCounts.get(manufacturer.id) ?? 0,
-    })),
     priceBounds: {
       min: Number.isFinite(minPrice) ? Math.floor(minPrice) : 0,
       max: Math.ceil(maxPrice),
@@ -282,8 +238,6 @@ export async function searchCatalog(query: CatalogSearchQuery) {
             { productCode: { contains: query.q, mode: "insensitive" } },
             { modelNumber: { contains: query.q, mode: "insensitive" } },
             { series: { contains: query.q, mode: "insensitive" } },
-            { brand: { name: { contains: query.q, mode: "insensitive" } } },
-            { manufacturer: { name: { contains: query.q, mode: "insensitive" } } },
             { category: { name: { contains: query.q, mode: "insensitive" } } },
             { category: { path: { contains: slugQuery || query.q, mode: "insensitive" } } },
             ...(ancestryCategoryIds.size > 0
@@ -304,8 +258,6 @@ export async function searchCatalog(query: CatalogSearchQuery) {
           discountPrice: true,
           categoryId: true,
           category: { select: { id: true, name: true, slug: true, path: true, image: true } },
-          brand: { select: { id: true, name: true, slug: true } },
-          manufacturer: { select: { id: true, name: true, slug: true } },
           images: { orderBy: { position: "asc" }, take: 1, select: { url: true } },
           variants: {
             where: { isActive: true },
@@ -374,8 +326,6 @@ export async function searchCatalog(query: CatalogSearchQuery) {
         reviewCount: metrics.reviewCount,
         category: product.category,
         categoryBreadcrumb: buildBreadcrumb(product.categoryId, categoryById),
-        brand: product.brand,
-        manufacturer: product.manufacturer,
       };
     }),
     categories: matchingCategories

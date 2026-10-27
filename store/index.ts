@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import adminBannersReducer from "@/store/slices/admin-banners.slice";
-import adminCapitalCostsReducer from "@/store/slices/admin-capital-costs.slice";
 import adminCategoriesReducer from "@/store/slices/admin-categories.slice";
 import adminMessagesReducer from "@/store/slices/admin-messages.slice";
 import adminOrdersReducer from "@/store/slices/admin-orders.slice";
@@ -29,7 +28,6 @@ export function makeStore() {
       adminReports: adminReportsReducer,
       adminReviews: adminReviewsReducer,
       adminTestimonials: adminTestimonialsReducer,
-      adminCapitalCosts: adminCapitalCostsReducer,
     },
   });
 }

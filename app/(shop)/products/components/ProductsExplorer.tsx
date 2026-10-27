@@ -42,8 +42,6 @@ type ViewMode = "grid" | "list";
 
 const EMPTY_FACETS: CatalogFacets = {
   categories: [],
-  brands: [],
-  manufacturers: [],
   priceBounds: { min: 0, max: 0 },
   availability: { inStock: 0, outOfStock: 0 },
 };
@@ -88,8 +86,6 @@ export default function ProductsExplorer({
 
   const filters: CatalogFilterState = {
     categoryPath: query.categoryPath,
-    brandSlug: query.brandSlug,
-    manufacturerSlug: query.manufacturerSlug,
     minPrice: query.minPrice,
     maxPrice: query.maxPrice,
     minRating: query.minRating,
@@ -203,8 +199,6 @@ export default function ProductsExplorer({
     setMobileFilterOpen(false);
     updateUrl({
       categoryPath: next.categoryPath,
-      brandSlug: next.brandSlug,
-      manufacturerSlug: next.manufacturerSlug,
       minPrice: next.minPrice,
       maxPrice: next.maxPrice,
       stock: next.stock,
@@ -217,8 +211,6 @@ export default function ProductsExplorer({
     setMobileFilterOpen(false);
     updateUrl({
       categoryPath: null,
-      brandSlug: null,
-      manufacturerSlug: null,
       minPrice: null,
       maxPrice: null,
       stock: null,
@@ -229,8 +221,6 @@ export default function ProductsExplorer({
 
   const activeFilterCount = [
     filters.categoryPath,
-    filters.brandSlug,
-    filters.manufacturerSlug,
     filters.minPrice,
     filters.maxPrice,
     filters.stock,
@@ -387,18 +377,6 @@ function ActiveFilterChips({
     query ? { key: "search", label: `Search: ${query}` } : null,
     filters.categoryPath
       ? { key: "categoryPath", label: `Category: ${categoryName}` }
-      : null,
-    filters.brandSlug
-      ? {
-          key: "brandSlug",
-          label: `Brand: ${facets.brands.find((brand) => brand.slug === filters.brandSlug)?.name ?? filters.brandSlug}`,
-        }
-      : null,
-    filters.manufacturerSlug
-      ? {
-          key: "manufacturerSlug",
-          label: `Manufacturer: ${facets.manufacturers.find((item) => item.slug === filters.manufacturerSlug)?.name ?? filters.manufacturerSlug}`,
-        }
       : null,
     filters.minPrice != null
       ? {

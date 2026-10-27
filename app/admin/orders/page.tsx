@@ -160,17 +160,17 @@ export default function AdminOrdersPage() {
   }, [customerFilter, orders, paymentFilter, query, statusFilter]);
 
   const totals = useMemo(() => {
-    let revenue = 0;
+    let sales = 0;
     let pending = 0;
     let unpaid = 0;
     for (const order of orders) {
-      if (order.status !== "CANCELLED") revenue += order.totalAmount;
+      if (order.status !== "CANCELLED") sales += order.totalAmount;
       if (order.status === "PENDING") pending += 1;
       if (order.paymentStatus !== "PAID" && order.status !== "CANCELLED") {
         unpaid += 1;
       }
     }
-    return { revenue, pending, unpaid };
+    return { sales, pending, unpaid };
   }, [orders]);
 
   const handleChangeStatus = async (
@@ -487,7 +487,7 @@ export default function AdminOrdersPage() {
     <section className="space-y-4">
       <OrderSummaryCards
         totalOrders={orders.length}
-        revenue={totals.revenue}
+        sales={totals.sales}
         pending={totals.pending}
         unpaid={totals.unpaid}
       />

@@ -27,7 +27,6 @@ export type SavedItem = {
   attributes?: Record<string, string> | null;
   attributeSummary?: string | null;
   name: string;
-  brand: string;
   image: string;
   price: number;
   originalPrice?: number;
@@ -83,8 +82,6 @@ export function normalizeSavedItem(raw: unknown): SavedItem | null {
     attributeSummary:
       typeof entry.attributeSummary === "string" ? entry.attributeSummary : null,
     name,
-    brand:
-      typeof entry.brand === "string" && entry.brand ? entry.brand : "SexToy",
     image: image || FALLBACK_PRODUCT_IMAGE,
     price,
     originalPrice,

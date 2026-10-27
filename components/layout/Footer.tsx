@@ -8,7 +8,6 @@ const quickLinks = [
   { name: "Home", href: "/" },
   { name: "Shop Categories", href: "/categories" },
   { name: "All Products", href: "/products" },
-  { name: "Brands", href: "/brands" },
   { name: "About Us", href: "/about" },
 ];
 

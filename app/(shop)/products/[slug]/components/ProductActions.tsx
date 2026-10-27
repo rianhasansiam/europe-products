@@ -133,7 +133,6 @@ type ProductActionsProps = {
   productSlug: string;
   productName: string;
   image?: string | null;
-  brand?: string | null;
   category: string;
   rating: number;
   reviewCount: number;
@@ -150,7 +149,6 @@ const ProductActions = ({
   productSlug,
   productName,
   image,
-  brand,
   category,
   rating,
   reviewCount,
@@ -317,7 +315,6 @@ const ProductActions = ({
       productCode,
       slug: productSlug,
       name: productName,
-      brand: brand?.trim() || "SexToy",
       image: image ?? FALLBACK_PRODUCT_IMAGE,
       price: unitPrice,
       originalPrice: discount > 0 ? currentListPrice : undefined,

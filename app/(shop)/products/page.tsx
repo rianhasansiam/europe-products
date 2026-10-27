@@ -28,8 +28,6 @@ type Props = { searchParams: Promise<SearchParams> };
 
 const EMPTY_FACETS: CatalogFacets = {
   categories: [],
-  brands: [],
-  manufacturers: [],
   priceBounds: { min: 0, max: 0 },
   availability: { inStock: 0, outOfStock: 0 },
 };

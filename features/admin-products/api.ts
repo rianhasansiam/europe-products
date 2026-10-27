@@ -20,13 +20,6 @@ export type AdminVariant = {
   isActive: boolean;
 };
 
-export type AdminCatalogReference = {
-  id: string;
-  name: string;
-  slug: string;
-  status: "ACTIVE" | "INACTIVE";
-};
-
 export type AdminProduct = {
   id: string;
   productCode: string;
@@ -43,7 +36,6 @@ export type AdminProduct = {
   modelNumber: string | null;
   series: string | null;
   specifications: SpecificationMap | null;
-  buyingPrice: number;
   salePrice: number;
   discountPrice: number | null;
   image: string | null;
@@ -65,10 +57,6 @@ export type AdminProduct = {
     depth: number;
     image: string | null;
   };
-  brandId: string | null;
-  brand: AdminCatalogReference | null;
-  manufacturerId: string | null;
-  manufacturer: (AdminCatalogReference & { country?: string | null }) | null;
 };
 
 export type CategoryBreadcrumb = {
@@ -115,15 +103,12 @@ export type ProductFormState = {
   primaryImageAlt: string;
   modelNumber: string;
   series: string;
-  buyingPrice: string;
   salePrice: string;
   discountPrice: string;
   image: string;
   images: string;
   status: ProductStatus;
   categoryId: string;
-  brandId: string;
-  manufacturerId: string;
   specifications: KeyValueFormRow[];
   variants: VariantFormRow[];
   /** Structured block-based description. Serialised as JSON string for the API. */
@@ -179,15 +164,12 @@ export const EMPTY_FORM: ProductFormState = {
   primaryImageAlt: "",
   modelNumber: "",
   series: "",
-  buyingPrice: "",
   salePrice: "",
   discountPrice: "",
   image: "",
   images: "",
   status: "ACTIVE",
   categoryId: "",
-  brandId: "",
-  manufacturerId: "",
   specifications: [],
   variants: [makeEmptyVariant()],
   descriptionBlocks: [],
@@ -258,20 +240,6 @@ function breadcrumb(value: unknown): CategoryBreadcrumb[] {
   });
 }
 
-function catalogReference(value: unknown): AdminCatalogReference | null {
-  const row = record(value);
-  const id = string(row?.id);
-  const name = string(row?.name);
-  const slug = string(row?.slug);
-  if (!id || !name || !slug) return null;
-  return {
-    id,
-    name,
-    slug,
-    status: row?.status === "INACTIVE" ? "INACTIVE" : "ACTIVE",
-  };
-}
-
 function variants(value: unknown): AdminVariant[] {
   if (!Array.isArray(value)) return [];
   return value.flatMap((entry) => {
@@ -307,12 +275,6 @@ export function parseProductsPayload(payload: unknown): AdminProduct[] {
     const categoryId = string(row.categoryId) ?? string(category.id) ?? "";
     const images = stringArray(row.images);
     const categoryBreadcrumb = breadcrumb(row.categoryBreadcrumb);
-    const brand = catalogReference(row.brand);
-    const baseManufacturer = catalogReference(row.manufacturer);
-    const manufacturerRecord = record(row.manufacturer);
-    const manufacturer = baseManufacturer
-      ? { ...baseManufacturer, country: string(manufacturerRecord?.country) }
-      : null;
 
     return {
       id: string(row.id) ?? "",
@@ -332,7 +294,6 @@ export function parseProductsPayload(payload: unknown): AdminProduct[] {
       modelNumber: string(row.modelNumber),
       series: string(row.series),
       specifications: specificationMap(row.specifications),
-      buyingPrice: number(row.buyingPrice) ?? 0,
       salePrice: number(row.salePrice ?? row.price) ?? 0,
       discountPrice: number(row.discountPrice),
       image: string(row.image) ?? images[0] ?? null,
@@ -354,11 +315,7 @@ export function parseProductsPayload(payload: unknown): AdminProduct[] {
         depth: number(category.depth) ?? 0,
         image: string(category.image),
       },
-      brandId: string(row.brandId) ?? brand?.id ?? null,
-      brand,
-      manufacturerId:
-        string(row.manufacturerId) ?? manufacturer?.id ?? null,
-      manufacturer,
+
     };
   });
 }
@@ -465,15 +422,12 @@ export function buildFormFromProduct(product: AdminProduct): ProductFormState {
     primaryImageAlt: product.primaryImageAlt ?? "",
     modelNumber: product.modelNumber ?? "",
     series: product.series ?? "",
-    buyingPrice: String(product.buyingPrice),
     salePrice: String(product.salePrice),
     discountPrice: product.discountPrice === null ? "" : String(product.discountPrice),
     image: product.image ?? "",
     images: product.images.join("\n"),
     status: product.status,
     categoryId: product.categoryId,
-    brandId: product.brandId ?? "",
-    manufacturerId: product.manufacturerId ?? "",
     specifications: mapToRows(product.specifications),
     variants: product.variants.length > 0
       ? product.variants.map((variant) => ({

@@ -15,8 +15,6 @@ export type ProductsPageQuery = Omit<
   ProductQueryInput,
   | "search"
   | "categoryPath"
-  | "brandSlug"
-  | "manufacturerSlug"
   | "minPrice"
   | "maxPrice"
   | "stock"
@@ -24,8 +22,6 @@ export type ProductsPageQuery = Omit<
 > & {
   search: string;
   categoryPath: string;
-  brandSlug: string;
-  manufacturerSlug: string;
   minPrice: number | null;
   maxPrice: number | null;
   stock: "" | "in-stock" | "out-of-stock";
@@ -77,10 +73,6 @@ export function parseProductsPageQuery(source: SearchParamSource): ProductsPageQ
   return {
     search: (value(source, "search") ?? "").trim().slice(0, 150),
     categoryPath: (value(source, "categoryPath") ?? "").trim().slice(0, 1000),
-    brandSlug: (value(source, "brandSlug") ?? "").trim().slice(0, 160),
-    manufacturerSlug: (value(source, "manufacturerSlug") ?? "")
-      .trim()
-      .slice(0, 160),
     minPrice: hasContradictoryPriceRange ? null : parsedMinPrice,
     maxPrice: hasContradictoryPriceRange ? null : parsedMaxPrice,
     stock:
@@ -101,8 +93,6 @@ export function toProductQueryInput(query: ProductsPageQuery): ProductQueryInput
     sort: query.sort,
     search: query.search || undefined,
     categoryPath: query.categoryPath || undefined,
-    brandSlug: query.brandSlug || undefined,
-    manufacturerSlug: query.manufacturerSlug || undefined,
     minPrice: query.minPrice ?? undefined,
     maxPrice: query.maxPrice ?? undefined,
     stock: query.stock || undefined,
@@ -115,8 +105,6 @@ const CONTROLLED_KEYS = new Set([
   "pageSize",
   "search",
   "categoryPath",
-  "brandSlug",
-  "manufacturerSlug",
   "minPrice",
   "maxPrice",
   "stock",
@@ -128,8 +116,6 @@ const FILTER_KEYS = new Set([
   "pageSize",
   "search",
   "categoryPath",
-  "brandSlug",
-  "manufacturerSlug",
   "minPrice",
   "maxPrice",
   "stock",

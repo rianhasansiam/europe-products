@@ -16,15 +16,7 @@ import type { OrderStatus } from "@/lib/orders/status";
  * the browser.
  */
 
-export const REPORT_TYPES = [
-  "sales",
-  "orders",
-  "products",
-  "profit",
-  "inventory",
-  "customers",
-  "categories",
-] as const;
+export const REPORT_TYPES = ["sales"] as const;
 
 export type ReportType = (typeof REPORT_TYPES)[number];
 
@@ -34,6 +26,7 @@ export type PaymentStatus = OrderPaymentStatus;
 export type PaymentMethod = OrderPaymentMethod;
 
 export type ReportMeta = {
+  currency: string;
   type: ReportType;
   from: string;
   to: string;
@@ -44,23 +37,18 @@ export type ReportMeta = {
 
 export type SalesReport = {
   summary: {
-    totalRevenue: number;
+    totalSales: number;
     totalOrders: number;
-    avgOrderValue: number;
-    grossSubtotal: number;
-    totalDeliveryCharges: number;
-    totalDiscounts: number;
-    cancelledRevenue: number;
     cancelledOrders: number;
     ordersInWindow: number;
   };
-  byStatus: Array<{ status: OrderStatus; orders: number; revenue: number }>;
+  byStatus: Array<{ status: OrderStatus; orders: number; sales: number }>;
   byPaymentStatus: Array<{
     paymentStatus: PaymentStatus;
     orders: number;
-    revenue: number;
+    sales: number;
   }>;
-  dailySeries: Array<{ day: string; revenue: number; orders: number }>;
+  dailySeries: Array<{ day: string; sales: number; orders: number }>;
   recentOrders: Array<{
     id: string;
     orderNumber: string;
@@ -73,205 +61,19 @@ export type SalesReport = {
   }>;
 };
 
-export type OrdersReport = {
-  summary: {
-    totalOrders: number;
-    totalAmount: number;
-    totalDiscounts: number;
-  };
-  byStatus: Array<{ status: OrderStatus; orders: number }>;
-  rows: Array<{
-    id: string;
-    orderNumber: string;
-    customerName: string;
-    customerPhone: string;
-    status: OrderStatus;
-    paymentStatus: PaymentStatus;
-    paymentMethod: PaymentMethod;
-    itemsCount: number;
-    subtotal: number;
-    deliveryCharge: number;
-    discountAmount: number;
-    totalAmount: number;
-    createdAt: string;
-  }>;
-};
-
-export type ProductsReport = {
-  summary: { uniqueProducts: number; unitsSold: number; revenue: number };
-  rows: Array<{
-    productId: string;
-    name: string;
-    category: string;
-    categoryPath: string | null;
-    unitsSold: number;
-    revenue: number;
-    currentPrice: number | null;
-    currentStock: number | null;
-    status: "ACTIVE" | "INACTIVE" | null;
-  }>;
-};
-
-export type ProfitReport = {
-  summary: {
-    totalRevenue: number;
-    totalCost: number;
-    grossProfit: number;
-    profitMargin: number;
-    unitsSold: number;
-    productsTracked: number;
-  };
-  rows: Array<{
-    productId: string;
-    name: string;
-    category: string;
-    categoryPath: string | null;
-    unitsSold: number;
-    revenue: number;
-    cost: number;
-    profit: number;
-    margin: number;
-    currentStock: number | null;
-    status: "ACTIVE" | "INACTIVE" | null;
-  }>;
-};
-
-export type InventoryReport = {
-  summary: {
-    totalProducts: number;
-    totalUnitsInStock: number;
-    outOfStock: number;
-    lowStock: number;
-    inventoryValue: number;
-  };
-  rows: Array<{
-    id: string;
-    name: string;
-    category: string;
-    categoryPath: string;
-    price: number;
-    discountPrice: number | null;
-    stock: number;
-    status: "ACTIVE" | "INACTIVE";
-    updatedAt: string;
-  }>;
-};
-
-export type CustomersReport = {
-  summary: {
-    totalUsers: number;
-    newSignupsInWindow: number;
-    activeBuyers: number;
-    totalRevenue: number;
-    avgRevenuePerBuyer: number;
-  };
-  rows: Array<{
-    userId: string;
-    name: string;
-    email: string | null;
-    phone: string | null;
-    city: string | null;
-    role: "USER" | "ADMIN";
-    ordersCount: number;
-    totalSpend: number;
-    lastOrderAt: string | null;
-  }>;
-};
-
-export type CategoriesReport = {
-  summary: {
-    totalCategories: number;
-    activeCategories: number;
-    totalProducts: number;
-    unitsSold: number;
-    revenue: number;
-  };
-  rows: Array<{
-    categoryId: string;
-    name: string;
-    breadcrumbLabel: string;
-    path: string;
-    depth: number;
-    status: "ACTIVE" | "INACTIVE";
-    directProductCount: number;
-    /** Compatibility alias for older report payloads. */
-    productCount: number;
-    unitsSold: number;
-    revenue: number;
-  }>;
-  rootRollups: Array<{
-    categoryId: string;
-    name: string;
-    path: string;
-    status: "ACTIVE" | "INACTIVE";
-    categoryCount: number;
-    totalProductCount: number;
-    unitsSold: number;
-    revenue: number;
-  }>;
-};
-
 export type ReportPayload = {
   meta: ReportMeta;
-  sales?: SalesReport;
-  orders?: OrdersReport;
-  products?: ProductsReport;
-  profit?: ProfitReport;
-  inventory?: InventoryReport;
-  customers?: CustomersReport;
-  categories?: CategoriesReport;
+  sales: SalesReport;
 };
 
-/**
- * Human-readable definitions of the available report types. Used to
- * render the picker cards on the Reports page and the title block on
- * the generated PDF.
- */
 export const REPORT_DEFS: Record<
   ReportType,
   { label: string; description: string; subject: string }
 > = {
   sales: {
     label: "Sales overview",
-    description:
-      "Revenue, average order value, payment status split, and daily sales trend.",
+    description: "Sales totals, order counts, payment status, and daily sales.",
     subject: "Sales Overview",
-  },
-  orders: {
-    label: "Orders log",
-    description:
-      "Every order placed in the window with line counts and totals.",
-    subject: "Orders Log",
-  },
-  products: {
-    label: "Top products",
-    description:
-      "Best-selling products ranked by revenue and units shipped.",
-    subject: "Top Products",
-  },
-  profit: {
-    label: "Profit report",
-    description:
-      "Gross profit and margin per product — revenue against buying cost for sold items.",
-    subject: "Profit Report",
-  },
-  inventory: {
-    label: "Inventory snapshot",
-    description:
-      "Current stock levels, low/out-of-stock items, and total inventory value.",
-    subject: "Inventory Snapshot",
-  },
-  customers: {
-    label: "Customers",
-    description:
-      "Top spenders, new sign-ups, and active buyers in the window.",
-    subject: "Customers",
-  },
-  categories: {
-    label: "Categories",
-    description:
-      "Direct category performance with separate, non-duplicating root rollups.",
-    subject: "Category Performance",
   },
 };
 

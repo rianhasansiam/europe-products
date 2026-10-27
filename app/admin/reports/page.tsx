@@ -14,34 +14,18 @@ import {
   setReportError,
   setReportLoading,
   setReportPayload,
-  setReportType,
   setTo,
 } from "@/store/slices/admin-reports.slice";
 import type { AppDispatch, RootState } from "@/store";
 import {
   fetchReport,
-  REPORT_DEFS,
-  type ReportType,
 } from "@/features/admin-reports/api";
 import { downloadReportPdf } from "@/features/admin-reports/pdf";
 
 import ReportFilters from "./components/ReportFilters";
 import ReportPreview from "./components/ReportPreview";
-import ReportTypePicker from "./components/ReportTypePicker";
 
-/**
- * Admin · Reports
- *
- * Workflow:
- *   1. Pick a report type (sales / orders / products / inventory / customers / categories).
- *   2. Choose a date window and an optional record cap.
- *   3. Hit "Generate report" — the API returns a fully aggregated payload.
- *   4. Preview on screen. When everything looks right, hit "Download PDF"
- *      and jsPDF builds the file in the browser, no server roundtrip.
- *
- * Redux holds the report state so it survives navigation back to the
- * page within the same session.
- */
+/** Sales reports with date controls, preview, and PDF export. */
 export default function AdminReportsPage() {
   const i18n = useInterfaceTranslations("AdminAdminReportsPage");
   const dispatch = useDispatch<AppDispatch>();
@@ -49,14 +33,6 @@ export default function AdminReportsPage() {
 
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState<string | null>(null);
-
-  const handleTypeChange = useCallback(
-    (next: ReportType) => {
-      dispatch(setReportType(next));
-      setDownloadError(null);
-    },
-    [dispatch],
-  );
 
   const handlePresetWindow = useCallback(
     (days: number) => {
@@ -120,34 +96,19 @@ export default function AdminReportsPage() {
     }
   }, [reportState.payload]);
 
-  const activeDef = REPORT_DEFS[reportState.type];
-
   return (
     <section className="space-y-5">
       {/* Hero */}
       <header className="rounded-2xl border border-brand-border bg-brand-black p-5 text-white shadow-sm">
         <p className="text-[11px] font-bold uppercase tracking-widest text-white/70">
           {i18n("Reports")}</p>
-        <h1 className="mt-1 text-xl font-extrabold">{i18n("Generate & download reports")}</h1>
+        <h1 className="mt-1 text-xl font-extrabold">{i18n("Sales reports")}</h1>
         <p className="mt-1 text-sm text-white/70">
-          {i18n("Pick a report, set the window, preview the data, and export a polished PDF for sharing with the team.")}</p>
-        <p className="mt-3 inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-bold ring-1 ring-white/30">
-          {i18n("Currently selected ·")}{" "}{activeDef.label}
-        </p>
+          {i18n("Choose a date window, review your sales, and download a PDF.")}</p>
       </header>
 
-      <p className="text-xs text-gray-500">{i18n("Financial summaries include USD orders only.")}</p>
+      <p className="text-xs text-gray-500">{i18n("Sales totals include USD orders only.")}</p>
 
-
-      <div>
-        <h2 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500">
-          {i18n("Choose a report")}</h2>
-        <ReportTypePicker
-          value={reportState.type}
-          onChange={handleTypeChange}
-          disabled={reportState.isLoading}
-        />
-      </div>
 
       <ReportFilters
         from={reportState.from}

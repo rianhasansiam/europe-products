@@ -124,7 +124,7 @@ describe("admin guest customer presentation", () => {
 
   it("shows the guest customer count", () => {
     const markup = renderToStaticMarkup(createElement(UserSummaryCards, {
-      totalCustomers: 12, guests: 7, admins: 1, withOrders: 8, lifetimeRevenue: 9000,
+      totalCustomers: 12, guests: 7, admins: 1, withOrders: 8, lifetimeSales: 9000,
     }));
     expect(markup).toContain("Guest customers");
     expect(markup).toContain(">7<");

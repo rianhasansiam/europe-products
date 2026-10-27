@@ -136,7 +136,6 @@ export default function ProductCard({
       productCode,
       slug,
       name,
-      brand: "SexToy",
       image,
       price,
       originalPrice,

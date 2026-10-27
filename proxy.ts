@@ -7,7 +7,7 @@ import { isLocaleExcludedPath, localizeHref, splitLocalePath } from "@/lib/i18n/
 
 const MAX_CATALOG_PATH_LENGTH = 8_192;
 const CATALOG_PATH_PATTERN =
-  /^\/(?:products\/[a-z0-9]+(?:-[a-z0-9]+)*|brands\/[a-z0-9]+(?:-[a-z0-9]+)*|categories\/[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)*)$/;
+  /^\/(?:products\/[a-z0-9]+(?:-[a-z0-9]+)*|categories\/[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)*)$/;
 
 function isCatalogPath(pathname: string): boolean {
   return (
@@ -57,9 +57,7 @@ export async function proxy(request: NextRequest) {
 
   const entityType = normalizedPathname.startsWith("/products/")
     ? "PRODUCT"
-    : normalizedPathname.startsWith("/brands/")
-      ? "BRAND"
-      : "CATEGORY";
+    : "CATEGORY";
 
   try {
     const redirect = await getCatalogRedirectByPath(

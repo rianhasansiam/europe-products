@@ -17,8 +17,6 @@ export type AdminActivityKind =
   | "review"
   | "testimonial"
   | "settings"
-  | "capital"
-  | "cost"
   | "user"
   | "courier";
 
@@ -27,8 +25,7 @@ export type AdminActivitySource =
   | "order"
   | "order-status"
   | "user"
-  | "message"
-  | "capital-cost";
+  | "message";
 
 export type AdminActivityItem = {
   id: string;

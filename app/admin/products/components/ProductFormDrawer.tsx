@@ -13,7 +13,6 @@ import ImageUploader from "@/components/ui/ImageUploader";
 import MultiImageUploader from "@/components/ui/MultiImageUploader";
 import AdvancedColorPicker from "@/components/ui/AdvancedColorPicker";
 import { ButtonLoader } from "@/components/ui/loading";
-import type { CatalogEntityOption } from "@/features/admin-catalog-entities/api";
 import {
   makeEmptyKeyValue,
   makeEmptyVariant,
@@ -126,8 +125,6 @@ export default function ProductFormDrawer({
   originalVariantColors,
   categories,
   currentCategory,
-  brands,
-  manufacturers,
   error,
   isSubmitting,
   onChange,
@@ -140,8 +137,6 @@ export default function ProductFormDrawer({
   originalVariantColors: ReadonlyMap<string, string | null>;
   categories: CategoryOption[];
   currentCategory: { id: string; label: string } | null;
-  brands: CatalogEntityOption[];
-  manufacturers: CatalogEntityOption[];
   error: string | null;
   isSubmitting: boolean;
   onChange: React.Dispatch<React.SetStateAction<ProductFormState>>;
@@ -294,34 +289,6 @@ export default function ProductFormDrawer({
                     <option value="INACTIVE">{i18n("Inactive")}</option>
                   </select>
                 </Field>
-                <Field label={i18n("Brand")}>
-                  <select
-                    value={form.brandId}
-                    onChange={(event) => onChange((current) => ({ ...current, brandId: event.target.value }))}
-                    className={inputClass}
-                  >
-                    <option value="">{i18n("No brand")}</option>
-                    {form.brandId && !brands.some((brand) => brand.value === form.brandId) && (
-                      <option value={form.brandId} disabled>{i18n("Current inactive brand")}</option>
-                    )}
-                    {brands.map((brand) => <option key={brand.value} value={brand.value}>{brand.label}</option>)}
-                  </select>
-                </Field>
-                <Field label={i18n("Manufacturer")}>
-                  <select
-                    value={form.manufacturerId}
-                    onChange={(event) => onChange((current) => ({ ...current, manufacturerId: event.target.value }))}
-                    className={inputClass}
-                  >
-                    <option value="">{i18n("No manufacturer")}</option>
-                    {form.manufacturerId && !manufacturers.some((manufacturer) => manufacturer.value === form.manufacturerId) && (
-                      <option value={form.manufacturerId} disabled>{i18n("Current inactive manufacturer")}</option>
-                    )}
-                    {manufacturers.map((manufacturer) => (
-                      <option key={manufacturer.value} value={manufacturer.value}>{manufacturer.label}</option>
-                    ))}
-                  </select>
-                </Field>
                 <Field label={i18n("Model number")}>
                   <input
                     value={form.modelNumber}
@@ -368,11 +335,8 @@ export default function ProductFormDrawer({
               </div>
             </Section>
 
-            <Section title={i18n("Pricing")} description={i18n("Buying price stays admin-only; sale and discount prices are customer-facing.")}>
-              <div className="grid gap-3 sm:grid-cols-3">
-                <Field label={i18n("Buying price")} required>
-                  <input type="number" min="0" step="0.01" value={form.buyingPrice} onChange={(event) => onChange((current) => ({ ...current, buyingPrice: event.target.value }))} className={inputClass} />
-                </Field>
+            <Section title={i18n("Pricing")} description={i18n("Set the sale and optional discount prices.")}>
+              <div className="grid gap-3 sm:grid-cols-2">
                 <Field label={i18n("Sale price")} required>
                   <input type="number" min="0" step="0.01" value={form.salePrice} onChange={(event) => onChange((current) => ({ ...current, salePrice: event.target.value }))} className={inputClass} />
                 </Field>

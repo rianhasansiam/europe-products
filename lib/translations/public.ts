@@ -40,13 +40,6 @@ export async function localizeCategorySnapshots<T extends {id:string}>(items:T[]
   return output.map(row=>({...row,...(Array.isArray(row.products)?{products:(row.products as Row[]).map(product=>productsById.get(product.id)??product)}:{})})) as LocalizedPublic<T>[];
 }
 
-export async function localizeBrandSnapshots<T extends {id:string}>(items:T[],locale:string):Promise<LocalizedPublic<T>[]> {
-  const localized=await localizePublicCollection("brand",items,locale);
-  const products=items.flatMap(item=>Array.isArray((item as Row).products)?(item as Row).products as Row[]:[]);
-  const translated=await localizeProductSnapshots(products,locale);const byId=new Map(translated.map(row=>[row.id,row]));
-  return localized.map(item=>({...item,...(Array.isArray((item as Row).products)?{products:((item as Row).products as Row[]).map(product=>byId.get(product.id)??product)}:{})}));
-}
-
 const BANNER_ALIASES={badge:"metadata.badge",label:"metadata.label",heading:"metadata.heading",discount:"metadata.discount",tag:"metadata.tag"};
 export async function localizeBannerSnapshots<T extends {id:string}>(items:T[],locale:string):Promise<LocalizedPublic<T>[]> {
   const expanded=items.map(item=>({...item,metadata:Object.fromEntries(Object.keys(BANNER_ALIASES).filter(key=>typeof (item as Row)[key]==="string").map(key=>[key,(item as Row)[key]]))}));

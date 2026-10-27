@@ -25,7 +25,6 @@ import {
   Star,
   User,
   UserPlus,
-  Wallet,
   type LucideIcon,
 } from "lucide-react";
 
@@ -55,8 +54,6 @@ const KIND_META: Record<
   review: { label: "Review", icon: Star },
   testimonial: { label: "Testimonial", icon: MessageSquareQuote },
   settings: { label: "Settings", icon: Settings },
-  capital: { label: "Capital", icon: Wallet },
-  cost: { label: "Cost", icon: Wallet },
   courier: { label: "Courier", icon: ShieldCheck },
   user: { label: "Customer", icon: UserPlus },
 };
@@ -71,7 +68,6 @@ const SOURCE_META: Record<AdminActivitySource, { label: string }> = {
   "order-status": { label: "Order Status" },
   user: { label: "Customer Account" },
   message: { label: "Contact Message" },
-  "capital-cost": { label: "Capital & Cost" },
 };
 
 const SOURCE_OPTIONS = (
@@ -182,7 +178,7 @@ export default function ActivityLogClient() {
             <Activity className="h-5 w-5 text-brand-red" />
             {i18n("Activity Log")}</h1>
           <p className="text-xs text-gray-500">
-            {i18n("Audit History for admin, order, customer, message, and cost activity.")}</p>
+            {i18n("Audit history for admin, order, customer, and message activity.")}</p>
         </div>
         <button
           type="button"

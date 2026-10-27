@@ -51,13 +51,13 @@ export default function UserSummaryCards({
   admins,
   guests,
   withOrders,
-  lifetimeRevenue,
+  lifetimeSales,
 }: {
   totalCustomers: number;
   admins: number;
   guests: number;
   withOrders: number;
-  lifetimeRevenue: number;
+  lifetimeSales: number;
 }) {
   const locale = useLocale();
   const i18n = useInterfaceTranslations("AdminAdminUsersComponentsUserSummaryCards");
@@ -84,7 +84,7 @@ export default function UserSummaryCards({
       <SummaryCard
         icon={<UserRound className="h-4 w-4" />}
         label={i18n("With orders")}
-        value={`${withOrders} · ${formatCurrency(lifetimeRevenue, locale)}`}
+        value={`${withOrders} · ${formatCurrency(lifetimeSales, locale)}`}
         accent="amber"
       />
     </div>

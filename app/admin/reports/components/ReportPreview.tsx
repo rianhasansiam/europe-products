@@ -11,12 +11,6 @@ import {
   formatCurrency,
   formatDate,
   formatDateTime,
-  type CategoriesReport,
-  type CustomersReport,
-  type InventoryReport,
-  type OrdersReport,
-  type ProductsReport,
-  type ProfitReport,
   type ReportPayload,
   type SalesReport,
 } from "@/features/admin-reports/api";
@@ -56,7 +50,7 @@ export default function ReportPreview({
         <h3 className="mt-3 text-base font-bold text-gray-900">
           {i18n("No report yet")}</h3>
         <p className="mx-auto mt-1 max-w-md text-sm text-gray-500">
-          {i18n("Pick a report type, choose a date window, and hit")}<span className="mx-1 font-semibold text-brand-red">{i18n("Generate report")}</span>
+          {i18n("Choose a date window and hit")}<span className="mx-1 font-semibold text-brand-red">{i18n("Generate report")}</span>
           {i18n("to preview the data here.")}</p>
       </div>
     );
@@ -69,7 +63,7 @@ export default function ReportPreview({
       {/* Title bar */}
       <header className="flex flex-wrap items-start justify-between gap-3 border-b border-brand-border bg-brand-light-bg px-5 py-4">
         <div className="min-w-0">
-          <h2 className="text-base font-bold text-gray-900">{def.subject}</h2>
+          <h2 className="text-base font-bold text-gray-900">{i18n(def.subject)}</h2>
           <p className="mt-0.5 text-xs text-gray-500">
             {payload.meta.allTime
               ? i18n("All time")
@@ -97,12 +91,6 @@ export default function ReportPreview({
 
       <div className="space-y-6 px-5 py-5">
         {payload.sales && <SalesPreview report={payload.sales} />}
-        {payload.orders && <OrdersPreview report={payload.orders} />}
-        {payload.products && <ProductsPreview report={payload.products} />}
-        {payload.profit && <ProfitPreview report={payload.profit} />}
-        {payload.inventory && <InventoryPreview report={payload.inventory} />}
-        {payload.customers && <CustomersPreview report={payload.customers} />}
-        {payload.categories && <CategoriesPreview report={payload.categories} />}
       </div>
     </section>
   );
@@ -127,7 +115,7 @@ function StatGrid({
 }) {
   const i18n = useInterfaceTranslations("AdminAdminReportsComponentsReportPreview");
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-3">
       {items.map((item) => (
         <div
           key={item.label}
@@ -163,10 +151,11 @@ function DataTable({
   rows: Array<Array<string | number>>;
   emptyLabel?: string;
 }) {
+  const i18n = useInterfaceTranslations("AdminAdminReportsComponentsReportPreview");
   if (rows.length === 0) {
     return (
       <p className="rounded-xl border border-dashed border-brand-border bg-white px-3 py-4 text-center text-xs text-gray-500">
-        {emptyLabel}
+        {i18n(emptyLabel)}
       </p>
     );
   }
@@ -179,7 +168,7 @@ function DataTable({
             <tr>
               {headers.map((header) => (
                 <th key={header} className="px-3 py-2 font-bold">
-                  {header}
+                  {i18n(header)}
                 </th>
               ))}
             </tr>
@@ -219,30 +208,16 @@ function SalesPreview({ report }: { report: SalesReport }) {
           <StatGrid
             items={[
               {
-                label: "Revenue",
-                value: formatCurrency(report.summary.totalRevenue, undefined, locale),
+                label: "Sales",
+                value: formatCurrency(report.summary.totalSales, undefined, locale),
               },
               {
                 label: "Orders",
                 value: String(report.summary.totalOrders),
               },
               {
-                label: "Avg order value",
-                value: formatCurrency(report.summary.avgOrderValue, undefined, locale),
-              },
-              {
-                label: "Discounts",
-                value: formatCurrency(report.summary.totalDiscounts, undefined, locale),
-                tone: "muted",
-              },
-              {
-                label: "Delivery fees",
-                value: formatCurrency(report.summary.totalDeliveryCharges, undefined, locale),
-                tone: "muted",
-              },
-              {
                 label: "Cancelled",
-                value: `${report.summary.cancelledOrders} · ${formatCurrency(report.summary.cancelledRevenue, undefined, locale)}`,
+                value: String(report.summary.cancelledOrders),
                 tone: "danger",
               },
             ]}
@@ -254,11 +229,11 @@ function SalesPreview({ report }: { report: SalesReport }) {
         <SectionHeading>{i18n("Orders by status")}</SectionHeading>
         <div className="mt-2">
           <DataTable
-            headers={["Status", "Orders", "Revenue"]}
+            headers={["Status", "Orders", "Sales"]}
             rows={report.byStatus.map((row) => [
               row.status,
               row.orders,
-              formatCurrency(row.revenue, undefined, locale),
+              formatCurrency(row.sales, undefined, locale),
             ])}
           />
         </div>
@@ -268,25 +243,25 @@ function SalesPreview({ report }: { report: SalesReport }) {
         <SectionHeading>{i18n("Payment status (live orders)")}</SectionHeading>
         <div className="mt-2">
           <DataTable
-            headers={["Payment status", "Orders", "Revenue"]}
+            headers={["Payment status", "Orders", "Sales"]}
             rows={report.byPaymentStatus.map((row) => [
               row.paymentStatus,
               row.orders,
-              formatCurrency(row.revenue, undefined, locale),
+              formatCurrency(row.sales, undefined, locale),
             ])}
           />
         </div>
       </div>
 
       <div>
-        <SectionHeading>{i18n("Daily revenue")}</SectionHeading>
+        <SectionHeading>{i18n("Daily sales")}</SectionHeading>
         <div className="mt-2">
           <DataTable
-            headers={["Date", "Orders", "Revenue"]}
+            headers={["Date", "Orders", "Sales"]}
             rows={report.dailySeries.map((row) => [
               formatDate(row.day, locale),
               row.orders,
-              formatCurrency(row.revenue, undefined, locale),
+              formatCurrency(row.sales, undefined, locale),
             ])}
           />
         </div>
@@ -311,430 +286,6 @@ function SalesPreview({ report }: { report: SalesReport }) {
               row.paymentStatus,
               formatCurrency(row.totalAmount, undefined, locale),
               formatDateTime(row.createdAt, locale),
-            ])}
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-
-function OrdersPreview({ report }: { report: OrdersReport }) {
-  const locale = useLocale();
-  const i18n = useInterfaceTranslations("AdminAdminReportsComponentsReportPreview");
-  return (
-    <>
-      <div>
-        <SectionHeading>{i18n("Summary")}</SectionHeading>
-        <div className="mt-2">
-          <StatGrid
-            items={[
-              {
-                label: "Orders",
-                value: String(report.summary.totalOrders),
-              },
-              {
-                label: "Total amount",
-                value: formatCurrency(report.summary.totalAmount, undefined, locale),
-              },
-              {
-                label: "Discounts applied",
-                value: formatCurrency(report.summary.totalDiscounts, undefined, locale),
-                tone: "muted",
-              },
-            ]}
-          />
-        </div>
-      </div>
-
-      <div>
-        <SectionHeading>{i18n("By status")}</SectionHeading>
-        <div className="mt-2">
-          <DataTable
-            headers={["Status", "Orders"]}
-            rows={report.byStatus.map((row) => [row.status, row.orders])}
-          />
-        </div>
-      </div>
-
-      <div>
-        <SectionHeading>{i18n("Order log")}</SectionHeading>
-        <div className="mt-2">
-          <DataTable
-            headers={[
-              "Order #",
-              "Customer",
-              "Status",
-              "Pay",
-              "Items",
-              "Total",
-              "Placed",
-            ]}
-            rows={report.rows.map((row) => [
-              row.orderNumber,
-              `${row.customerName} · ${row.customerPhone}`,
-              row.status,
-              row.paymentStatus,
-              row.itemsCount,
-              formatCurrency(row.totalAmount, undefined, locale),
-              formatDateTime(row.createdAt, locale),
-            ])}
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-
-function ProductsPreview({ report }: { report: ProductsReport }) {
-  const locale = useLocale();
-  const i18n = useInterfaceTranslations("AdminAdminReportsComponentsReportPreview");
-  return (
-    <>
-      <div>
-        <SectionHeading>{i18n("Summary")}</SectionHeading>
-        <div className="mt-2">
-          <StatGrid
-            items={[
-              {
-                label: "Unique products",
-                value: String(report.summary.uniqueProducts),
-              },
-              {
-                label: "Units sold",
-                value: String(report.summary.unitsSold),
-              },
-              {
-                label: "Revenue",
-                value: formatCurrency(report.summary.revenue, undefined, locale),
-              },
-            ]}
-          />
-        </div>
-      </div>
-
-      <div>
-        <SectionHeading>{i18n("Top products by revenue")}</SectionHeading>
-        <div className="mt-2">
-          <DataTable
-            headers={[
-              "#",
-              "Product",
-              "Category",
-              "Units",
-              "Revenue",
-              "Price now",
-              "Stock",
-              "Status",
-            ]}
-            rows={report.rows.map((row, idx) => [
-              idx + 1,
-              row.name,
-              row.category,
-              row.unitsSold,
-              formatCurrency(row.revenue, undefined, locale),
-              row.currentPrice != null ? formatCurrency(row.currentPrice, undefined, locale) : "—",
-              row.currentStock != null ? String(row.currentStock) : "—",
-              row.status ?? "—",
-            ])}
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-
-function ProfitPreview({ report }: { report: ProfitReport }) {
-  const locale = useLocale();
-  const i18n = useInterfaceTranslations("AdminAdminReportsComponentsReportPreview");
-  return (
-    <>
-      <div>
-        <SectionHeading>{i18n("Summary")}</SectionHeading>
-        <div className="mt-2">
-          <StatGrid
-            items={[
-              {
-                label: "Revenue",
-                value: formatCurrency(report.summary.totalRevenue, undefined, locale),
-              },
-              {
-                label: "Cost of goods",
-                value: formatCurrency(report.summary.totalCost, undefined, locale),
-                tone: "muted",
-              },
-              {
-                label: "Gross profit",
-                value: formatCurrency(report.summary.grossProfit, undefined, locale),
-                tone: report.summary.grossProfit < 0 ? "danger" : "default",
-              },
-              {
-                label: "Profit margin",
-                value: `${report.summary.profitMargin}%`,
-                tone: report.summary.profitMargin < 0 ? "danger" : "default",
-              },
-              {
-                label: "Units sold",
-                value: String(report.summary.unitsSold),
-              },
-              {
-                label: "Products tracked",
-                value: String(report.summary.productsTracked),
-              },
-            ]}
-          />
-        </div>
-      </div>
-
-      <div>
-        <SectionHeading>{i18n("Profit by product")}</SectionHeading>
-        <div className="mt-2">
-          <DataTable
-            headers={[
-              "#",
-              "Product",
-              "Category",
-              "Units",
-              "Revenue",
-              "Cost",
-              "Profit",
-              "Margin",
-              "Stock",
-              "Status",
-            ]}
-            rows={report.rows.map((row, idx) => [
-              idx + 1,
-              row.name,
-              row.category,
-              row.unitsSold,
-              formatCurrency(row.revenue, undefined, locale),
-              formatCurrency(row.cost, undefined, locale),
-              formatCurrency(row.profit, undefined, locale),
-              `${row.margin}%`,
-              row.currentStock != null ? String(row.currentStock) : "—",
-              row.status ?? "—",
-            ])}
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-
-function InventoryPreview({ report }: { report: InventoryReport }) {
-  const locale = useLocale();
-  const i18n = useInterfaceTranslations("AdminAdminReportsComponentsReportPreview");
-  return (
-    <>
-      <div>
-        <SectionHeading>{i18n("Summary")}</SectionHeading>
-        <div className="mt-2">
-          <StatGrid
-            items={[
-              {
-                label: "Products",
-                value: String(report.summary.totalProducts),
-              },
-              {
-                label: "Units in stock",
-                value: String(report.summary.totalUnitsInStock),
-              },
-              {
-                label: "Out of stock",
-                value: String(report.summary.outOfStock),
-                tone: report.summary.outOfStock > 0 ? "danger" : "default",
-              },
-              {
-                label: "Low stock",
-                value: String(report.summary.lowStock),
-                tone: report.summary.lowStock > 0 ? "danger" : "default",
-              },
-              {
-                label: "Inventory value",
-                value: formatCurrency(report.summary.inventoryValue, undefined, locale),
-              },
-            ]}
-          />
-        </div>
-      </div>
-
-      <div>
-        <SectionHeading>{i18n("Catalog · lowest stock first")}</SectionHeading>
-        <div className="mt-2">
-          <DataTable
-            headers={[
-              "Product",
-              "Category",
-              "Price",
-              "Discount",
-              "Stock",
-              "Status",
-              "Updated",
-            ]}
-            rows={report.rows.map((row) => [
-              row.name,
-              row.category,
-              formatCurrency(row.price, undefined, locale),
-              row.discountPrice != null ? formatCurrency(row.discountPrice, undefined, locale) : "—",
-              row.stock,
-              row.status,
-              formatDate(row.updatedAt, locale),
-            ])}
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-
-function CustomersPreview({ report }: { report: CustomersReport }) {
-  const locale = useLocale();
-  const i18n = useInterfaceTranslations("AdminAdminReportsComponentsReportPreview");
-  return (
-    <>
-      <div>
-        <SectionHeading>{i18n("Summary")}</SectionHeading>
-        <div className="mt-2">
-          <StatGrid
-            items={[
-              {
-                label: "Total users",
-                value: String(report.summary.totalUsers),
-              },
-              {
-                label: "New sign-ups",
-                value: String(report.summary.newSignupsInWindow),
-              },
-              {
-                label: "Active buyers",
-                value: String(report.summary.activeBuyers),
-              },
-              {
-                label: "Revenue",
-                value: formatCurrency(report.summary.totalRevenue, undefined, locale),
-              },
-              {
-                label: "Avg per buyer",
-                value: formatCurrency(report.summary.avgRevenuePerBuyer, undefined, locale),
-              },
-            ]}
-          />
-        </div>
-      </div>
-
-      <div>
-        <SectionHeading>{i18n("Top customers")}</SectionHeading>
-        <div className="mt-2">
-          <DataTable
-            headers={[
-              "Customer",
-              "Email",
-              "Phone",
-              "City",
-              "Role",
-              "Orders",
-              "Spend",
-              "Last order",
-            ]}
-            rows={report.rows.map((row) => [
-              row.name,
-              row.email ?? "—",
-              row.phone ?? "—",
-              row.city ?? "—",
-              row.role,
-              row.ordersCount,
-              formatCurrency(row.totalSpend, undefined, locale),
-              row.lastOrderAt ? formatDate(row.lastOrderAt, locale) : "—",
-            ])}
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-
-function CategoriesPreview({ report }: { report: CategoriesReport }) {
-  const locale = useLocale();
-  const i18n = useInterfaceTranslations("AdminAdminReportsComponentsReportPreview");
-  return (
-    <>
-      <div>
-        <SectionHeading>{i18n("Summary")}</SectionHeading>
-        <div className="mt-2">
-          <StatGrid
-            items={[
-              {
-                label: "Total categories",
-                value: String(report.summary.totalCategories),
-              },
-              {
-                label: "Active",
-                value: String(report.summary.activeCategories),
-              },
-              {
-                label: "Catalog products",
-                value: String(report.summary.totalProducts),
-              },
-              {
-                label: "Units sold",
-                value: String(report.summary.unitsSold),
-              },
-              {
-                label: "Revenue",
-                value: formatCurrency(report.summary.revenue, undefined, locale),
-              },
-            ]}
-          />
-        </div>
-      </div>
-
-      <div>
-        <SectionHeading>{i18n("Direct category performance")}</SectionHeading>
-        <div className="mt-2">
-          <DataTable
-            headers={[
-              "Category breadcrumb",
-              "Canonical path",
-              "Status",
-              "Direct products",
-              "Units",
-              "Revenue",
-            ]}
-            rows={report.rows.map((row) => [
-              row.breadcrumbLabel,
-              `/${row.path}`,
-              row.status,
-              row.directProductCount,
-              row.unitsSold,
-              formatCurrency(row.revenue, undefined, locale),
-            ])}
-          />
-        </div>
-      </div>
-
-      <div>
-        <SectionHeading>{i18n("Root category rollups")}</SectionHeading>
-        <p className="mt-1 text-xs text-gray-500">
-          {i18n("Each descendant contributes to one root only; these rows do not duplicate intermediate-category totals.")}</p>
-        <div className="mt-2">
-          <DataTable
-            headers={[
-              "Root category",
-              "Canonical path",
-              "Status",
-              "Categories",
-              "Subtree products",
-              "Units",
-              "Revenue",
-            ]}
-            rows={report.rootRollups.map((row) => [
-              row.name,
-              `/${row.path}`,
-              row.status,
-              row.categoryCount,
-              row.totalProductCount,
-              row.unitsSold,
-              formatCurrency(row.revenue, undefined, locale),
             ])}
           />
         </div>

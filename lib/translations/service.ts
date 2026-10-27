@@ -80,10 +80,8 @@ export async function publishLanguage(code: string, published: boolean, source: 
 async function sourceRecords(db: Db, entityType: PublicEntity, entityIds: string[]): Promise<Record<string,unknown>[]> {
   const where={id:{in:entityIds}};
   switch(entityType) {
-    case "product": return db.product.findMany({where,select:{id:true,status:true,name:true,description:true,descriptionBlocks:true,seoTitle:true,metaDescription:true,productCode:true,modelNumber:true,brand:{select:{name:true}},manufacturer:{select:{name:true}}}});
+    case "product": return db.product.findMany({where,select:{id:true,status:true,name:true,description:true,descriptionBlocks:true,seoTitle:true,metaDescription:true,productCode:true,modelNumber:true}});
     case "category": return db.category.findMany({where,select:{id:true,status:true,name:true,description:true,seoTitle:true,metaDescription:true}});
-    case "brand": return db.brand.findMany({where,select:{id:true,status:true,name:true,description:true,seoTitle:true,metaDescription:true}});
-    case "manufacturer": return db.manufacturer.findMany({where,select:{id:true,status:true,name:true,description:true}});
     case "banner": return db.banner.findMany({where,select:{id:true,status:true,title:true,subtitle:true,description:true,metadata:true}});
   }
 }
@@ -95,7 +93,7 @@ function sourceValue(record: Record<string,unknown>, field: string): string | nu
   return field==="descriptionBlocks" ? JSON.stringify(value) : typeof value==="string" ? value : null;
 }
 function protectedTerms(record: Record<string,unknown>): string[] {
-  return ["SexToy",record.productCode,record.modelNumber,record.brand && (record.brand as {name:string}).name,record.manufacturer && (record.manufacturer as {name:string}).name,...(process.env.TRANSLATION_PROTECTED_TERMS??"").split("|")].filter((value):value is string=>typeof value==="string" && !!value);
+  return ["SexToy",record.productCode,record.modelNumber,...(process.env.TRANSLATION_PROTECTED_TERMS??"").split("|")].filter((value):value is string=>typeof value==="string" && !!value);
 }
 // Keep the original empty-glossary hash shape so reviewed stored text remains usable.
 function contextFor(record:Record<string,unknown>) { return contentHash({version:1,protectedTerms:protectedTerms(record),glossary:null}); }
@@ -174,7 +172,7 @@ export async function preparePublicBatch(input:{entityType:PublicEntity;entityId
 
 export async function runTranslationJobs(limit=5,provider:TranslationProvider=new LibreTranslateProvider()) {
   limit=Math.min(Math.max(1,limit),batchLimit());
-  const candidates=await prisma.translationJob.findMany({where:{status:{in:["queued","failed"]},attempts:{lt:3},nextAttemptAt:{lte:new Date()}},orderBy:{createdAt:"asc"},take:limit});
+  const candidates=await prisma.translationJob.findMany({where:{entityType:{in:Object.keys(PUBLIC_FIELDS)},status:{in:["queued","failed"]},attempts:{lt:3},nextAttemptAt:{lte:new Date()}},orderBy:{createdAt:"asc"},take:limit});
   const results:{id:string;status:string}[]=[];
   // Serializable predicate reads prevent two workers claiming different jobs
   // from racing past the global permit count. No DB connection is held during HTTP.
@@ -390,7 +388,7 @@ export async function localizePublicCollection<T extends {id:string}>(entityType
 }
 
 export async function translationDashboard() {
-  const [languages,jobs,translations]=await Promise.all([prisma.localeLanguage.findMany({orderBy:{englishName:"asc"}}),prisma.translationJob.findMany({orderBy:{createdAt:"desc"},take:50}),prisma.contentTranslation.findMany({orderBy:{updatedAt:"desc"},take:100})]);
+  const [languages,jobs,translations]=await Promise.all([prisma.localeLanguage.findMany({orderBy:{englishName:"asc"}}),prisma.translationJob.findMany({where:{entityType:{in:Object.keys(PUBLIC_FIELDS)}},orderBy:{createdAt:"desc"},take:50}),prisma.contentTranslation.findMany({where:{entityType:{in:Object.keys(PUBLIC_FIELDS)}},orderBy:{updatedAt:"desc"},take:100})]);
   const entities=new Map<PublicEntity,string[]>();
   for(const row of translations){
     if(!(row.entityType in PUBLIC_FIELDS))continue;

@@ -104,6 +104,8 @@ describe("prefix-free English sitemap coverage", () => {
     expect(urls).toContain(absoluteUrl("/products/translated"));
     expect(urls).toContain(absoluteUrl("/products/english-only"));
     expect(urls.some((url) => url.includes("hidden") || /^\/(en|bn|ar)(\/|$)/.test(new URL(url).pathname))).toBe(false);
+    expect(urls.some((url) => new URL(url).pathname.startsWith("/brands"))).toBe(false);
+    expect(mocks.brands).not.toHaveBeenCalled();
     expect(urls).toContain(absoluteUrl("/contact"));
     expect(urls).toContain(absoluteUrl("/privacy-policy"));
     expect(new Set(urls).size).toBe(urls.length);
@@ -112,6 +114,6 @@ describe("prefix-free English sitemap coverage", () => {
       en: absoluteUrl("/products/translated"), "x-default": absoluteUrl("/products/translated"),
     });
     expect(result.every((entry) => Object.values(entry.alternates?.languages ?? {}).every((url) => url === entry.url))).toBe(true);
-    expect(mocks.locales.mock.calls.map(([type]) => type).sort()).toEqual(["brand", "category", "product"]);
+    expect(mocks.locales.mock.calls.map(([type]) => type).sort()).toEqual(["category", "product"]);
   });
 });

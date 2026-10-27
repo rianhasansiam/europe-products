@@ -97,7 +97,7 @@ export default function WishlistCard({
           <div className="flex min-w-0 flex-col gap-1.5 min-[400px]:flex-row min-[400px]:items-start min-[400px]:justify-between min-[400px]:gap-2">
             <div className="min-w-0">
               <p className="truncate text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                {item.brand} • {item.category}
+                {item.category}
               </p>
               <Link
                 href={`/products/${item.slug ?? item.id}`}
@@ -212,7 +212,7 @@ export default function WishlistCard({
       {/* Content */}
       <div className="flex flex-1 flex-col p-3 sm:p-4">
         <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          {item.brand} • {item.category}
+          {item.category}
         </p>
         <Link href={`/products/${item.slug ?? item.id}`}>
           <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-semibold leading-tight text-foreground transition-colors [overflow-wrap:anywhere] hover:text-primary">

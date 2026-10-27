@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildLocalizedMetadata({
   title: "Shop All Categories",
   description:
-    "Browse every active department and subcategory, then find the right products by brand, specification, price, and availability.",
+    "Browse every active department and subcategory, then find the right products by specification, price, and availability.",
   path: "/categories",
   keywords: ["product categories", "shop departments", "online catalog"],
 }, "InterfaceCategoriesPage");

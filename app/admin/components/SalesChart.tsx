@@ -16,7 +16,7 @@ type Range = "7d" | "14d";
 const FALLBACK_SERIES: DashboardSalesSeries = {
   days: 0,
   points: [],
-  totalRevenue: 0,
+  totalSales: 0,
   totalOrders: 0,
 };
 
@@ -51,8 +51,8 @@ export default function SalesChart({ sales, loading }: SalesChartProps) {
   }, [range, series.points]);
 
   const hasData = points.length > 0;
-  const totalRevenue = useMemo(
-    () => points.reduce((sum, point) => sum + point.revenue, 0),
+  const totalSales = useMemo(
+    () => points.reduce((sum, point) => sum + point.sales, 0),
     [points],
   );
   const totalOrders = useMemo(
@@ -66,7 +66,7 @@ export default function SalesChart({ sales, loading }: SalesChartProps) {
   const innerH = CHART_HEIGHT - CHART_PAD.t - CHART_PAD.b;
 
   const max = useMemo(() => {
-    const peak = points.reduce((m, p) => (p.revenue > m ? p.revenue : m), 0);
+    const peak = points.reduce((m, p) => (p.sales > m ? p.sales : m), 0);
     // A flat-zero series should still render a baseline grid, so we
     // pretend the max is 1 to avoid divide-by-zero downstream.
     return peak === 0 ? 1 : peak;
@@ -77,7 +77,7 @@ export default function SalesChart({ sales, loading }: SalesChartProps) {
     const denominator = Math.max(1, points.length - 1);
     return points.map((point, index) => {
       const x = CHART_PAD.l + (innerW * index) / denominator;
-      const y = CHART_PAD.t + innerH - (point.revenue / max) * innerH;
+      const y = CHART_PAD.t + innerH - (point.sales / max) * innerH;
       return { ...point, x, y };
     });
   }, [innerH, innerW, max, points]);
@@ -113,12 +113,12 @@ export default function SalesChart({ sales, loading }: SalesChartProps) {
           <div className="mt-2 flex items-end gap-4">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">
-                {i18n("Revenue")}</p>
+                {i18n("Sales")}</p>
               {loading ? (
                 <div className="mt-1 h-7 w-32 animate-pulse rounded-md bg-brand-light-bg" />
               ) : (
                 <p className="text-xl font-extrabold text-gray-900">
-                  {BASE_CURRENCY} {Math.round(totalRevenue).toLocaleString(locale)}
+                  {BASE_CURRENCY} {Math.round(totalSales).toLocaleString(locale)}
                 </p>
               )}
             </div>
@@ -166,7 +166,7 @@ export default function SalesChart({ sales, loading }: SalesChartProps) {
             viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
             className="h-56 w-full"
             role="img"
-            aria-label={i18n("Revenue trend")}
+            aria-label={i18n("Sales trend")}
           >
             <defs>
               <linearGradient id="salesArea" x1="0" y1="0" x2="0" y2="1">
@@ -215,7 +215,7 @@ export default function SalesChart({ sales, loading }: SalesChartProps) {
             {/* Points */}
             {plotted.map((p, i) => (
               <g key={`point-${i}`}>
-                <title>{`${p.label} · ${BASE_CURRENCY} ${p.revenue.toLocaleString(locale)} · ${p.orders} orders`}</title>
+                <title>{`${p.label} · ${BASE_CURRENCY} ${p.sales.toLocaleString(locale)} · ${p.orders} orders`}</title>
                 <circle
                   cx={p.x}
                   cy={p.y}

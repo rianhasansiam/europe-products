@@ -222,8 +222,6 @@ type PricedLine = {
   unitPrice: Prisma.Decimal;
   originalPrice: Prisma.Decimal;
   lineTotal: Prisma.Decimal;
-  /** Admin-only source cost snapshot for OrderItem profit analytics. */
-  buyingPrice: Prisma.Decimal;
   stock: number;
 };
 
@@ -248,7 +246,6 @@ async function priceLines(
         categoryId: true,
         salePrice: true,
         discountPrice: true,
-        buyingPrice: true,
         images: {
           orderBy: { position: "asc" },
           take: 1,
@@ -340,7 +337,6 @@ async function priceLines(
       unitPrice,
       originalPrice: toDecimal(product.salePrice),
       lineTotal: multiply(unitPrice, line.quantity),
-      buyingPrice: toDecimal(product.buyingPrice),
       stock: variant.stock,
     };
   });
@@ -1060,7 +1056,6 @@ async function placeOrderInternal(
                 totalPrice: round2(line.lineTotal),
                 displayUnitPrice: itemSnapshot.displayUnitPrice,
                 displayTotalPrice: itemSnapshot.displayTotalPrice,
-                buyingPrice: round2(line.buyingPrice),
               };
             }),
           },

@@ -11,7 +11,7 @@ function contentUrl(path: string, locale?: string) {
  *
  * Each helper returns a plain object ready to be serialized into a
  * `<script type="application/ld+json">` tag. We never invent data:
- * brand, SKU, ratings, etc. are only included when a real value is
+ * SKU, ratings, etc. are only included when a real value is
  * passed in. Keys with `undefined` values are stripped before render.
  */
 
@@ -138,14 +138,10 @@ export type ProductJsonLdInput = {
   category?: string | null;
   /** Real SKU if available — omitted entirely when absent. */
   sku?: string | null;
-  /** Real brand name if available — omitted entirely when absent. */
-  brand?: string | null;
   /** Real manufacturer part number if available; never synthesized. */
   mpn?: string | null;
   /** Real Global Trade Item Number if available; never synthesized. */
   gtin?: string | null;
-  /** Real manufacturer name if available; omitted entirely when absent. */
-  manufacturer?: string | null;
   /** Persisted product condition. Defaults to NEW for legacy callers. */
   itemCondition?: ProductCondition;
   /** Aggregate backed by persisted reviews; omitted when no reviews exist. */
@@ -164,7 +160,6 @@ export function productJsonLd(input: ProductJsonLdInput): JsonLd {
   const url = contentUrl(input.path, input.locale);
   const mpn = input.mpn?.trim();
   const gtin = input.gtin?.trim();
-  const manufacturer = input.manufacturer?.trim();
   const images = (input.images ?? [])
     .filter((src) => typeof src === "string" && src.length > 0)
     .map((src) => absoluteUrl(src));
@@ -177,12 +172,8 @@ export function productJsonLd(input: ProductJsonLdInput): JsonLd {
     url,
     image: images.length > 0 ? images : undefined,
     sku: input.sku ?? undefined,
-    brand: input.brand ? { "@type": "Brand", name: input.brand } : undefined,
     mpn: mpn || undefined,
     gtin: gtin || undefined,
-    manufacturer: manufacturer
-      ? { "@type": "Organization", name: manufacturer }
-      : undefined,
     category: input.category ?? undefined,
     aggregateRating:
       input.rating &&
@@ -260,10 +251,6 @@ export function productGroupJsonLd(input: ProductGroupJsonLdInput): JsonLd {
     url,
     image: images.length > 0 ? images : undefined,
     variesBy: input.variesBy.length > 0 ? input.variesBy : undefined,
-    brand: input.brand ? { "@type": "Brand", name: input.brand } : undefined,
-    manufacturer: input.manufacturer
-      ? { "@type": "Organization", name: input.manufacturer }
-      : undefined,
     category: input.category ?? undefined,
     mpn: input.mpn?.trim() || undefined,
     gtin: input.gtin?.trim() || undefined,

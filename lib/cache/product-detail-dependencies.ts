@@ -8,8 +8,6 @@ export function productDetailCacheTags(input: {
   category: CategoryDependency;
   categoryBreadcrumb: readonly CategoryDependency[];
   relatedProducts: readonly SlugDependency[];
-  brand?: SlugDependency | null;
-  manufacturerId?: string | null;
 }): string[] {
   return [
     catalogCacheTags.categoryTree,
@@ -22,15 +20,6 @@ export function productDetailCacheTags(input: {
       catalogCacheTags.category(category.id),
       catalogCacheTags.categoryPath(category.path),
     ]),
-    ...(input.brand
-      ? [
-          catalogCacheTags.brand(input.brand.id),
-          catalogCacheTags.brandSlug(input.brand.slug),
-        ]
-      : []),
-    ...(input.manufacturerId
-      ? [catalogCacheTags.manufacturer(input.manufacturerId)]
-      : []),
     ...input.relatedProducts.flatMap((related) => [
       catalogCacheTags.product(related.id),
       catalogCacheTags.productSlug(related.slug),

@@ -19,8 +19,8 @@ import { productDescriptionBlocksArraySchema } from "@/lib/validations/product-d
  * The shapes mirror the Prisma `Product` model and its `ProductStatus`
  * enum — keep them aligned when the schema changes.
  *
- * Pricing now lives on the Product (`buyingPrice`/`salePrice`/
- * `discountPrice`) and each `ProductVariant` is a purchasable
+ * Customer pricing lives on the Product (`salePrice`/`discountPrice`)
+ * and each `ProductVariant` is a purchasable
  * size+color inventory row.
  */
 
@@ -62,12 +62,6 @@ const description = z
   .max(5000, "Description is too long.")
   .optional()
   .nullable();
-
-/** Business purchase/source cost. Required, admin-only, never negative. */
-const buyingPrice = z
-  .number({ message: "Buying price is required." })
-  .finite("Buying price must be a valid number.")
-  .nonnegative("Buying price cannot be negative.");
 
 /** Normal customer selling price. Required, never negative. */
 const salePrice = z
@@ -155,7 +149,6 @@ const primaryImageAlt = z
 const optionalText = (max: number) =>
   z.string().trim().min(1).max(max).optional().nullable();
 
-const entityId = z.string().trim().min(1).optional().nullable();
 
 const attributes = z
   .record(
@@ -301,7 +294,6 @@ export const createProductSchema = z
     series: optionalText(100),
     specifications,
     descriptionBlocks: productDescriptionBlocksArraySchema.optional().nullable(),
-    buyingPrice,
     salePrice,
     discountPrice,
     image,
@@ -309,8 +301,6 @@ export const createProductSchema = z
     primaryImageAlt,
     status: z.enum(PRODUCT_STATUS).default("ACTIVE"),
     categoryId: z.string().trim().min(1, "Category is required."),
-    brandId: entityId,
-    manufacturerId: entityId,
     variants: z.array(createVariantInput).min(1, "Add at least one variant."),
   })
   .refine(discountWithinSale, {
@@ -356,7 +346,6 @@ export const updateProductSchema = z
     series: optionalText(100),
     specifications,
     descriptionBlocks: productDescriptionBlocksArraySchema.optional().nullable(),
-    buyingPrice: buyingPrice.optional(),
     salePrice: salePrice.optional(),
     discountPrice,
     image,
@@ -364,8 +353,6 @@ export const updateProductSchema = z
     primaryImageAlt,
     status: z.enum(PRODUCT_STATUS).optional(),
     categoryId: z.string().trim().min(1).optional(),
-    brandId: entityId,
-    manufacturerId: entityId,
     variants: z.array(updateVariantInput).min(1).optional(),
   })
   .refine((data) => Object.keys(data).length > 0, {
@@ -411,10 +398,6 @@ export const productQuerySchema = z
         "Category path must be canonical without leading or trailing slashes.",
       )
       .optional(),
-    brandId: z.string().trim().min(1).optional(),
-    brandSlug: z.string().trim().min(1).max(160).optional(),
-    manufacturerId: z.string().trim().min(1).optional(),
-    manufacturerSlug: z.string().trim().min(1).max(160).optional(),
     status: z.enum(PRODUCT_STATUS).optional(),
     stock: z.enum(["in-stock", "out-of-stock"]).optional(),
     minRating: z.coerce.number().min(0).max(5).optional(),

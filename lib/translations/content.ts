@@ -7,8 +7,6 @@ import { LIBRETRANSLATE_DEFAULT_BATCH_SIZE, LIBRETRANSLATE_DEFAULT_MAX_CHARACTER
 export const PUBLIC_FIELDS = {
   product: ["name", "description", "descriptionBlocks", "seoTitle", "metaDescription"],
   category: ["name", "description", "seoTitle", "metaDescription"],
-  brand: ["description", "seoTitle", "metaDescription"],
-  manufacturer: ["description"],
   banner: ["title", "subtitle", "description", "metadata.badge", "metadata.label", "metadata.heading", "metadata.discount", "metadata.tag"],
 } as const;
 export type PublicEntity = keyof typeof PUBLIC_FIELDS;

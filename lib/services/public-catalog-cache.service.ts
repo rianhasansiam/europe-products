@@ -23,7 +23,7 @@ const getCachedPublicCatalogPage = unstable_cache(
       meta,
     };
   },
-  ["public-catalog-page-v1"],
+  ["public-catalog-page-v2"],
   {
     revalidate: 900,
     tags: [catalogCacheTags.catalog, catalogCacheTags.listings],
@@ -32,7 +32,7 @@ const getCachedPublicCatalogPage = unstable_cache(
 
 const getCachedCatalogFacets = unstable_cache(
   getCatalogFacets,
-  ["public-catalog-facets-v1"],
+  ["public-catalog-facets-v2"],
   {
     revalidate: 1800,
     tags: [
@@ -50,8 +50,6 @@ export function isCacheablePublicCatalogQuery(query: ProductQueryInput): boolean
     query.sort === "popular" &&
     !query.search &&
     !query.categoryPath &&
-    !query.brandSlug &&
-    !query.manufacturerSlug &&
     query.minPrice == null &&
     query.maxPrice == null &&
     !query.stock &&

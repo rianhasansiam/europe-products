@@ -7,12 +7,6 @@ import {
   formatDate,
   formatDateTime,
   formatNumber,
-  type CategoriesReport,
-  type CustomersReport,
-  type InventoryReport,
-  type OrdersReport,
-  type ProductsReport,
-  type ProfitReport,
   type ReportPayload,
   type SalesReport,
 } from "@/features/admin-reports/api";
@@ -36,7 +30,7 @@ import {
 } from "@/features/branding/pdf";
 
 /**
- * Generates a downloadable, premium-styled PDF for any admin report.
+ * Generates a downloadable PDF for the sales report.
  *
  * The same payload that powers the on-screen preview drives the PDF, so
  * the two can never disagree. Generation runs entirely on the client
@@ -46,7 +40,7 @@ import {
  * Every section follows the same skeleton:
  *   1. Shared brand header + a title card (subject, description, window).
  *   2. Summary KPIs rendered as a card grid.
- *   3. One or more styled detail tables specific to the report type.
+ *   3. One or more styled detail tables with daily sales and order details.
  *   4. Shared footer with page numbers.
  */
 
@@ -214,14 +208,9 @@ function drawDataTable(
 
 function renderSales(doc: Doc, report: SalesReport, startY: number): void {
   let y = drawKpiCards(doc, startY, [
-    { label: "Total revenue", value: formatCurrency(report.summary.totalRevenue) },
+    { label: "Total sales", value: formatCurrency(report.summary.totalSales) },
     { label: "Orders (live)", value: formatNumber(report.summary.totalOrders) },
-    { label: "Avg order value", value: formatCurrency(report.summary.avgOrderValue) },
-    { label: "Gross subtotal", value: formatCurrency(report.summary.grossSubtotal) },
-    { label: "Delivery fees", value: formatCurrency(report.summary.totalDeliveryCharges) },
-    { label: "Discounts applied", value: formatCurrency(report.summary.totalDiscounts) },
     { label: "Cancelled orders", value: formatNumber(report.summary.cancelledOrders) },
-    { label: "Cancelled revenue", value: formatCurrency(report.summary.cancelledRevenue) },
   ]);
 
   if (report.byStatus.length > 0) {
@@ -232,12 +221,12 @@ function renderSales(doc: Doc, report: SalesReport, startY: number): void {
       [
         { header: "Status" },
         { header: "Orders", align: "right", width: 28 },
-        { header: "Revenue", align: "right", width: 40, bold: true },
+        { header: "Sales", align: "right", width: 40, bold: true },
       ],
       report.byStatus.map((row) => [
         titleCase(row.status),
         formatNumber(row.orders),
-        formatCurrency(row.revenue),
+        formatCurrency(row.sales),
       ]),
     );
   }
@@ -250,30 +239,30 @@ function renderSales(doc: Doc, report: SalesReport, startY: number): void {
       [
         { header: "Payment status" },
         { header: "Orders", align: "right", width: 28 },
-        { header: "Revenue", align: "right", width: 40, bold: true },
+        { header: "Sales", align: "right", width: 40, bold: true },
       ],
       report.byPaymentStatus.map((row) => [
         titleCase(row.paymentStatus),
         formatNumber(row.orders),
-        formatCurrency(row.revenue),
+        formatCurrency(row.sales),
       ]),
     );
   }
 
   if (report.dailySeries.length > 0) {
-    y = drawSection(doc, y, "Daily revenue");
+    y = drawSection(doc, y, "Daily sales");
     y = drawDataTable(
       doc,
       y,
       [
         { header: "Date" },
         { header: "Orders", align: "right", width: 28 },
-        { header: "Revenue", align: "right", width: 40, bold: true },
+        { header: "Sales", align: "right", width: 40, bold: true },
       ],
       report.dailySeries.map((row) => [
         formatDate(row.day),
         formatNumber(row.orders),
-        formatCurrency(row.revenue),
+        formatCurrency(row.sales),
       ]),
     );
   }
@@ -304,276 +293,8 @@ function renderSales(doc: Doc, report: SalesReport, startY: number): void {
   }
 }
 
-function renderOrders(doc: Doc, report: OrdersReport, startY: number): void {
-  let y = drawKpiCards(doc, startY, [
-    { label: "Total orders", value: formatNumber(report.summary.totalOrders) },
-    { label: "Total amount", value: formatCurrency(report.summary.totalAmount) },
-    { label: "Total discounts", value: formatCurrency(report.summary.totalDiscounts) },
-  ]);
-
-  if (report.byStatus.length > 0) {
-    y = drawSection(doc, y, "Orders by status");
-    y = drawDataTable(
-      doc,
-      y,
-      [
-        { header: "Status" },
-        { header: "Orders", align: "right", width: 32, bold: true },
-      ],
-      report.byStatus.map((row) => [
-        titleCase(row.status),
-        formatNumber(row.orders),
-      ]),
-    );
-  }
-
-  y = drawSection(doc, y, "Order log");
-  drawDataTable(
-    doc,
-    y,
-    [
-      { header: "Order #", bold: true },
-      { header: "Customer" },
-      { header: "Phone", width: 26 },
-      { header: "Status", width: 20 },
-      { header: "Pay", width: 16 },
-      { header: "Items", align: "right", width: 13 },
-      { header: "Total", align: "right", width: 26, bold: true },
-      { header: "Placed", width: 30 },
-    ],
-    report.rows.map((row) => [
-      safeText(row.orderNumber),
-      safeText(row.customerName, "—"),
-      safeText(row.customerPhone, "—"),
-      titleCase(row.status),
-      titleCase(row.paymentStatus),
-      formatNumber(row.itemsCount),
-      formatCurrency(row.totalAmount),
-      formatDateTime(row.createdAt),
-    ]),
-    8,
-  );
-}
-
-function renderProducts(doc: Doc, report: ProductsReport, startY: number): void {
-  let y = drawKpiCards(doc, startY, [
-    { label: "Unique products sold", value: formatNumber(report.summary.uniqueProducts) },
-    { label: "Total units shipped", value: formatNumber(report.summary.unitsSold) },
-    { label: "Revenue", value: formatCurrency(report.summary.revenue) },
-  ]);
-
-  y = drawSection(doc, y, "Top products by revenue");
-  drawDataTable(
-    doc,
-    y,
-    [
-      { header: "#", align: "right", width: 10 },
-      { header: "Product", bold: true },
-      { header: "Category", width: 32 },
-      { header: "Units", align: "right", width: 16 },
-      { header: "Revenue", align: "right", width: 30, bold: true },
-      { header: "Price now", align: "right", width: 26 },
-      { header: "Stock", align: "right", width: 16 },
-      { header: "Status", width: 20 },
-    ],
-    report.rows.map((row, index) => [
-      String(index + 1),
-      safeText(row.name, "—"),
-      safeText(row.category, "—"),
-      formatNumber(row.unitsSold),
-      formatCurrency(row.revenue),
-      row.currentPrice != null ? formatCurrency(row.currentPrice) : "—",
-      row.currentStock != null ? formatNumber(row.currentStock) : "—",
-      row.status ? titleCase(row.status) : "—",
-    ]),
-    8.5,
-  );
-}
-
-function renderProfit(doc: Doc, report: ProfitReport, startY: number): void {
-  let y = drawKpiCards(doc, startY, [
-    { label: "Revenue", value: formatCurrency(report.summary.totalRevenue) },
-    { label: "Cost of goods", value: formatCurrency(report.summary.totalCost) },
-    { label: "Gross profit", value: formatCurrency(report.summary.grossProfit) },
-    { label: "Profit margin", value: `${report.summary.profitMargin}%` },
-    { label: "Units sold", value: formatNumber(report.summary.unitsSold) },
-    { label: "Products tracked", value: formatNumber(report.summary.productsTracked) },
-  ]);
-
-  y = drawSection(doc, y, "Profit by product");
-  drawDataTable(
-    doc,
-    y,
-    [
-      { header: "#", align: "right", width: 12 },
-      { header: "Product", bold: true },
-      { header: "Category", width: 38 },
-      { header: "Units", align: "right", width: 18 },
-      { header: "Revenue", align: "right", width: 32 },
-      { header: "Cost", align: "right", width: 30 },
-      { header: "Profit", align: "right", width: 32, bold: true },
-      { header: "Margin", align: "right", width: 22 },
-      { header: "Stock", align: "right", width: 18 },
-      { header: "Status", width: 26 },
-    ],
-    report.rows.map((row, index) => [
-      String(index + 1),
-      safeText(row.name, "—"),
-      safeText(row.category, "—"),
-      formatNumber(row.unitsSold),
-      formatCurrency(row.revenue),
-      formatCurrency(row.cost),
-      formatCurrency(row.profit),
-      `${row.margin}%`,
-      row.currentStock != null ? formatNumber(row.currentStock) : "—",
-      row.status ? titleCase(row.status) : "—",
-    ]),
-    8.5,
-  );
-}
-
-function renderInventory(doc: Doc, report: InventoryReport, startY: number): void {
-  let y = drawKpiCards(doc, startY, [
-    { label: "Total products", value: formatNumber(report.summary.totalProducts) },
-    { label: "Units in stock", value: formatNumber(report.summary.totalUnitsInStock) },
-    { label: "Out of stock", value: formatNumber(report.summary.outOfStock) },
-    { label: "Low stock (<= 5)", value: formatNumber(report.summary.lowStock) },
-    { label: "Inventory value", value: formatCurrency(report.summary.inventoryValue) },
-  ]);
-
-  y = drawSection(doc, y, "Catalog (lowest stock first)");
-  drawDataTable(
-    doc,
-    y,
-    [
-      { header: "Product", bold: true },
-      { header: "Category", width: 32 },
-      { header: "Price", align: "right", width: 26 },
-      { header: "Discount", align: "right", width: 26 },
-      { header: "Stock", align: "right", width: 16 },
-      { header: "Status", width: 20 },
-      { header: "Updated", width: 26 },
-    ],
-    report.rows.map((row) => [
-      safeText(row.name, "—"),
-      safeText(row.category, "—"),
-      formatCurrency(row.price),
-      row.discountPrice != null ? formatCurrency(row.discountPrice) : "—",
-      formatNumber(row.stock),
-      titleCase(row.status),
-      formatDate(row.updatedAt),
-    ]),
-    8.5,
-  );
-}
-
-function renderCustomers(doc: Doc, report: CustomersReport, startY: number): void {
-  let y = drawKpiCards(doc, startY, [
-    { label: "Total registered users", value: formatNumber(report.summary.totalUsers) },
-    { label: "New sign-ups", value: formatNumber(report.summary.newSignupsInWindow) },
-    { label: "Active buyers", value: formatNumber(report.summary.activeBuyers) },
-    { label: "Total revenue", value: formatCurrency(report.summary.totalRevenue) },
-    { label: "Avg revenue / buyer", value: formatCurrency(report.summary.avgRevenuePerBuyer) },
-  ]);
-
-  y = drawSection(doc, y, "Top customers");
-  drawDataTable(
-    doc,
-    y,
-    [
-      { header: "Customer", bold: true },
-      { header: "Email" },
-      { header: "Phone", width: 26 },
-      { header: "City", width: 22 },
-      { header: "Role", width: 16 },
-      { header: "Orders", align: "right", width: 16 },
-      { header: "Spend", align: "right", width: 28, bold: true },
-      { header: "Last order", width: 24 },
-    ],
-    report.rows.map((row) => [
-      safeText(row.name, "—"),
-      safeText(row.email, "—"),
-      safeText(row.phone, "—"),
-      safeText(row.city, "—"),
-      titleCase(row.role),
-      formatNumber(row.ordersCount),
-      formatCurrency(row.totalSpend),
-      row.lastOrderAt ? formatDate(row.lastOrderAt) : "—",
-    ]),
-    8,
-  );
-}
-
-function renderCategories(doc: Doc, report: CategoriesReport, startY: number): void {
-  let y = drawKpiCards(doc, startY, [
-    { label: "Total categories", value: formatNumber(report.summary.totalCategories) },
-    { label: "Active categories", value: formatNumber(report.summary.activeCategories) },
-    { label: "Catalog products", value: formatNumber(report.summary.totalProducts) },
-    { label: "Units sold", value: formatNumber(report.summary.unitsSold) },
-    { label: "Revenue", value: formatCurrency(report.summary.revenue) },
-  ]);
-
-  y = drawSection(doc, y, "Direct category performance");
-  y = drawDataTable(
-    doc,
-    y,
-    [
-      { header: "Category breadcrumb", bold: true },
-      { header: "Path", width: 42 },
-      { header: "Status", width: 20 },
-      { header: "Direct products", align: "right", width: 25 },
-      { header: "Units", align: "right", width: 18 },
-      { header: "Revenue", align: "right", width: 30, bold: true },
-    ],
-    report.rows.map((row) => [
-      safeText(row.breadcrumbLabel, "—"),
-      `/${safeText(row.path)}`,
-      titleCase(row.status),
-      formatNumber(row.directProductCount),
-      formatNumber(row.unitsSold),
-      formatCurrency(row.revenue),
-    ]),
-    8,
-  );
-
-  y = drawSection(doc, y, "Root category rollups (non-duplicating)");
-  drawDataTable(
-    doc,
-    y,
-    [
-      { header: "Root category", bold: true },
-      { header: "Path", width: 42 },
-      { header: "Status", width: 20 },
-      { header: "Categories", align: "right", width: 22 },
-      { header: "Products", align: "right", width: 22 },
-      { header: "Units", align: "right", width: 18 },
-      { header: "Revenue", align: "right", width: 30, bold: true },
-    ],
-    report.rootRollups.map((row) => [
-      safeText(row.name, "—"),
-      `/${safeText(row.path)}`,
-      titleCase(row.status),
-      formatNumber(row.categoryCount),
-      formatNumber(row.totalProductCount),
-      formatNumber(row.unitsSold),
-      formatCurrency(row.revenue),
-    ]),
-    8,
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/*  Public entry                                                              */
-/* -------------------------------------------------------------------------- */
-
 export async function generateReportPdf(payload: ReportPayload): Promise<jsPDF> {
-  // The profit report carries 10 columns of financial data; portrait A4
-  // squeezes them so the product name wraps one letter per line. Render
-  // it in landscape so every column gets a sane width. All the shared
-  // chrome (header/footer/cards) reads the page width dynamically, so
-  // they adapt automatically.
-  const orientation = payload.meta.type === "profit" ? "landscape" : "portrait";
-  const doc = new jsPDF({ unit: "mm", format: "a4", orientation });
+  const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
   doc.setLanguage("en");
 
   const logo = await loadBrandLogo();
@@ -589,31 +310,9 @@ export async function generateReportPdf(payload: ReportPayload): Promise<jsPDF> 
 
   const y = drawTitleCard(doc, HEADER_HEIGHT + 8, payload);
 
-  switch (payload.meta.type) {
-    case "sales":
-      if (payload.sales) renderSales(doc, payload.sales, y);
-      break;
-    case "orders":
-      if (payload.orders) renderOrders(doc, payload.orders, y);
-      break;
-    case "products":
-      if (payload.products) renderProducts(doc, payload.products, y);
-      break;
-    case "profit":
-      if (payload.profit) renderProfit(doc, payload.profit, y);
-      break;
-    case "inventory":
-      if (payload.inventory) renderInventory(doc, payload.inventory, y);
-      break;
-    case "customers":
-      if (payload.customers) renderCustomers(doc, payload.customers, y);
-      break;
-    case "categories":
-      if (payload.categories) renderCategories(doc, payload.categories, y);
-      break;
-  }
+  renderSales(doc, payload.sales, y);
 
-  drawBrandFooter(doc, [`${STORE_INFO.name} Admin · Confidential`, "Financial summaries include USD orders only."]);
+  drawBrandFooter(doc, [`${STORE_INFO.name} Admin · Confidential`, "Sales totals include USD orders only."]);
   return doc;
 }
 

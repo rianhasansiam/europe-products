@@ -20,7 +20,6 @@ import {
   Star,
   User,
   UserPlus,
-  Wallet,
   type LucideIcon,
 } from "lucide-react";
 
@@ -45,8 +44,6 @@ const KIND_META: Record<
     tile: "bg-brand-red/10 text-brand-red",
   },
   settings: { icon: Settings, tile: "bg-brand-red/10 text-brand-red" },
-  capital: { icon: Wallet, tile: "bg-brand-red/10 text-brand-red" },
-  cost: { icon: Wallet, tile: "bg-brand-red/10 text-brand-red" },
   courier: { icon: ShieldCheck, tile: "bg-brand-red/10 text-brand-red" },
   user: { icon: UserPlus, tile: "bg-brand-red/10 text-brand-red" },
 };

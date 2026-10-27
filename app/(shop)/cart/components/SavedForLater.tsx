@@ -19,7 +19,6 @@ type SavedItem = {
   productId: string;
   slug: string;
   name: string;
-  brand: string;
   image: string;
   price: number;
   originalPrice?: number;
@@ -96,9 +95,6 @@ export default function SavedForLater({
               </button>
 
               <div className="p-3">
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                  {item.brand}
-                </p>
                 <Link
                   href={`/products/${item.slug}`}
                   className="mt-0.5 line-clamp-2 text-sm font-semibold text-foreground hover:text-primary"

@@ -31,7 +31,6 @@ export const catalogCacheTags = {
   listings: "catalog-listings",
   facets: "catalog-facets",
   categoryTree: "category-tree",
-  brandDirectory: "brand-directory",
   homepage: "homepage",
   sitemap: "sitemap",
   redirects: "catalog-redirects",
@@ -40,9 +39,6 @@ export const catalogCacheTags = {
   productReviews: (id: string) => dynamicTag("product-reviews", id),
   category: (id: string) => dynamicTag("category", id),
   categoryPath: (path: string) => dynamicTag("category-path", path),
-  brand: (id: string) => dynamicTag("brand", id),
-  brandSlug: (slug: string) => dynamicTag("brand-slug", slug),
-  manufacturer: (id: string) => dynamicTag("manufacturer", id),
 } as const;
 
 export const CATALOG_LISTING_TAGS = [

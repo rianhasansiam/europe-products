@@ -1,21 +1,15 @@
 "use client";
-import CurrencyAmount from "@/components/currency/CurrencyAmount";
 
 import { useInterfaceTranslations } from "@/components/i18n/translate";
 
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Boxes, CircleDollarSign, PackageCheck, Warehouse } from "lucide-react";
+import { Boxes, PackageCheck, Warehouse } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ProductFormDrawer from "@/app/admin/products/components/ProductFormDrawer";
 import ProductsTable from "@/app/admin/products/components/ProductsTable";
 import ProductsToolbar from "@/app/admin/products/components/ProductsToolbar";
-import {
-  fetchActiveBrandOptions,
-  fetchActiveManufacturerOptions,
-  type CatalogEntityOption,
-} from "@/features/admin-catalog-entities/api";
 import {
   buildFormFromProduct,
   categoryLabel,
@@ -63,15 +57,12 @@ type ProductWriteBody = {
   modelNumber: string | null;
   series: string | null;
   specifications: Record<string, string> | null;
-  buyingPrice: number;
   salePrice: number;
   discountPrice: number | null;
   image: string | null;
   images: string[];
   status: ProductStatus;
   categoryId: string;
-  brandId: string | null;
-  manufacturerId: string | null;
   variants: Array<{
     id?: string;
     name: string | null;
@@ -125,8 +116,6 @@ export default function AdminProductsPage() {
   const loadError = useSelector((state: RootState) => state.adminProducts.error);
 
   const [categories, setCategories] = useState<CategoryOption[]>([]);
-  const [brands, setBrands] = useState<CatalogEntityOption[]>([]);
-  const [manufacturers, setManufacturers] = useState<CatalogEntityOption[]>([]);
   const [optionsError, setOptionsError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"ALL" | ProductStatus>("ALL");
@@ -164,14 +153,7 @@ export default function AdminProductsPage() {
 
   const refreshOptions = useCallback(async () => {
     try {
-      const [categoryRows, brandRows, manufacturerRows] = await Promise.all([
-        fetchActiveCategories(),
-        fetchActiveBrandOptions(),
-        fetchActiveManufacturerOptions(),
-      ]);
-      setCategories(categoryRows);
-      setBrands(brandRows);
-      setManufacturers(manufacturerRows);
+      setCategories(await fetchActiveCategories());
       setOptionsError(null);
     } catch (error) {
       setOptionsError(error instanceof Error ? error.message : "Failed to load catalog options.");
@@ -207,8 +189,6 @@ export default function AdminProductsPage() {
         product.modelNumber,
         product.series,
         categoryLabel(product),
-        product.brand?.name,
-        product.manufacturer?.name,
         ...product.variants.flatMap((variant) => [
           variant.sku,
           variant.name,
@@ -227,7 +207,6 @@ export default function AdminProductsPage() {
   const summary = useMemo(() => ({
     active: products.filter((product) => product.status === "ACTIVE").length,
     stock: products.reduce((sum, product) => sum + product.stock, 0),
-    value: products.reduce((sum, product) => sum + product.buyingPrice * product.stock, 0),
   }), [products]);
 
   const openCreate = () => {
@@ -262,7 +241,6 @@ export default function AdminProductsPage() {
 
     if (!form.categoryId) missingFields.push("Category");
 
-    if (!form.buyingPrice.trim()) missingFields.push("Buying price");
     if (!form.salePrice.trim()) missingFields.push("Sale price");
 
     if (form.variants.length === 0) {
@@ -288,9 +266,8 @@ export default function AdminProductsPage() {
       );
     }
 
-    const buyingPrice = parseNumericField(form.buyingPrice, "Buying price");
     const salePrice = parseNumericField(form.salePrice, "Sale price");
-    if (buyingPrice < 0 || salePrice < 0) throw new Error(i18n("Prices cannot be negative."));
+    if (salePrice < 0) throw new Error(i18n("Prices cannot be negative."));
     const discountPrice = form.discountPrice.trim()
       ? parseNumericField(form.discountPrice, "Discount price")
       : null;
@@ -375,15 +352,12 @@ export default function AdminProductsPage() {
       modelNumber: optional(form.modelNumber),
       series: optional(form.series),
       specifications: rowsToStringMap(form.specifications),
-      buyingPrice,
       salePrice,
       discountPrice,
       image: optional(form.image),
       images: normalizeImagesInput(form.images),
       status: form.status,
       categoryId: form.categoryId,
-      brandId: form.brandId || null,
-      manufacturerId: form.manufacturerId || null,
       variants,
     };
   };
@@ -408,10 +382,6 @@ export default function AdminProductsPage() {
       if (panelMode === "edit" && editingProduct) {
         const slug = form.slug.trim();
         if (slug !== editingProduct.slug) requestBody.slug = slug;
-        if (body.brandId === editingProduct.brandId) delete requestBody.brandId;
-        if (body.manufacturerId === editingProduct.manufacturerId) {
-          delete requestBody.manufacturerId;
-        }
       }
       const response = await fetch(
         panelMode === "create" ? "/api/products" : `/api/products/${editingProduct?.id}`,
@@ -488,11 +458,10 @@ export default function AdminProductsPage() {
         <p className="mt-1 text-sm text-gray-600">{i18n("Manage classification, technical data, pricing, media and purchasable option combinations.")}</p>
       </header>
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-3">
         <SummaryCard label={i18n("Products")} value={products.length} detail="All catalog records" icon={Boxes} />
         <SummaryCard label={i18n("Published")} value={summary.active} detail="Visible when category ancestry is active" icon={PackageCheck} />
         <SummaryCard label={i18n("Units in stock")} value={summary.stock} detail="Across active variants" icon={Warehouse} />
-        <SummaryCard label={i18n("Stock cost")} value={<CurrencyAmount amountUSD={summary.value} />} detail="Buying price × current stock" icon={CircleDollarSign} />
       </div>
 
       {(loadError || optionsError) && (
@@ -539,8 +508,6 @@ export default function AdminProductsPage() {
               }
             : null
         }
-        brands={brands}
-        manufacturers={manufacturers}
         error={mutationError}
         isSubmitting={isSubmitting}
         onChange={setForm}

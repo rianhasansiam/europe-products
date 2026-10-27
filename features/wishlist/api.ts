@@ -5,7 +5,6 @@ export type WishlistItem = {
   productCode?: string | null;
   slug?: string;
   name: string;
-  brand: string;
   image: string;
   price: number;
   originalPrice?: number;

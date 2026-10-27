@@ -122,7 +122,6 @@ export default function WishlistPage() {
       const matchesQuery =
         !q ||
         item.name.toLowerCase().includes(q) ||
-        item.brand.toLowerCase().includes(q) ||
         item.category.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
     });

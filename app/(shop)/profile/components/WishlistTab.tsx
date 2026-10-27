@@ -168,7 +168,7 @@ export default function WishlistTab() {
                 </Link>
                 <div className="flex min-w-0 flex-1 flex-col">
                   <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    {item.brand} • {item.category}
+                    {item.category}
                   </p>
                   <Link
                     href={`/products/${item.id}`}

@@ -3,7 +3,7 @@ import { useInterfaceTranslations } from "@/components/i18n/translate";
 
 
 import { RotateCcw, Star } from "lucide-react";
-import { useId, useState } from "react";
+import { useState } from "react";
 
 import type {
   CatalogCategoryFacet,
@@ -18,8 +18,6 @@ import {
 
 export type CatalogFilterState = {
   categoryPath: string;
-  brandSlug: string;
-  manufacturerSlug: string;
   minPrice: number | null;
   maxPrice: number | null;
   minRating: number;
@@ -55,9 +53,6 @@ export default function FilterSidebar({
 }: Props) {
   const i18n = useInterfaceTranslations("InterfaceProductsComponentsFilterSidebar");
   const { pricingReady } = useCurrency();
-  const controlId = useId();
-  const brandFilterId = `${controlId}-brand-filter`;
-  const manufacturerFilterId = `${controlId}-manufacturer-filter`;
   const categories = flattenCategories(facets.categories);
 
   const update = <K extends keyof CatalogFilterState>(
@@ -159,46 +154,6 @@ export default function FilterSidebar({
           ))}
         </div>
       </FilterGroup>
-
-      {facets.brands.length > 0 && (
-        <FilterGroup title={i18n("Brand")}>
-          <label className="sr-only" htmlFor={brandFilterId}>
-            {i18n("Brand")}</label>
-          <select
-            id={brandFilterId}
-            value={filters.brandSlug}
-            onChange={(event) => update("brandSlug", event.target.value)}
-            className="h-11 w-full rounded-xl border border-border bg-card px-3 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-ring/20"
-          >
-            <option value="">{i18n("All brands")}</option>
-            {facets.brands.map((brand) => (
-              <option key={brand.id} value={brand.slug}>
-                {brand.name} ({brand.productCount})
-              </option>
-            ))}
-          </select>
-        </FilterGroup>
-      )}
-
-      {facets.manufacturers.length > 0 && (
-        <FilterGroup title={i18n("Manufacturer")}>
-          <label className="sr-only" htmlFor={manufacturerFilterId}>
-            {i18n("Manufacturer")}</label>
-          <select
-            id={manufacturerFilterId}
-            value={filters.manufacturerSlug}
-            onChange={(event) => update("manufacturerSlug", event.target.value)}
-            className="h-11 w-full rounded-xl border border-border bg-card px-3 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-ring/20"
-          >
-            <option value="">{i18n("All manufacturers")}</option>
-            {facets.manufacturers.map((manufacturer) => (
-              <option key={manufacturer.id} value={manufacturer.slug}>
-                {manufacturer.name} ({manufacturer.productCount})
-              </option>
-            ))}
-          </select>
-        </FilterGroup>
-      )}
 
       <FilterGroup title={i18n("Availability")} last>
         <div className="space-y-1">

@@ -15,8 +15,6 @@ export type AdminActivityKind =
   | "review"
   | "testimonial"
   | "settings"
-  | "capital"
-  | "cost"
   | "user"
   | "courier";
 
@@ -346,10 +344,6 @@ function normalizeActivityKind(kind: string): AdminActivityKind {
       return "testimonial";
     case "settings":
       return "settings";
-    case "capital":
-      return "capital";
-    case "cost":
-      return "cost";
     case "user":
       return "user";
     case "courier":
@@ -369,8 +363,6 @@ const SKIPPED_AUTO_ACTIVITY_SCOPES = new Set([
   "admin.orders/[id].status.PATCH",
 ]);
 
-const SKIPPED_AUTO_ACTIVITY_PREFIXES = ["admin.capital-costs"];
-
 export async function logAdminRouteActivity(input: {
   scope: string;
   method: string;
@@ -379,14 +371,6 @@ export async function logAdminRouteActivity(input: {
   const method = input.method.toUpperCase();
   if (method === "GET" || method === "HEAD") return;
   if (SKIPPED_AUTO_ACTIVITY_SCOPES.has(input.scope)) return;
-  if (
-    SKIPPED_AUTO_ACTIVITY_PREFIXES.some((prefix) =>
-      input.scope.startsWith(prefix),
-    )
-  ) {
-    return;
-  }
-
   const descriptor = describeRouteActivity(input.scope);
   await logAdminActivity({
     kind: descriptor.kind,

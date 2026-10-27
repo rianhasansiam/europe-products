@@ -21,7 +21,6 @@ import { getCategoryBreadcrumbsByIds } from "@/lib/services/category.service";
  *   - `Order`                   customer order placement
  *   - `User`                    account registrations
  *   - `ContactMessage`          contact-form submissions
- *   - `AdminCapitalCostActivity` capital & cost edits
  *
  * This service MERGES those sources at read time into one chronological
  * feed. Nothing is written: there is no materialized "feed" table, so no
@@ -32,8 +31,7 @@ import { getCategoryBreadcrumbsByIds } from "@/lib/services/category.service";
  * duplicate-free by design: each row represents a distinct event (e.g.
  * order placement vs order status change vs admin payment-status edit are
  * different rows in different tables), and `AdminActivityLog` intentionally
- * skips the events that already live in `OrderStatusHistory` /
- * `AdminCapitalCostActivity`.
+ * skips events that already live in `OrderStatusHistory`.
  */
 
 export type ActivityFeedKind = AdminActivityKind;
@@ -43,8 +41,7 @@ export type ActivityFeedSource =
   | "order"
   | "order-status"
   | "user"
-  | "message"
-  | "capital-cost";
+  | "message";
 
 export type ActivityFeedItem = {
   id: string;
@@ -103,8 +100,6 @@ function normalizeKindFilter(
     case "review":
     case "testimonial":
     case "settings":
-    case "capital":
-    case "cost":
     case "user":
     case "courier":
       return normalized;
@@ -133,9 +128,6 @@ function normalizeSourceFilter(
       return "user";
     case "message":
       return "message";
-    case "capital-cost":
-    case "capitalcost":
-      return "capital-cost";
     default:
       return null;
   }
@@ -167,7 +159,6 @@ const SOURCE_SEARCH_LABELS: Record<ActivityFeedSource, string> = {
   "order-status": "order status",
   user: "customer account",
   message: "contact message",
-  "capital-cost": "capital cost",
 };
 
 /* -------------------------------------------------------------------------- */
@@ -180,7 +171,6 @@ type SourceFlags = {
   orderStatus: boolean;
   user: boolean;
   message: boolean;
-  capitalCost: boolean;
 };
 
 const SOURCE_FLAGS: Record<ActivityFeedSource, SourceFlags> = {
@@ -190,7 +180,6 @@ const SOURCE_FLAGS: Record<ActivityFeedSource, SourceFlags> = {
     orderStatus: false,
     user: false,
     message: false,
-    capitalCost: false,
   },
   order: {
     admin: false,
@@ -198,7 +187,6 @@ const SOURCE_FLAGS: Record<ActivityFeedSource, SourceFlags> = {
     orderStatus: false,
     user: false,
     message: false,
-    capitalCost: false,
   },
   "order-status": {
     admin: false,
@@ -206,7 +194,6 @@ const SOURCE_FLAGS: Record<ActivityFeedSource, SourceFlags> = {
     orderStatus: true,
     user: false,
     message: false,
-    capitalCost: false,
   },
   user: {
     admin: false,
@@ -214,7 +201,6 @@ const SOURCE_FLAGS: Record<ActivityFeedSource, SourceFlags> = {
     orderStatus: false,
     user: true,
     message: false,
-    capitalCost: false,
   },
   message: {
     admin: false,
@@ -222,15 +208,6 @@ const SOURCE_FLAGS: Record<ActivityFeedSource, SourceFlags> = {
     orderStatus: false,
     user: false,
     message: true,
-    capitalCost: false,
-  },
-  "capital-cost": {
-    admin: false,
-    order: false,
-    orderStatus: false,
-    user: false,
-    message: false,
-    capitalCost: true,
   },
 };
 
@@ -252,7 +229,6 @@ function resolveSources(filters: ActivityFeedFilters): SourceFlags {
       orderStatus: true,
       user: true,
       message: !filters.actorId,
-      capitalCost: true,
     };
   }
 
@@ -264,7 +240,6 @@ function resolveSources(filters: ActivityFeedFilters): SourceFlags {
         orderStatus: true,
         user: false,
         message: false,
-        capitalCost: false,
       };
     case "user":
       return {
@@ -273,7 +248,6 @@ function resolveSources(filters: ActivityFeedFilters): SourceFlags {
         orderStatus: false,
         user: true,
         message: false,
-        capitalCost: false,
       };
     case "message":
       return {
@@ -282,17 +256,6 @@ function resolveSources(filters: ActivityFeedFilters): SourceFlags {
         orderStatus: false,
         user: false,
         message: !filters.actorId,
-        capitalCost: false,
-      };
-    case "capital":
-    case "cost":
-      return {
-        admin: false,
-        order: false,
-        orderStatus: false,
-        user: false,
-        message: false,
-        capitalCost: true,
       };
     default:
       // product, category, banner, review, testimonial, settings, courier
@@ -302,7 +265,6 @@ function resolveSources(filters: ActivityFeedFilters): SourceFlags {
         orderStatus: false,
         user: false,
         message: false,
-        capitalCost: false,
       };
   }
 }
@@ -356,7 +318,10 @@ async function collectAdmin(
       action: row.action,
       target,
       targetId: row.targetId,
-      href: row.href,
+      // Keep historical audit entries readable after their modules are retired.
+      href: row.href && /^\/admin\/(?:brands|manufacturers|capital-costs)(?:[/?#]|$)/.test(row.href)
+        ? null
+        : row.href,
       actorId: row.actorId,
       actorName: row.actorName,
       actorEmail: row.actorEmail,
@@ -367,61 +332,6 @@ async function collectAdmin(
       createdAt: row.createdAt,
     };
   });
-}
-
-async function collectCapitalCost(
-  filters: ActivityFeedFilters,
-  limit?: number | null,
-): Promise<ActivityFeedItem[]> {
-  const createdAt = dateRange(filters.from, filters.to);
-  const rows = await prisma.adminCapitalCostActivity.findMany({
-    where: {
-      ...(filters.actorId ? { actorId: filters.actorId } : {}),
-      ...(createdAt ? { createdAt } : {}),
-    },
-    orderBy: { createdAt: "desc" },
-    ...(limit ? { take: limit } : {}),
-    select: {
-      id: true,
-      type: true,
-      description: true,
-      entityId: true,
-      actorId: true,
-      actorName: true,
-      actorEmail: true,
-      createdAt: true,
-    },
-  });
-
-  return rows
-    .map((row) => {
-      const kind: ActivityFeedKind = row.type.startsWith("CAPITAL")
-        ? "capital"
-        : "cost";
-      return {
-        id: `capital-cost-${row.id}`,
-        source: "capital-cost" as const,
-        kind,
-        action: "recorded",
-        target: row.description,
-        targetId: row.entityId,
-        href: "/admin/capital-costs",
-        actorId: row.actorId,
-        actorName: row.actorName,
-        actorEmail: row.actorEmail,
-        performedBy: personLabel(
-          { name: row.actorName, email: row.actorEmail },
-          "Unknown",
-        ),
-        createdAt: row.createdAt.toISOString(),
-      };
-    })
-    // When a specific capital/cost kind is requested, keep only that half.
-    .filter((item) =>
-      filters.kind === "capital" || filters.kind === "cost"
-        ? item.kind === filters.kind
-        : true,
-    );
 }
 
 async function collectOrders(
@@ -642,12 +552,6 @@ async function collectFeedItems(
   if (flags.admin) {
     tasks.push({ source: "admin", task: collectAdmin(filters, perSourceLimit) });
   }
-  if (flags.capitalCost) {
-    tasks.push({
-      source: "capital-cost",
-      task: collectCapitalCost(filters, perSourceLimit),
-    });
-  }
   if (flags.order) {
     tasks.push({ source: "order", task: collectOrders(filters, perSourceLimit) });
   }
@@ -752,14 +656,9 @@ export async function getRecentActivityFeed(
 export async function listActivityFeedActors(): Promise<
   AdminActivityActorOption[]
 > {
-  const [adminActors, capitalActors, statusRows, orderActors, registeredUsers] =
+  const [adminActors, statusRows, orderActors, registeredUsers] =
     await Promise.all([
       listAdminActivityActors(),
-      prisma.adminCapitalCostActivity.findMany({
-        where: { actorId: { not: null } },
-        distinct: ["actorId"],
-        select: { actorId: true, actorName: true, actorEmail: true },
-      }),
       prisma.orderStatusHistory.findMany({
         where: { updatedBy: { not: null } },
         distinct: ["updatedBy"],
@@ -795,11 +694,6 @@ export async function listActivityFeedActors(): Promise<
   };
 
   for (const actor of adminActors) add(actor);
-  for (const actor of capitalActors) {
-    if (actor.actorId) {
-      add({ id: actor.actorId, name: actor.actorName, email: actor.actorEmail });
-    }
-  }
   for (const actor of orderActors) {
     if (actor.userId) {
       add({

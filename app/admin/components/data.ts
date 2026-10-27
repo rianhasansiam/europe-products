@@ -12,10 +12,7 @@ import {
   ShieldCheck,
   Star,
   MessageSquareQuote,
-  Wallet,
   Activity,
-  Factory,
-  Tags,
   ReceiptText,
 } from "lucide-react";
 
@@ -48,8 +45,6 @@ export const ADMIN_NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/admin/products", label: "Products", icon: Package },
       { href: "/admin/categories", label: "Categories", icon: FolderTree },
-      { href: "/admin/brands", label: "Brands", icon: Tags },
-      {href: "/admin/manufacturers",label: "Manufacturers",icon: Factory }
     ],
   },
   {
@@ -68,9 +63,8 @@ export const ADMIN_NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/admin/banners", label: "Banners", icon: ImageIcon },
       {href: "/admin/testimonials",label: "Testimonials",icon: MessageSquareQuote},
-      { href: "/admin/capital-costs", label: "Capital & Costs", icon: Wallet },
       { href: "/admin/activities", label: "Activity Log", icon: Activity },
-      { href: "/admin/reports", label: "Reports", icon: BarChart3 },
+      { href: "/admin/reports", label: "Sales Reports", icon: BarChart3 },
       { href: "/admin/settings", label: "Settings", icon: Settings },
     ],
   },

@@ -19,7 +19,6 @@
     "Contact Message": "contactMessage",
     "Capital & Cost": "capitalCost",
     "Activity Log": "activityLog",
-    "Audit History for admin, order, customer, message, and cost activity.": "auditHistoryForAdminOrderCustomerMessageAnd",
     "Refreshing...": "refreshing",
     "Refresh": "refresh",
     "Search action, source, target, ID, or performer...": "searchActionSourceTargetIdOrPerformer",
@@ -49,7 +48,8 @@
     "Target": "target",
     "Target ID": "targetId",
     "Source:": "source2",
-    "Module:": "module2"
+    "Module:": "module2",
+    "Audit history for admin, order, customer, and message activity.": "auditHistoryForAdminOrderCustomerMessageAnd"
   },
   "AdminAdminActivitiesLoading": {
     "Loading activity log": "loadingActivityLog"
@@ -421,21 +421,19 @@
     "· last": "last",
     "7d": "7d",
     "days": "days",
-    "Revenue": "revenue",
     "Orders": "orders",
     "7 days": "7Days",
     "14 days": "14Days",
     "No orders yet in this window.": "noOrdersYetInThisWindow",
-    "Revenue trend": "revenueTrend"
+    "Sales": "sales",
+    "Sales trend": "salesTrend"
   },
   "AdminAdminComponentsStatCards": {
-    "Revenue (all time)": "revenueAllTime",
     "growth this month": "growthThisMonth",
-    "Profit (all time)": "profitAllTime",
-    "revenue − cost": "revenueCost",
     "Orders (all time)": "ordersAllTime",
     "Customers (all time)": "customersAllTime",
-    "Cancellations (all time)": "cancellationsAllTime"
+    "Cancellations (all time)": "cancellationsAllTime",
+    "Sales (all time)": "salesAllTime"
   },
   "AdminAdminComponentsTopProducts": {
     "Top Products": "topProducts",
@@ -533,9 +531,9 @@
     "Testimonials": "testimonials",
     "Capital & Costs": "capitalCosts",
     "Activity Log": "activityLog",
-    "Reports": "reports",
     "Settings": "settings",
-    "Languages & Translations": "languagesAndTranslations"
+    "Languages & Translations": "languagesAndTranslations",
+    "Sales Reports": "reports"
   },
   "AdminAdminCourierComponentsCourierReportPanel": {
     "Courier history for": "courierHistoryFor",
@@ -663,13 +661,11 @@
   "AdminAdminOrdersComponentsAdminOrderDrawer": {
     "Place customer order": "placeCustomerOrder",
     "Place order for customer": "placeOrderForCustomer",
-    "Create an order for a registered customer or a walk-in guest with the same checkout, stock, revenue, and profit rules.": "createAnOrderForARegisteredCustomerOr",
     "Close order form": "closeOrderForm",
     "Order placed": "orderPlaced",
     "Guest": "guest",
     "Registered": "registered",
     "for": "for",
-    "is now included in sales, revenue, and profit.": "isNowIncludedInSalesRevenueAndProfit",
     "advance paid -": "advancePaid",
     "balance due": "balanceDue",
     "Preparing PDF...": "preparingPdf",
@@ -722,12 +718,14 @@
     "Cancel": "cancel",
     "Placing order...": "placingOrder",
     "Place order": "placeOrder",
-    "Download PDF receipt (English)": "downloadEnglishReceipt"
+    "Download PDF receipt (English)": "downloadEnglishReceipt",
+    "Create an order for a registered customer or a walk-in guest using the same checkout and stock rules.": "createAnOrderForARegisteredCustomerOr",
+    "is now included in sales.": "isNowIncludedInSalesRevenueAndProfit"
   },
   "AdminAdminOrdersComponentsOrderSummaryCards": {
     "Total orders": "totalOrders",
-    "Revenue (excl. cancelled)": "revenueExclCancelled",
-    "Pending / unpaid": "pendingUnpaid"
+    "Pending / unpaid": "pendingUnpaid",
+    "Sales (excl. cancelled)": "revenueExclCancelled"
   },
   "AdminAdminOrdersComponentsOrdersTable": {
     "No orders match the current filters.": "noOrdersMatchTheCurrentFilters",
@@ -792,7 +790,7 @@
     "Refresh": "refresh",
     "Couldn't refresh dashboard.": "couldnAposTRefreshDashboard",
     "Try again": "tryAgain",
-    "Financial summaries include USD orders only.": "financialSummariesIncludeUsdOrdersOnly"
+    "Sales totals include USD orders only.": "salesTotalsIncludeUsdOrdersOnly"
   },
   "AdminAdminProductsComponentsProductFormDrawer": {
     "Add": "add",
@@ -827,7 +825,7 @@
     "Refurbished": "refurbished",
     "Used": "used",
     "Pricing": "pricing",
-    "Buying price stays admin-only; sale and discount prices are customer-facing.": "buyingPriceStaysAdminOnlySaleAndDiscount",
+    "Set the sale and optional discount prices.": "saleAndOptionalDiscountPrices",
     "Buying price": "buyingPrice",
     "Sale price": "salePrice",
     "Discount price": "discountPrice",
@@ -894,7 +892,7 @@
     "Variants": "variants2"
   },
   "AdminAdminProductsComponentsProductsToolbar": {
-    "Search name, code, model, brand, category, SKU...": "searchNameCodeModelBrandCategorySku",
+    "Search name, code, model, category, SKU...": "searchNameCodeModelCategorySku",
     "All status": "allStatus",
     "Active": "active",
     "Inactive": "inactive",
@@ -937,25 +935,18 @@
   "AdminAdminReportsComponentsReportPreview": {
     "Crunching the numbers": "crunchingTheNumbers",
     "No report yet": "noReportYet",
-    "Pick a report type, choose a date window, and hit": "pickAReportTypeChooseADateWindow",
     "Generate report": "generateReport",
     "to preview the data here.": "toPreviewTheDataHere",
     "All time": "allTime",
     "· generated": "generated",
     "Downloading...": "downloading",
-    "Download PDF": "downloadPdf",
     "Summary": "summary",
-    "Revenue": "revenue",
     "Orders": "orders",
-    "Avg order value": "avgOrderValue",
-    "Discounts": "discounts",
-    "Delivery fees": "deliveryFees",
     "Cancelled": "cancelled",
     "Orders by status": "ordersByStatus",
     "Status": "status",
     "Payment status (live orders)": "paymentStatusLiveOrders",
     "Payment status": "paymentStatus",
-    "Daily revenue": "dailyRevenue",
     "Date": "date",
     "Recent orders": "recentOrders",
     "Order #": "order",
@@ -963,77 +954,22 @@
     "Payment": "payment",
     "Total": "total",
     "Placed": "placed",
-    "Total amount": "totalAmount",
-    "Discounts applied": "discountsApplied",
-    "By status": "byStatus",
-    "Order log": "orderLog",
-    "Pay": "pay",
-    "Items": "items",
-    "Unique products": "uniqueProducts",
-    "Units sold": "unitsSold",
-    "Top products by revenue": "topProductsByRevenue",
-    "Product": "product",
-    "Category": "category",
-    "Units": "units",
-    "Price now": "priceNow",
-    "Stock": "stock",
-    "Cost of goods": "costOfGoods",
-    "Gross profit": "grossProfit",
-    "Profit margin": "profitMargin",
-    "Products tracked": "productsTracked",
-    "Profit by product": "profitByProduct",
-    "Cost": "cost",
-    "Profit": "profit",
-    "Margin": "margin",
-    "Products": "products",
-    "Units in stock": "unitsInStock",
-    "Out of stock": "outOfStock",
-    "Low stock": "lowStock",
-    "Inventory value": "inventoryValue",
-    "Catalog · lowest stock first": "catalogLowestStockFirst",
-    "Price": "price",
-    "Discount": "discount",
-    "Updated": "updated",
-    "Total users": "totalUsers",
-    "New sign-ups": "newSignUps",
-    "Active buyers": "activeBuyers",
-    "Avg per buyer": "avgPerBuyer",
-    "Top customers": "topCustomers",
-    "Email": "email",
-    "Phone": "phone",
-    "City": "city",
-    "Role": "role",
-    "Spend": "spend",
-    "Last order": "lastOrder",
-    "Total categories": "totalCategories",
-    "Active": "active",
-    "Catalog products": "catalogProducts",
-    "Direct category performance": "directCategoryPerformance",
-    "Category breadcrumb": "categoryBreadcrumb",
-    "Canonical path": "canonicalPath",
-    "Direct products": "directProducts",
-    "Root category rollups": "rootCategoryRollups",
-    "Each descendant contributes to one root only; these rows do not duplicate intermediate-category totals.": "eachDescendantContributesToOneRootOnlyThese",
-    "Root category": "rootCategory",
-    "Categories": "categories",
-    "Subtree products": "subtreeProducts",
-    "Download PDF (English)": "downloadEnglishReport"
-  },
-  "AdminAdminReportsComponentsReportTypePicker": {
-    "Selected": "selected"
+    "Download PDF (English)": "downloadEnglishReport",
+    "Choose a date window and hit": "chooseADateWindowAndHit",
+    "Sales": "sales",
+    "Daily sales": "dailySales",
+    "No rows in this window.": "noRowsInThisWindow"
   },
   "AdminAdminReportsLoading": {
     "Loading reports": "loadingReports"
   },
   "AdminAdminReportsPage": {
     "Reports": "reports",
-    "Generate & download reports": "generateAmpDownloadReports",
-    "Pick a report, set the window, preview the data, and export a polished PDF for sharing with the team.": "pickAReportSetTheWindowPreviewThe",
-    "Currently selected ·": "currentlySelected",
-    "Choose a report": "chooseAReport",
     "Couldn't generate the report": "couldnAposTGenerateTheReport",
     "Couldn't build the PDF": "couldnAposTBuildThePdf",
-    "Financial summaries include USD orders only.": "financialSummariesIncludeUsdOrdersOnly"
+    "Sales reports": "salesReports",
+    "Choose a date window, review your sales, and download a PDF.": "chooseADateWindowReviewYourSales",
+    "Sales totals include USD orders only.": "salesTotalsIncludeUsdOrdersOnly"
   },
   "AdminAdminReviewsComponentsAddReviewForm": {
     "Add a review": "addAReview",
@@ -1380,25 +1316,12 @@
   },
   "AdminShared": {
     "Sales overview": "salesOverview",
-    "Revenue, average order value, payment status split, and daily sales trend.": "revenueAverageOrderValuePaymentStatusSplit",
-    "Orders log": "ordersLog",
-    "Every order placed in the window with line counts and totals.": "everyOrderPlacedInTheWindowWith",
-    "Orders Log": "ordersLog2",
-    "Top products": "topProducts",
-    "Best-selling products ranked by revenue and units shipped.": "bestSellingProductsRankedByRevenueAnd",
-    "Profit report": "profitReport",
-    "Gross profit and margin per product — revenue against buying cost for sold items.": "grossProfitAndMarginPerProductRevenue",
-    "Profit Report": "profitReport2",
-    "Inventory snapshot": "inventorySnapshot",
-    "Current stock levels, low/out-of-stock items, and total inventory value.": "currentStockLevelsLowOutOfStock",
-    "Inventory Snapshot": "inventorySnapshot2",
-    "Top spenders, new sign-ups, and active buyers in the window.": "topSpendersNewSignUpsAndActive",
-    "Direct category performance with separate, non-duplicating root rollups.": "directCategoryPerformanceWithSeparateNonDuplicating",
-    "Category Performance": "categoryPerformance",
     "Awaiting payment": "awaitingPayment",
     "Processing": "processing",
     "Payment failed": "paymentFailed",
     "Refunded": "refunded",
-    "English PDF": "englishPdf"
+    "English PDF": "englishPdf",
+    "Sales totals, order counts, payment status, and daily sales.": "salesTotalsOrderCountsPaymentStatus",
+    "Sales Overview": "salesOverviewTitle"
   }
 }

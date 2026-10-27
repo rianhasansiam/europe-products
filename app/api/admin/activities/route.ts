@@ -14,7 +14,7 @@ import {
  * Admin only. Paginated, filterable read over the UNIFIED activity feed
  * for the standalone `/admin/activities` page. The feed merges several
  * sources at read time (admin audit log, order placement + status
- * history, registrations, contact messages, capital/cost edits) without
+ * history, registrations, contact messages) without
  * writing any merged records to the database. Newest first, with optional
  * filters by module (kind), source, performer, free-text search, and a
  * created-at date range.
@@ -29,8 +29,6 @@ const ACTIVITY_KINDS = [
   "review",
   "testimonial",
   "settings",
-  "capital",
-  "cost",
   "user",
   "courier",
 ] as const satisfies readonly ActivityFeedKind[];
@@ -41,7 +39,6 @@ const ACTIVITY_SOURCES = [
   "order-status",
   "user",
   "message",
-  "capital-cost",
 ] as const satisfies readonly ActivityFeedSource[];
 
 function normalizeOptionalFilter(value: unknown): string | undefined {
@@ -59,8 +56,6 @@ function normalizeSourceFilter(value: unknown): string | undefined {
       return "admin";
     case "orderstatus":
       return "order-status";
-    case "capitalcost":
-      return "capital-cost";
     default:
       return normalized;
   }
