@@ -26,6 +26,7 @@ import {
   type ProductStatus,
 } from "@/features/admin-products/api";
 import { readApiError } from "@/features/http/api-envelope";
+import { validateProductRequiredFields } from "@/features/admin-products/required-fields";
 import {
   confirmMajorAction,
   notifyActionError,
@@ -127,6 +128,7 @@ export default function AdminProductsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [mutationError, setMutationError] = useState<string | null>(null);
+  const [showRequiredErrors, setShowRequiredErrors] = useState(false);
   const [successNote, setSuccessNote] = useState<string | null>(null);
 
   const originalVariantColors = useMemo<ReadonlyMap<string, string | null>>(
@@ -210,6 +212,7 @@ export default function AdminProductsPage() {
   }), [products]);
 
   const openCreate = () => {
+    setShowRequiredErrors(false);
     setPanelMode("create");
     setEditingProduct(null);
     setForm({
@@ -223,6 +226,7 @@ export default function AdminProductsPage() {
   };
 
   const openEdit = (product: AdminProduct) => {
+    setShowRequiredErrors(false);
     setPanelMode("edit");
     setEditingProduct(product);
     setForm(buildFormFromProduct(product));
@@ -366,6 +370,21 @@ export default function AdminProductsPage() {
     event.preventDefault();
     setMutationError(null);
     setSuccessNote(null);
+    setShowRequiredErrors(true);
+    const missingFields = validateProductRequiredFields(form, panelMode);
+    const firstMissingField = Object.keys(missingFields)[0];
+    if (firstMissingField) {
+      setMutationError("Please fill in the required fields highlighted below.");
+      const formElement = event.currentTarget;
+      requestAnimationFrame(() => {
+        const input = formElement.querySelector<HTMLInputElement | HTMLSelectElement>(`[name="${firstMissingField}"]`);
+        input?.focus();
+        input?.scrollIntoView({ block: "center" });
+      });
+      return;
+    }
+    // Show all missing fields together, then retain native format/range checks.
+    if (!event.currentTarget.reportValidity()) return;
     let body: ProductWriteBody;
     try {
       body = buildBody();
@@ -509,8 +528,12 @@ export default function AdminProductsPage() {
             : null
         }
         error={mutationError}
+        fieldErrors={showRequiredErrors ? validateProductRequiredFields(form, panelMode) : {}}
         isSubmitting={isSubmitting}
-        onChange={setForm}
+        onChange={(update) => {
+          setForm(update);
+          setMutationError(null);
+        }}
         onClose={closePanel}
         onSubmit={handleSubmit}
       />

@@ -23,6 +23,7 @@ import {
   type VariantFormRow,
 } from "@/features/admin-products/api";
 import type { ProductDescriptionBlock } from "@/lib/types/product-description-blocks";
+import type { ProductFormFieldErrors } from "@/features/admin-products/required-fields";
 import {
   isValidProductColor,
   normalizeProductColor,
@@ -34,7 +35,7 @@ import { cn } from "@/lib/utils";
 import Field from "./Field";
 
 const inputClass =
-  "h-10 w-full rounded-xl border border-brand-border bg-white px-3 text-sm outline-none transition focus:border-brand-red disabled:cursor-not-allowed disabled:bg-gray-50";
+  "h-10 w-full rounded-xl border border-brand-border bg-white px-3 text-sm outline-none transition focus:border-brand-red disabled:cursor-not-allowed disabled:bg-gray-50 aria-invalid:border-red-500 aria-invalid:bg-red-50 aria-invalid:ring-1 aria-invalid:ring-red-500";
 
 function Section({
   title,
@@ -126,6 +127,7 @@ export default function ProductFormDrawer({
   categories,
   currentCategory,
   error,
+  fieldErrors = {},
   isSubmitting,
   onChange,
   onClose,
@@ -138,6 +140,7 @@ export default function ProductFormDrawer({
   categories: CategoryOption[];
   currentCategory: { id: string; label: string } | null;
   error: string | null;
+  fieldErrors?: ProductFormFieldErrors;
   isSubmitting: boolean;
   onChange: React.Dispatch<React.SetStateAction<ProductFormState>>;
   onClose: () => void;
@@ -145,6 +148,17 @@ export default function ProductFormDrawer({
 }) {
   const i18n = useInterfaceTranslations("AdminAdminProductsComponentsProductFormDrawer");
   const closeRef = useRef<HTMLButtonElement | null>(null);
+  const requiredFieldProps = (name: string) => ({
+    required: true,
+    error: fieldErrors[name] ? i18n(fieldErrors[name]) : undefined,
+    errorId: `product-${name}-error`,
+  });
+  const requiredInputProps = (name: string) => ({
+    name,
+    required: true,
+    "aria-invalid": fieldErrors[name] ? true : undefined,
+    "aria-describedby": fieldErrors[name] ? `product-${name}-error` : undefined,
+  });
 
   useEffect(() => {
     if (!open) return;
@@ -215,7 +229,7 @@ export default function ProductFormDrawer({
           </button>
         </header>
 
-        <form onSubmit={onSubmit} className="flex min-h-0 flex-1 flex-col">
+        <form noValidate onSubmit={onSubmit} className="flex min-h-0 flex-1 flex-col">
           <div className="flex-1 space-y-4 overflow-y-auto p-5">
             {error && (
               <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
@@ -226,8 +240,9 @@ export default function ProductFormDrawer({
             <Section title={i18n("Classification")} description={i18n("Place the product in the catalog and record its technical identity.")}>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="sm:col-span-2">
-                  <Field label={i18n("Product name")} required>
+                  <Field label={i18n("Product name")} {...requiredFieldProps("name")}>
                     <input
+                      {...requiredInputProps("name")}
                       value={form.name}
                       onChange={(event) => onChange((current) => ({ ...current, name: event.target.value }))}
                       className={inputClass}
@@ -237,8 +252,9 @@ export default function ProductFormDrawer({
                 </div>
                 {mode === "edit" && (
                   <div className="sm:col-span-2">
-                    <Field label={i18n("Canonical URL slug")} required>
+                    <Field label={i18n("Canonical URL slug")} {...requiredFieldProps("slug")}>
                       <input
+                        {...requiredInputProps("slug")}
                         value={form.slug}
                         onChange={(event) => onChange((current) => ({
                           ...current,
@@ -256,8 +272,9 @@ export default function ProductFormDrawer({
                       {i18n("Changing this moves the product URL and keeps the previous URL as a permanent redirect.")}</p>
                   </div>
                 )}
-                <Field label={i18n("Category")} required>
+                <Field label={i18n("Category")} {...requiredFieldProps("categoryId")}>
                   <select
+                    {...requiredInputProps("categoryId")}
                     value={form.categoryId}
                     onChange={(event) => onChange((current) => ({ ...current, categoryId: event.target.value }))}
                     className={inputClass}
@@ -276,8 +293,9 @@ export default function ProductFormDrawer({
                     ))}
                   </select>
                 </Field>
-                <Field label={i18n("Status")} required>
+                <Field label={i18n("Status")} {...requiredFieldProps("status")}>
                   <select
+                    {...requiredInputProps("status")}
                     value={form.status}
                     onChange={(event) => onChange((current) => ({
                       ...current,
@@ -295,27 +313,6 @@ export default function ProductFormDrawer({
                     onChange={(event) => onChange((current) => ({ ...current, modelNumber: event.target.value }))}
                     className={inputClass}
                     placeholder={i18n("AC-2200")}
-                  />
-                </Field>
-                <Field label={i18n("Series")}>
-                  <input
-                    value={form.series}
-                    onChange={(event) => onChange((current) => ({ ...current, series: event.target.value }))}
-                    className={inputClass}
-                    placeholder={i18n("ProLine")}
-                  />
-                </Field>
-                <Field label="GTIN">
-                  <input
-                    value={form.gtin}
-                    onChange={(event) => onChange((current) => ({
-                      ...current,
-                      gtin: event.target.value,
-                    }))}
-                    className={inputClass}
-                    placeholder="0123456789012"
-                    maxLength={32}
-                    inputMode="numeric"
                   />
                 </Field>
                 <Field label={i18n("Item condition")}>
@@ -337,8 +334,8 @@ export default function ProductFormDrawer({
 
             <Section title={i18n("Pricing")} description={i18n("Set the sale and optional discount prices.")}>
               <div className="grid gap-3 sm:grid-cols-2">
-                <Field label={i18n("Sale price")} required>
-                  <input type="number" min="0" step="0.01" value={form.salePrice} onChange={(event) => onChange((current) => ({ ...current, salePrice: event.target.value }))} className={inputClass} />
+                <Field label={i18n("Sale price")} {...requiredFieldProps("salePrice")}>
+                  <input {...requiredInputProps("salePrice")} type="number" min="0" step="0.01" value={form.salePrice} onChange={(event) => onChange((current) => ({ ...current, salePrice: event.target.value }))} className={inputClass} />
                 </Field>
                 <Field label={i18n("Discount price")}>
                   <input type="number" min="0" step="0.01" value={form.discountPrice} onChange={(event) => onChange((current) => ({ ...current, discountPrice: event.target.value }))} className={inputClass} />
@@ -408,8 +405,7 @@ export default function ProductFormDrawer({
                       <Field label={i18n("Option name")}><input value={variant.name} onChange={(event) => updateVariant(index, { name: event.target.value })} className={inputClass} placeholder={i18n("220 V / Single phase")} /></Field>
                       <Field label="SKU"><input value={variant.sku} onChange={(event) => updateVariant(index, { sku: event.target.value })} className={inputClass} placeholder={i18n("Optional unique SKU")} /></Field>
                       <Field label={i18n("Variant model")}><input value={variant.modelNumber} onChange={(event) => updateVariant(index, { modelNumber: event.target.value })} className={inputClass} placeholder={i18n("Optional")} /></Field>
-                      <Field label={i18n("Stock")} required><input type="number" min="0" step="1" value={variant.stock} onChange={(event) => updateVariant(index, { stock: event.target.value })} className={inputClass} /></Field>
-                      <Field label={i18n("Size shortcut")}><input value={variant.size} onChange={(event) => updateVariant(index, { size: event.target.value })} className={inputClass} placeholder={i18n("Optional")} /></Field>
+                      <Field label={i18n("Stock")} {...requiredFieldProps(`variants.${index}.stock`)}><input {...requiredInputProps(`variants.${index}.stock`)} type="number" min="0" step="1" value={variant.stock} onChange={(event) => updateVariant(index, { stock: event.target.value })} className={inputClass} /></Field>
                       <div className="space-y-1.5 sm:col-span-2">
                         <span className="text-xs font-semibold uppercase tracking-wide text-gray-600">
                           {i18n("Color shortcut (name or HEX)")}</span>

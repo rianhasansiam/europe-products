@@ -866,7 +866,14 @@
     "Loading editor…": "loadingEditor",
     "Cancel": "cancel",
     "Saving...": "saving",
-    "Save changes": "saveChanges"
+    "Save changes": "saveChanges",
+    "Product name is required.": "productNameIsRequired",
+    "Canonical URL slug is required.": "canonicalUrlSlugIsRequired",
+    "Category is required.": "categoryIsRequired",
+    "Status is required.": "statusIsRequired",
+    "Sale price is required.": "salePriceIsRequired",
+    "Stock is required.": "stockIsRequired",
+    "Please fill in the required fields highlighted below.": "pleaseFillInRequiredFieldsHighlightedBelow"
   },
   "AdminAdminProductsComponentsProductsTable": {
     "Edit": "edit",

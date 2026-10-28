@@ -865,7 +865,14 @@
     "loadingEditor": "Loading editor…",
     "cancel": "Cancel",
     "saving": "Saving...",
-    "saveChanges": "Save changes"
+    "saveChanges": "Save changes",
+    "productNameIsRequired": "Product name is required.",
+    "canonicalUrlSlugIsRequired": "Canonical URL slug is required.",
+    "categoryIsRequired": "Category is required.",
+    "statusIsRequired": "Status is required.",
+    "salePriceIsRequired": "Sale price is required.",
+    "stockIsRequired": "Stock is required.",
+    "pleaseFillInRequiredFieldsHighlightedBelow": "Please fill in the required fields highlighted below."
   },
   "AdminAdminProductsComponentsProductsTable": {
     "edit": "Edit",

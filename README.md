@@ -91,6 +91,7 @@ operational reports, secrets, generated clients, build artifacts and translation
 runtime caches are excluded. Historical financial data belongs in private
 backups, not a public Git repository.
 
-
+## important
 npx prisma studio --port 5555
 runuser -u sextoy -- git -C /var/www/europe-products pull origin main
+VPS_SSH_TARGET=root@187.127.138.53 npm run db:tunnel
